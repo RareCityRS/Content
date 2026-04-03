@@ -9,6 +9,13 @@ if (npc_findhero = ^false) {
 obj_add(npc_coord, dragon_bones, 1, ^lootdrop_duration);
 obj_add(npc_coord, dragonhide_black, 1, ^lootdrop_duration);
 
+~strong_boi_roll;
+~strong_boi_roll;
+~strong_boi_roll;
+~strong_boi_roll;
+~strong_boi_roll;
+~strong_boi_roll;
+
 // sources used:
 // - https://web.archive.org/web/20050305120920/http://runehq.com:80/cache/viewMonster57.htm
 // - https://web.archive.org/web/20050407104611/http://www.tip.it/runescape/index.php?rs2monster_id=219
@@ -69,6 +76,14 @@ if ($random < 10) { // osrs
     obj_add(npc_coord, ~ultrarare_getitem, ^lootdrop_duration);
 } else { // osrs
     obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
+}
+
+$random = random(32);
+if ($random < 1) { 
+    ~trail_clue_hard_insta_reward;
+} else { 
+    ~strong_boi_roll;
+    ~strong_boi_roll;
 }
 
 

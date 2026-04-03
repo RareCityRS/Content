@@ -14,14 +14,22 @@ p_delay(0);
 // Temp note: dur updated
 loc_add(loc_coord, muddy_chestopen, loc_angle, loc_shape, 2);
 inv_del(inv, muddy_key, 1);
-inv_add(inv, mithril_bar, 1);
-inv_add(inv, lawrune, 2);
-inv_add(inv, anchovie_pizza, 1);
-inv_add(inv, mithril_dagger, 1);
-inv_add(inv, coins, 50);
-inv_add(inv, deathrune, 2);
-inv_add(inv, chaosrune, 2);
-inv_add(inv, uncut_ruby, 1);
+inv_add(inv, cert_mithril_bar, 10);
+inv_add(inv, lawrune, 20);
+inv_add(inv, cert_anchovie_pizza, 2);
+inv_add(inv, cert_mithril_dagger, 2);
+inv_add(inv, coins, 500);
+inv_add(inv, deathrune, 40);
+inv_add(inv, chaosrune, 40);
+switch_int (random(4)) {
+    case 0 : inv_add(inv, airrune, 400);
+    case 1 : inv_add(inv, earthrune, 400);
+    case 2 : inv_add(inv, waterrune, 400);
+    case 3 : inv_add(inv, firerune, 400);
+    case default : inv_add(inv, cosmicrune, 40);
+}
+inv_add(inv, cert_uncut_ruby, 10);
+
 mes("You find some treasure in the chest!");
 p_delay(0);
 

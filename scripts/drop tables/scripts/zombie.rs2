@@ -8,6 +8,9 @@ if (npc_findhero = ^false) {
     return;
 }
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+~roll_tide;
+~roll_tide;
+
 def_int $dropint = random(128);
 if ($dropint < 4) {
     obj_add(npc_coord, bronze_med_helm, 1, ^lootdrop_duration);
@@ -45,6 +48,8 @@ if ($dropint < 4) {
     obj_add(npc_coord, fishing_bait, 5, ^lootdrop_duration);
 } else if ($dropint < 120) {
     obj_add(npc_coord, copper_ore, 1, ^lootdrop_duration);
+} else{ 
+    ~roll_tide;
 }
 
 // Armed Zombie
@@ -56,6 +61,9 @@ if (npc_findhero = ^false) {
     return;
 }
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+~roll_tide;
+~roll_tide;
+
 def_int $dropint = random(128);
 if ($dropint < 3) {
     obj_add(npc_coord, iron_mace, 1, ^lootdrop_duration);
@@ -97,6 +105,8 @@ if ($dropint < 3) {
     obj_add(npc_coord, tin_ore, 1, ^lootdrop_duration);
 } else if ($dropint < 125) {
     obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
+} else{ 
+    ~roll_tide;
 }
 
 [ai_queue3,zombie_entranan]
@@ -105,6 +115,9 @@ if (npc_findhero = ^false) {
     return;
 }
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+~roll_tide;
+~roll_tide;
+
 def_int $dropint = random(128);
 if ($dropint < 50) {
     obj_add(npc_coord, bronze_axe, 1, ^lootdrop_duration);
@@ -128,5 +141,7 @@ if ($dropint < 50) {
     obj_add(npc_coord, coins, 18, ^lootdrop_duration);
 } else if ($dropint < 120) {
     obj_add(npc_coord, coins, 28, ^lootdrop_duration);
+} else{ 
+    ~roll_tide;
 }
 // Nothing - 8/128

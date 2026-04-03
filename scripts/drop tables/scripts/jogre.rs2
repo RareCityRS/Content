@@ -11,11 +11,12 @@ if (npc_findhero = ^false) {
 
 // Normal drop
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+~strong_boi_roll;
 
 // Treasure trail
-~trail_mediumcluedrop(129, npc_coord);
+~trail_mediumcluedrop(128, npc_coord);
 
-def_int $random = randominc(128);
+def_int $random = random(128);
 if ($random < 30) {
     obj_add(npc_coord, bronze_spear, 1, ^lootdrop_duration);
 } else if ($random < 34) {
@@ -48,4 +49,25 @@ if ($random < 30) {
     obj_add(npc_coord, unidentified_snake_weed, 1, ^lootdrop_duration);
 } else if ($random < 90) {
     obj_add(npc_coord, unidentified_rogues_purse, 1, ^lootdrop_duration);
+} if ($random < 94) {
+    $random = random(6);
+
+    if($random < 1){
+        ~trail_clue_medium_insta_reward;
+        ~roll_tide;
+        ~roll_tide;
+        ~roll_tide;
+    }else{
+        ~roll_tide;
+        ~roll_tide;
+        ~roll_tide;
+        ~roll_tide;
+    }
+    
+}else{
+    ~roll_tide;
+    ~roll_tide;
+    ~roll_tide;
+    ~roll_tide;
+    ~roll_tide;
 }

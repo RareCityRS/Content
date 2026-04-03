@@ -9,3 +9,10 @@ if (npc_findhero = ^false) {
 // before rework
 obj_add(npc_coord, intelligence_report, 1, ^lootdrop_duration);
 obj_add(npc_coord, bones, 1, ^lootdrop_duration);
+~roll_tide;
+
+def_int $random = random(2);
+
+if ($random < 1) {
+    ~roll_tide;
+}

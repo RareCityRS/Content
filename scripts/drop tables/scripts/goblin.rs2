@@ -12,9 +12,10 @@ if (npc_findhero = ^false) {
 }
 
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+~roll_tide;
 
 // Tertiary
-~trail_easycluedrop(128, npc_coord);
+~trail_easycluedrop(192, npc_coord);
 
 def_int $dropint = random(128);
 
@@ -55,6 +56,8 @@ if ($dropint < 1) {
     obj_add(npc_coord, waterrune, 6, ^lootdrop_duration);
 } else if ($dropint < 63) {
     obj_add(npc_coord, coins, 5, ^lootdrop_duration);
+} else {
+    ~roll_tide;
 }
 
 
@@ -68,6 +71,7 @@ if (npc_findhero = ^false) {
 }
 
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+~roll_tide;
 
 // Tertiary
 ~trail_easycluedrop(128, npc_coord);
@@ -123,4 +127,15 @@ if ($dropint < 3) {
     obj_add(npc_coord, red_cape, 1, ^lootdrop_duration);
 } else if ($dropint < 109) {
     obj_add(npc_coord, tin_ore, 1, ^lootdrop_duration);
+} else if ($dropint < 113) {
+    $dropint = random(8);
+
+    if($dropint < 1){
+        ~trail_clue_easy_insta_reward;
+    }else{
+        ~roll_tide;
+    }
+     
+}else{
+    ~roll_tide;
 }

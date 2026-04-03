@@ -9,6 +9,7 @@ if (npc_findhero = ^false) {
 
 // Normal drop
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+~strong_boi_roll;
 
 // Treasure trail
 ~trail_easycluedrop(128, npc_coord);
@@ -65,6 +66,15 @@ if ($dropint < 2) {
 } else if ($dropint < 120) {
     // 1/128
     obj_add(npc_coord, cabbage, 1, ^lootdrop_duration);
-}
+} if ($dropint < 121) {
+    $dropint = random(10);
 
-// 8/128 nothing
+    if($dropint < 1){
+        ~trail_clue_easy_insta_reward;
+    }else{
+        ~roll_tide;
+    }
+    
+}else{
+    ~roll_tide;
+}

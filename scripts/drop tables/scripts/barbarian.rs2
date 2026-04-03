@@ -7,6 +7,7 @@ if (npc_findhero = ^false) {
 
 // Default drop from config.
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+~roll_tide;
 
 // Tertiary
 ~trail_easycluedrop(128, npc_coord);
@@ -53,7 +54,10 @@ if ($random < 6) {
     obj_add(npc_coord, flier, 1, ^lootdrop_duration);
 } else if ($random < 92) {
     obj_add(npc_coord, ring_mould, 1, ^lootdrop_duration);
+}else{
+    ~roll_tide;
 }
+
 
 [ai_queue3,gunthor_the_brave]
 gosub(npc_death);
@@ -63,6 +67,9 @@ if (npc_findhero = ^false) {
 
 // Default drop from config.
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+~roll_tide;
+~roll_tide;
+~roll_tide;
 
 // Tertiary
 ~trail_easycluedrop(128, npc_coord);
@@ -113,4 +120,16 @@ if ($random < 6) {
     obj_add(npc_coord, flier, 1, ^lootdrop_duration);
 } else if ($random < 96) {
     obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
+} else if ($random < 100) {
+        $random = random(4);
+
+    if($random < 1){
+        ~trail_clue_easy_insta_reward;
+        ~roll_tide;
+    }else{
+        ~roll_tide;
+    }
+    
+}else{
+    ~roll_tide;
 }

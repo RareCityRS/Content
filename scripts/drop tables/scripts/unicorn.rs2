@@ -6,6 +6,14 @@ if (npc_findhero = ^false) {
 
 // Default drop from config.
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+~roll_tide;
+~roll_tide;
 
 // Normal drop
 obj_add(npc_coord, unicorn_horn, 1, ^lootdrop_duration);
+
+def_int $random = random(2);
+
+if ($random < 1) {
+    ~roll_tide;
+}

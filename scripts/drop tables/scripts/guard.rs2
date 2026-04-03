@@ -10,11 +10,14 @@ if (npc_findhero = ^false) {
 
 // Default drop from config.
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+~roll_tide;
+~roll_tide;
+~roll_tide;
 
 // Tertiary
 ~trail_mediumcluedrop(128, npc_coord);
 
-def_int $random = random(128);
+def_int $random = random(150);
 
 if ($random < 8) {
     // nothing dropped
@@ -66,4 +69,18 @@ if ($random < 8) {
     obj_add(npc_coord, coins, 17, ^lootdrop_duration);
 } else if ($random < 128) {
     obj_add(npc_coord, coins, 30, ^lootdrop_duration);
+} else if ($random < 132) {
+    $random = random(8);
+
+    if($random < 1){
+        ~trail_clue_medium_insta_reward;
+        ~roll_tide;
+    }else{
+        ~roll_tide;
+    }
+     
+}else{
+    ~roll_tide;
+
 }
+

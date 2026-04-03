@@ -6,8 +6,9 @@ if (npc_findhero = ^false) {
 
 // Default drop from config.
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+~roll_tide;
 
-def_int $random = random(128);
+def_int $random = random(192);
 
 if ($random < 5) {
     obj_add(npc_coord, black_bead, 1, ^lootdrop_duration);
@@ -73,4 +74,14 @@ if ($random < 5) {
     obj_add(npc_coord, flier, 1, ^lootdrop_duration);
 } else if ($random < 128) {
     obj_add(npc_coord, acne_potion, 1, ^lootdrop_duration);
+} else if ($random < 133) {
+    obj_add(npc_coord, black_bead, 1, ^lootdrop_duration);
+} else if ($random < 138) {
+    obj_add(npc_coord, red_bead, 1, ^lootdrop_duration);
+} else if ($random < 142) {
+    obj_add(npc_coord, white_bead, 1, ^lootdrop_duration);
+} else if ($random < 147) {
+    obj_add(npc_coord, yellow_bead, 1, ^lootdrop_duration);
+} else{
+    ~roll_tide;
 }

@@ -3,9 +3,7 @@
 [ai_queue3,al_kharid_warrior] @man_drop_table;
 [ai_queue3,thief1] @man_drop_table;
 [ai_queue3,thief_blanket] @man_drop_table;
-[ai_queue3,_citizen_burthorpe]
-
-@man_drop_table;
+[ai_queue3,_citizen_burthorpe] @man_drop_table;
 
 [label,man_drop_table]
 gosub(npc_death);
@@ -15,6 +13,7 @@ if (npc_findhero = ^false) {
 
 // Default drop from config.
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+~roll_tide;
 
 // Tertiary
 ~trail_easycluedrop(128, npc_coord);
@@ -58,4 +57,15 @@ if ($random < 1) {
     obj_add(npc_coord, earth_talisman, 1, ^lootdrop_duration);
 } else if ($random < 120) {
     obj_add(npc_coord, cabbage, 1, ^lootdrop_duration);
+} else if ($random < 124) {
+    $random = random(8);
+
+    if($random < 1){
+        ~trail_clue_easy_insta_reward;
+    }else{
+        ~roll_tide;
+    }
+    
+} else {
+    ~roll_tide;
 }

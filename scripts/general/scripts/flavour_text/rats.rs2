@@ -1,0 +1,8 @@
+[ai_timer,rat]
+@rat_moo;
+
+[label,rat_moo]
+npc_settimer(calc(random(20)));
+if (random(2) = 0) {
+    npc_say("Squeak!");
+}

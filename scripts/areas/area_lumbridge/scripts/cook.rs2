@@ -38,3 +38,71 @@ if(inv_total(inv, trail_clue_medium_anagram002_challenge) > 0) {
 ~chatnpc("<p,confused>I've always wondered how many cannons the castle has. Could you find out for me?");
 inv_add(inv, trail_clue_medium_anagram002_challenge, 1);
 ~objbox(trail_clue_medium_anagram002_challenge, "The cook has given you a challenge scroll!", 250, 0, 0);
+
+
+[opnpcu,cook]
+switch_obj(last_useitem) {
+    case easter_egg : @grand_egg_exchange;
+    case cert_easter_egg : mes("Noted eggs can't be opened!"); 
+    case default : mes("The cook doesn't want that."); // osrs
+}
+
+[label,grand_egg_exchange]
+inv_del(inv, easter_egg, 1);
+mes("You give the cook an easter egg, for some reason.");
+
+def_namedobj $drop = null;
+def_int $random = 0;
+$random = random(4);
+
+if($random < 1){
+    $random = random(100);
+    if ($random < 20) {
+        $drop = discofreturning;
+        inv_add(inv, discofreturning, 1);
+        ~objbox(discofreturning, "Inside the easter egg you find a disk of returning.", 250, 0, 0);
+    } else if ($random < 30) {
+        $drop = half_full_wine_jug;
+        inv_add(inv, half_full_wine_jug, 1);
+        ~objbox(half_full_wine_jug, "Inside the easter egg you find a half full jug of wine", 250, 0, 0);
+    } else if ($random < 50) {
+        $drop = santa_hat;
+        inv_add(inv, santa_hat, 1);
+        ~objbox(santa_hat, "Inside the easter egg you find a santa hat.", 250, 0, 0);
+    } else if ($random < 70) {
+        $drop = halloweenmask_green;
+        inv_add(inv, halloweenmask_green, 1);
+        ~objbox(halloweenmask_green, "Inside the easter egg you find a halloween mask.", 250, 0, 0);
+    } else if ($random < 80) {
+        $drop = halloweenmask_blue;
+        inv_add(inv, halloweenmask_blue, 1);
+        ~objbox(halloweenmask_blue, "Inside the easter egg you find a halloween mask.", 250, 0, 0);
+    } else if ($random < 90) {
+        $drop = halloweenmask_red;
+        inv_add(inv, halloweenmask_red, 1);
+        ~objbox(halloweenmask_red, "Inside the easter egg you find a halloween mask.", 250, 0, 0);
+    } else if ($random < 100) {
+        $drop = christmas_cracker;
+        inv_add(inv, christmas_cracker, 1);
+        ~objbox(christmas_cracker, "Inside the easter egg you find a christmas cracker.", 250, 0, 0);
+    }
+    sound_synth(zap, 0, 0);
+    session_log(2026, "Exchanged an egg and received a <oc_name($drop)>!");
+} else{
+    $random = random(30);
+    mes("You find nothing, but as the cook turns away you notice he drops something.");
+    mes("You pick it up.");
+    if ($random < 8) {
+        inv_add(inv, rune_spear, 1);
+    } else if ($random < 10) {
+        inv_add(inv, dragon_spear, 1);
+    } else if ($random < 11) {
+        inv_add(inv, dragon_med_helm, 1);
+    } else if ($random < 15) {
+        inv_add(inv, coins, 50000);
+    } else if ($random < 20) {
+        inv_add(inv, coins, 20000);
+    } else if ($random < 30) {
+        inv_add(inv, coins, 10000);
+    }
+}

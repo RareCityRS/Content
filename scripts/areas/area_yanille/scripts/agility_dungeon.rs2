@@ -18,7 +18,7 @@ if(%yanille_obstacle_pipe_used >= map_clock) {
     mes("The pipe is being used"); // todo: confirm, using the same as gnome course
     return;
 }
-%yanille_obstacle_pipe_used = calc(map_clock + 9);
+%yanille_obstacle_pipe_used = calc(map_clock + 4);
 ~agility_exactmove(human_doublepipesqueeze, 30, 3, coord, movecoord(coord, calc(3 * $mod), 0, 0), 30, 126, $dir, true);
 sound_synth(squeeze_in, 0, 0);
 p_delay(0);
@@ -112,12 +112,101 @@ if(last_useitem = sinister_key) {
     }
     mes("You find a lot of herbs in the chest...");
     inv_del(inv, sinister_key, 1);
-    inv_add(inv, unidentified_harralander, 2);
-    inv_add(inv, unidentified_ranarr, 3);
-    inv_add(inv, unidentified_irit, 1);
-    inv_add(inv, unidentified_avantoe, 1);
-    inv_add(inv, unidentified_kwuarm, 1);
-    inv_add(inv, unidentified_torstol, 1);
+    inv_add(inv, cert_unidentified_harralander, 2);
+    inv_add(inv, cert_unidentified_ranarr, 3);
+    inv_add(inv, cert_unidentified_irit, 1);
+    inv_add(inv, cert_unidentified_avantoe, 1);
+    inv_add(inv, cert_unidentified_kwuarm, 1);
+    inv_add(inv, cert_unidentified_torstol, 1);
+
+def_int $random = 0;
+$random = random(132);
+// Noted herbs/secondaries
+if ($random < 32) {
+    $random = random(2);
+    if ($random < 1) {
+        inv_add(inv, cert_unidentified_guam, 14);
+    }else {
+        inv_add(inv, cert_eye_of_newt, calc(10 + random(4)));
+    }
+} else if ($random < 56) {
+    $random = random(2);
+    if ($random < 1) {
+        inv_add(inv, cert_unidentified_marentill, 13);
+    }else {
+        inv_add(inv, cert_unicorn_horn, calc(9 + random(4)));
+    }
+} else if ($random < 74) {
+    $random = random(2);
+    if ($random < 1) {
+        inv_add(inv, cert_unidentified_tarromin, 12);
+    }else {
+        inv_add(inv, cert_limpwurt_root, calc(8 + random(4)));
+    }
+} else if ($random < 88) {
+    $random = random(2);
+    if ($random < 1) {
+        inv_add(inv, cert_unidentified_harralander, 11);
+    }else {
+        inv_add(inv, cert_red_spiders_eggs, calc(7 + random(4)));
+    }
+} else if ($random < 99) {
+    $random = random(2);
+    if ($random < 1) {
+        inv_add(inv, cert_unidentified_ranarr, 10);
+    }else {
+        inv_add(inv, cert_snape_grass, calc(6 + random(4)));
+    }
+} else if ($random < 107) {
+    $random = random(2);
+    if ($random < 1) {
+        inv_add(inv, cert_unidentified_irit, 9);
+    }else {
+        inv_add(inv, cert_eye_of_newt, calc(5 + random(4)));
+    }
+} else if ($random < 113) {
+    $random = random(2);
+    if ($random < 1) {
+        inv_add(inv, cert_unidentified_avantoe, 8);
+    }else {
+        inv_add(inv, cert_mortmyremushroom, calc(5 + random(3)));
+    } 
+} else if ($random < 118) {
+    $random = random(2);
+    if ($random < 1) {
+        inv_add(inv, cert_unidentified_kwuarm, 7);
+    }else {
+        inv_add(inv, cert_limpwurt_root, calc(4 + random(3)));
+    }
+} else if ($random < 122) {
+    $random = random(2);
+    if ($random < 1) {
+        inv_add(inv, cert_unidentified_cadantine, 6);
+    }else {
+        inv_add(inv, cert_white_berries, calc(4 + random(2)));
+    }
+} else if ($random < 125) {
+    $random = random(2);
+    if ($random < 1) {
+        inv_add(inv, cert_unidentified_lantadyme, 5);
+    }else {
+        inv_add(inv, cert_blue_dragon_scale, calc(3 + random(2)));
+    }
+} else if ($random < 128) {
+    inv_add(inv, cert_unidentified_toadflax, 4);
+} else if ($random < 130) {
+    $random = random(2);
+    if ($random < 1) {
+        inv_add(inv, cert_unidentified_dwarf_weed, 3);
+    }else {
+        inv_add(inv, cert_wine_of_zamorak, calc(2 + random(2)));
+    }
+} else if ($random < 131) {
+    inv_add(inv, cert_unidentified_snapdragon, 2);
+} else if ($random < 132) {
+    inv_add(inv, cert_unidentified_torstol, 1);
+}
+
     // Temp note: dur updated
     loc_change(chestopen_inactive, 5);
     return;

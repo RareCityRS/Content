@@ -109,6 +109,15 @@ data=damagetype,^stab_style
 data=damagetype,^slash_style
 data=damagetype,^stab_style
 
+[weapon_giga_table]
+table=combat_style_table
+data=damagestyle,^style_melee_aggressive
+data=damagestyle,^style_melee_aggressive
+data=damagestyle,^style_melee_defensive
+data=damagetype,^stab_style
+data=damagetype,^slash_style
+data=damagetype,^stab_style
+
 [weapon_bow_table]
 table=combat_style_table
 data=damagestyle,^style_ranged_accurate

@@ -1345,7 +1345,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
                 ~give_display_tea;
                 mes("Congratulations. You have reached the next chompy hat prestige.");
                 mes("Pick up new chompy hat drops and discard lower tiers.");
-                mes("(Do NOT drop your yellow Expert chompy hats!)")
+                mes("(Do NOT drop your yellow Expert chompy hats!)");
                 mes("Keep at least one inventory slot free for display teas.");
                 mes("These must be kept in your bank or inventory to progress. Best of luck!");
                 obj_add(npc_coord, cbhat1, 1, 600);

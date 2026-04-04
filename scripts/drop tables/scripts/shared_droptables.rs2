@@ -463,11 +463,11 @@ if ($random < 77) {
     } else if ($random < 100) {
         obj_add(npc_coord, cert_paramayaticket, 1, ^lootdrop_duration);
     } else if ($random < 101) {
-        def_obj $god_cape_obtained = calc(  inv_total(worn, saradomin_cape) + inv_total(inv, saradomin_cape) + inv_total(bank, saradomin_cape) + 
+        def_int $god_capes_obtained = calc(  inv_total(worn, saradomin_cape) + inv_total(inv, saradomin_cape) + inv_total(bank, saradomin_cape) + 
                                             inv_total(worn, guthix_cape) + inv_total(inv, guthix_cape) + inv_total(bank, guthix_cape) + 
                                             inv_total(worn, zamorak_cape) + inv_total(inv, zamorak_cape) + inv_total(bank, zamorak_cape) 
-                                            ) > 0;
-        if ($god_cape_obtained = true) {
+                                            );
+        if ($god_capes_obtained > 0) {
             $random = random(3);  
             if ( $random < 1 )
                 obj_add(npc_coord, saradomin_cape, 1, 600);
@@ -1484,11 +1484,11 @@ if (inv_total(worn, bunnyears) = 0 & inv_total(inv, bunnyears) = 0 & inv_total(b
 }
 
 if ($random < 2) { // god capes
-    def_obj $god_cape_obtained = calc(  inv_total(worn, saradomin_cape) + inv_total(inv, saradomin_cape) + inv_total(bank, saradomin_cape) + 
+    def_int $god_capes_obtained = calc(  inv_total(worn, saradomin_cape) + inv_total(inv, saradomin_cape) + inv_total(bank, saradomin_cape) + 
                                         inv_total(worn, guthix_cape) + inv_total(inv, guthix_cape) + inv_total(bank, guthix_cape) + 
                                         inv_total(worn, zamorak_cape) + inv_total(inv, zamorak_cape) + inv_total(bank, zamorak_cape) 
-                                        ) > 0;
-    if ($god_cape_obtained = true) {
+                                        );
+    if ($god_capes_obtained > 0) {
         $random = random(3);  
         if ( $random < 1 )
             obj_add(npc_coord, saradomin_cape, 1, 600);

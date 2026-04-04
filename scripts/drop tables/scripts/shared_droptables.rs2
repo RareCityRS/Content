@@ -314,7 +314,7 @@ if ($random < 77) {
         obj_add(npc_coord, mcannonbook, 1, ^lootdrop_duration);
     } else if ($random < 19) {
         obj_add(npc_coord, rockcake, 1, ^lootdrop_duration); 
-    } else if ($random < 20) {
+    } else if ($random < 20 & %upass ! ^upass_complete) {
         obj_add(npc_coord, ibandoll, 1, ^lootdrop_duration);
     } else if ($random < 21) {
         obj_add(npc_coord, thkaramjamap, 1, ^lootdrop_duration);
@@ -364,7 +364,7 @@ if ($random < 77) {
         obj_add(npc_coord, silverlight_key_3, 1, ^lootdrop_duration);
     } else if ($random < 47) {
         obj_add(npc_coord, ground_bat_bones, 1, ^lootdrop_duration);
-    } else if ($random < 48) {
+    } else if ($random < 48 & ( %itwatchtower ! ^itwatchtower_complete & %itwatchtower ! ^itwatchtower_complete_read_scroll )) {
         obj_add(npc_coord, fingernails, 1, ^lootdrop_duration);
     } else if ($random < 49) {
         obj_add(npc_coord, jangerberries, 1, ^lootdrop_duration);
@@ -463,7 +463,21 @@ if ($random < 77) {
     } else if ($random < 100) {
         obj_add(npc_coord, cert_paramayaticket, 1, ^lootdrop_duration);
     } else if ($random < 101) {
-        obj_add(npc_coord, burnt_uw_oomlie, 1, ^lootdrop_duration);
+        def_obj $god_cape_obtained = calc(  inv_total(worn, saradomin_cape) + inv_total(inv, saradomin_cape) + inv_total(bank, saradomin_cape) + 
+                                            inv_total(worn, guthix_cape) + inv_total(inv, guthix_cape) + inv_total(bank, guthix_cape) + 
+                                            inv_total(worn, zamorak_cape) + inv_total(inv, zamorak_cape) + inv_total(bank, zamorak_cape) 
+                                            ) > 0
+        if ($god_cape_obtained = true) {
+            $random = random(3);  
+            if ( $random < 1 )
+                obj_add(npc_coord, saradomin_cape, 1, 600);
+            } else if ($random < 2) {
+                obj_add(npc_coord, guthix_cape, 1, 600);
+            } else if ($random < 3) {
+                obj_add(npc_coord, zamorak_cape, 1, 600);
+        } else {
+            ~edible_roll;
+        }
     } else if ($random < 102) {
         obj_add(npc_coord, cert_shiloshipticket, 1, ^lootdrop_duration);
     } else if ($random < 103) {
@@ -550,15 +564,15 @@ if ($random < 77) {
         obj_add(npc_coord, shaman_robe, 1, ^lootdrop_duration);
     } else if ($random < 145) {
         obj_add(npc_coord, nightshade, 1, ^lootdrop_duration);
-    } else if ($random < 146) {
+    } else if ($random < 146 & %waterfall_quest ! ^waterfall_complete) {
         obj_add(npc_coord, golrie_key_waterfall_quest, 1, ^lootdrop_duration);
-    } else if ($random < 147) {
+    } else if ($random < 147 & %waterfall_quest ! ^waterfall_complete) {
         obj_add(npc_coord, glarials_pebble_waterfall_quest, 1, ^lootdrop_duration);
     } else if ($random < 151) {
         obj_add(npc_coord, liquid_honey, 1, ^lootdrop_duration);
     } else if ($random < 152) {
         obj_add(npc_coord, sulphuric_broline, 1, ^lootdrop_duration);
-    } else if ($random < 153) {
+    } else if ($random < 153 & %biohazard ! ^biohazard_complete) {
         obj_add(npc_coord, plaguesample, 1, ^lootdrop_duration);
     } else if ($random < 154) {
         obj_add(npc_coord, touch_paper, 1, ^lootdrop_duration);
@@ -603,7 +617,7 @@ if ($random < 77) {
     } else if ($random < 174) {
         obj_add(npc_coord, old_tooth, 1, ^lootdrop_duration);
     } else if ($random < 175) {
-        obj_add(npc_coord, digexpertscroll, 1, ^lootdrop_duration);
+        obj_add(npc_coord, digExpertscroll, 1, ^lootdrop_duration);
     } else if ($random < 176) {
         obj_add(npc_coord, digsitearmour1, 1, ^lootdrop_duration);
     } else if ($random < 177) {
@@ -631,7 +645,7 @@ if ($random < 77) {
     } else if ($random < 188) {
         obj_add(npc_coord, khali_brew, 1, ^lootdrop_duration);
     } else if ($random < 189) {
-        obj_add(npc_coord, bigoysterpearls, 1, ^lootdrop_duration);
+        obj_add(npc_coord, cert_bigoysterpearls, 1, ^lootdrop_duration);
     } else if ($random < 190) {
         obj_add(npc_coord, ethenea, 1, ^lootdrop_duration);
     } else if ($random < 191) {
@@ -648,11 +662,11 @@ if ($random < 77) {
         obj_add(npc_coord, recommendedletter, 1, ^lootdrop_duration);    
     } else if ($random < 197) {
         obj_add(npc_coord, nuggets, 1, ^lootdrop_duration);
-    } else if ($random < 198) {
+    } else if ($random < 198 & %upass ! ^upass_complete) {
         obj_add(npc_coord, ibansdove, 1, ^lootdrop_duration);
-    } else if ($random < 199) {
+    } else if ($random < 199 & ( %itwatchtower ! ^itwatchtower_complete & %itwatchtower ! ^itwatchtower_complete_read_scroll )) {
         obj_add(npc_coord, watch_eye_patch, 1, ^lootdrop_duration);
-    } else if ($random < 200) {
+    } else if ($random < 200 & ( %itwatchtower ! ^itwatchtower_complete & %itwatchtower ! ^itwatchtower_complete_read_scroll )) {
         obj_add(npc_coord, guamjangervial, 1, ^lootdrop_duration); 
     } else if ($random < 201) {
         obj_add(npc_coord, thpunishrock, 1, ^lootdrop_duration); 
@@ -672,23 +686,23 @@ if ($random < 77) {
         obj_add(npc_coord, agilityarena_ticket, calc(2 + random(3)), ^lootdrop_duration); 
     } else if ($random < 218) {
         obj_add(npc_coord, mithril_seed, calc(2 + random(3)), ^lootdrop_duration); 
-    } else if ($random < 219) {
+    } else if ($random < 219 & ( %itwatchtower ! ^itwatchtower_complete & %itwatchtower ! ^itwatchtower_complete_read_scroll )) {
         obj_add(npc_coord, ogre_potion, 1, ^lootdrop_duration); 
-    } else if ($random < 221) {
+    } else if ($random < 221 & ( %itwatchtower ! ^itwatchtower_complete & %itwatchtower ! ^itwatchtower_complete_read_scroll )) {
         obj_add(npc_coord, perfect_gold_bar, 1, ^lootdrop_duration); 
-    } else if ($random < 222) {
+    } else if ($random < 222 & %upass ! ^upass_complete) {
         obj_add(npc_coord, othainian_amulet, 1, ^lootdrop_duration); 
-    } else if ($random < 223) {
+    } else if ($random < 223 & %upass ! ^upass_complete) {
         obj_add(npc_coord, doomion_amulet, 1, ^lootdrop_duration); 
-    } else if ($random < 224) {
+    } else if ($random < 224 & %upass ! ^upass_complete) {
         obj_add(npc_coord, holthion_amulet, 1, ^lootdrop_duration); 
-    } else if ($random < 225) {
+    } else if ($random < 225 & %upass ! ^upass_complete) {
         obj_add(npc_coord, ibansshadow, 1, ^lootdrop_duration); 
     } else if ($random < 226) {
         obj_add(npc_coord, slave_shirt, 1, ^lootdrop_duration); 
-    } else if ($random < 227) {
+    } else if ($random < 227 & ( %itwatchtower ! ^itwatchtower_complete & %itwatchtower ! ^itwatchtower_complete_read_scroll )) {
         obj_add(npc_coord, watchtowerrobe, 1, ^lootdrop_duration); 
-    } else if ($random < 228) {
+    } else if ($random < 228 & ( %itwatchtower ! ^itwatchtower_complete & %itwatchtower ! ^itwatchtower_complete_read_scroll )) {
         obj_add(npc_coord, magic_ogre_potion, 1, ^lootdrop_duration); 
     } else if ($random < 229) {
         obj_add(npc_coord, thcaptplans, 1, ^lootdrop_duration); 
@@ -700,6 +714,8 @@ if ($random < 77) {
         obj_add(npc_coord, thkebabinstructs, 1, ^lootdrop_duration); 
     } else if ($random < 233) {
         obj_add(npc_coord, thshantaydisc, 1, ^lootdrop_duration); 
+    } else {
+        obj_add(npc_coord, macro_genilamp, 1, 600); 
     }
 } else if ($random < 79) {
     $random = random(40);
@@ -925,18 +941,14 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
 
     if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 1 ){
         $random = random(3);
-
     } else if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 2 ){
         $random = random(7);
         $prestige = 18;
-
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
             ~superrare_getitem;
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
-            mes("To enter prestige mode you must have only one additional expert dragon archer chompy hat for every 18 display teas."); 
         }
-
     } else if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 3 ){
         $random = random(10);
         $prestige = 36;
@@ -946,85 +958,68 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
             ~superrare_getitem;
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
-            mes("To enter prestige mode you must have only one additional expert dragon archer chompy hat for every 18 display teas."); 
         }
-
     } else if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 4 ){
         $random = random(12);
         $prestige = 54;
-
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
             ~superrare_getitem;
             ~superrare_getitem;
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
-            mes("To enter prestige mode you must have only one additional expert dragon archer chompy hat for every 18 display teas."); 
         }
-
     } else if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 5 ){
         $random = random(15);
         $prestige = 72;
-
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
             ~superrare_getitem;
             ~superrare_getitem;
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
-            mes("To enter prestige mode you must have only one additional expert dragon archer chompy hat for every 18 display teas."); 
         }
-
     } else if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 6 ){
         $random = random(20);
         $prestige = 90;
-
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
             ~superrare_getitem;
             ~superrare_getitem;
             ~superrare_getitem;
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
-            mes("To enter prestige mode you must have only one additional expert dragon archer chompy hat for every 18 display teas."); 
         }
     } else if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 7 ){
         $random = random(23);
         $prestige = 108;
-
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
             ~superrare_getitem;
             ~superrare_getitem;
             ~superrare_getitem;
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
-            mes("To enter prestige mode you must have only one additional expert dragon archer chompy hat for every 18 display teas."); 
         }
     } else if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 8 ){
         $random = random(27);
         $prestige = 126;
-
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
             ~superrare_getitem;
             ~superrare_getitem;
             ~superrare_getitem;
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
-            mes("To enter prestige mode you must have only one additional expert dragon archer chompy hat for every 18 display teas."); 
         }
     } else if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 9 ){
         $random = random(31);
         $prestige = 144;
-
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
             ~superrare_getitem;
             ~superrare_getitem;
             ~superrare_getitem;
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
-            mes("To enter prestige mode you must have only one additional expert dragon archer chompy hat for every 18 display teas."); 
         }
     } else if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 10 ){
         $random = random(40);
         $prestige = 162;
-
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
             ~superrare_getitem;
             ~superrare_getitem;
@@ -1032,200 +1027,327 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
             ~superrare_getitem;
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
-            mes("To enter prestige mode you must have only one additional expert dragon archer chompy hat for every 18 display teas."); 
         }
     } else if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 11 ){
         $random = random(50);
         $prestige = 180;
-
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
             ~superrare_getitem;
             ~superrare_getitem;
             ~superrare_getitem;
             ~superrare_getitem;
-            
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
-            mes("To enter prestige mode you must have only one additional expert dragon archer chompy hat for every 18 display teas."); 
         }
         return(~superrare_getitem);
     }
-
     if ($random < 1) {
         mes("You get a chompy hat!");
-
-            if (($obj1 = cbhat17 | inv_total(inv, cbhat17) > 0 | inv_total(bank, cbhat17) > 0) & (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(16 + $prestige))) {
-                if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(17 + $prestige))){
+            if ( $obj1 = cbhat17 | calc( inv_total(inv, cbhat17) + inv_total(bank, cbhat17) ) > 0 ) {
+                if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(16 + $prestige)) ){
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(17 + $prestige))){
+                        ~give_display_tea;
+                    } else{
+                        mes("You already have enough tea.");
+                        obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
+                    }
+                    obj_add(npc_coord, cbhat18, 1, 600);
+                    if($prestige = 0 ){
+                        session_log(^log_adventure, "Defeated a <npc_name> and received a second Chompy Bird Hat!");
+                    } else if($prestige = 18 ){
+                        session_log(^log_adventure, "Defeated a <npc_name> and received a second Chompy Bird Hat!");
+                    } else if($prestige = 36 ){
+                        session_log(^log_adventure, "Defeated a <npc_name> and received a third Chompy Bird Hat!");
+                    } else if($prestige = 54 ){
+                        session_log(^log_adventure, "Defeated a <npc_name> and received a fourth Chompy Bird Hat!");
+                    } else if($prestige = 72 ){
+                        session_log(^log_adventure, "Defeated a <npc_name> and received a fifth Chompy Bird Hat!");
+                    } else if($prestige = 90 ){
+                        session_log(^log_adventure, "Defeated a <npc_name> and received a sixth Chompy Bird Hat!");
+                    }
+                } else{
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(16 + $prestige))){
+                        mes("You have a sneaking suspicion that you would've received an Expert chompy hat.");
+                        ~give_display_tea;
+                    } else{
+                        mes("Oh no, you don't have enough tea! Drop any blue Expert chompy hats you own.");
+                    }
+                }
+            } else if ( $obj1 = cbhat16 | calc( inv_total(inv, cbhat16) + inv_total(bank, cbhat16) ) > 0 ) {                  
+                if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(15 + $prestige)) ){
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(16 + $prestige))){
+                        ~give_display_tea;
+                    } else{
+                        mes("You already have enough tea.");
+                        obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
+                    }
+                    obj_add(npc_coord, cbhat17, 1, 600);
+                } else{
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(15 + $prestige))){
+                        mes("You have a sneaking suspicion you would have received another chompy hat.");
+                        ~give_display_tea;
+                    } else{
+                        mes("Oh no, you don't have enough tea! Drop any black Archer chompy hats you own.");
+                    }
+                }
+            } else if ( $obj1 = cbhat15 | calc( inv_total(inv, cbhat15) + inv_total(bank, cbhat15) ) > 0 ) {                  
+                if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(14 + $prestige)) ){
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(15 + $prestige))){
+                        ~give_display_tea;
+                    } else{
+                        mes("You already have enough tea.");
+                        obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
+                    }
+                    obj_add(npc_coord, cbhat16, 1, 600);
+                } else{
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(14 + $prestige))){
+                        mes("You have a sneaking suspicion you would have received another chompy hat.");
+                        ~give_display_tea;
+                    } else{
+                        mes("Oh no, you don't have enough tea! Drop any red Archer chompy hats you own.");
+                    }
+                }
+            } else if ( $obj1 = cbhat14 | calc( inv_total(inv, cbhat14) + inv_total(cbhat14) ) > 0 ) {                  
+                if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(13 + $prestige)) ){
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(14 + $prestige))){
+                        ~give_display_tea;
+                    } else{
+                        mes("You already have enough tea.");
+                        obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
+                    }
+                    obj_add(npc_coord, cbhat15, 1, 600);
+                } else{
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(13 + $prestige))){
+                        mes("You have a sneaking suspicion you would have received another chompy hat.");
+                        ~give_display_tea;
+                    } else{
+                        mes("Oh no, you don't have enough tea! Drop any green Expert chompy hats you own.");
+                    }
+                }
+            } else if ( $obj1 = cbhat13 | calc( inv_total(inv, cbhat13) + inv_total(cbhat13) ) > 0 ) {                  
+                if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(12 + $prestige)) ){
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(13 + $prestige))){
+                        ~give_display_tea;
+                    } else{
+                        mes("You already have enough tea.");
+                        obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
+                    }
+                    obj_add(npc_coord, cbhat14, 1, 600);
+                } else{
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(12 + $prestige))){
+                        mes("You have a sneaking suspicion you would have received another chompy hat.");
+                        ~give_display_tea;
+                    } else{
+                        mes("Oh no, you don't have enough tea! Drop any white Expert chompy hats you own.");
+                    }
+                }
+            } else if ( $obj1 = cbhat12 | calc( inv_total(inv, cbhat12) + inv_total(cbhat12) ) > 0 ) {                  
+                if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(11 + $prestige)) ){
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(12 + $prestige))){
+                        ~give_display_tea;
+                    } else{
+                        mes("You already have enough tea.");
+                        obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
+                    }
+                    obj_add(npc_coord, cbhat13, 1, 600);
+                } else{
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(11 + $prestige))){
+                        mes("You have a sneaking suspicion you would have received another chompy hat.");
+                        ~give_display_tea;
+                    } else{
+                        mes("Oh no, you don't have enough tea! Drop any yellow Bowmaster chompy hats you own.");
+                    }
+                }
+            } else if ( $obj1 = cbhat11 | calc( inv_total(inv, cbhat11) + inv_total(cbhat11) ) > 0 ) {                  
+                if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(10 + $prestige)) ){
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(11 + $prestige))){
+                        ~give_display_tea;
+                    } else{
+                        mes("You already have enough tea.");
+                        obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
+                    }
+                    obj_add(npc_coord, cbhat12, 1, 600);
+                } else{
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(10 + $prestige))){
+                        mes("You have a sneaking suspicion you would have received another chompy hat.");
+                        ~give_display_tea;
+                    } else{
+                        mes("Oh no, you don't have enough tea! Drop any blue Bowmaster chompy hats you own.");
+                    }
+                }
+            } else if ( $obj1 = cbhat10 | calc( inv_total(inv, cbhat10) + inv_total(cbhat10) ) > 0 ) {                  
+                if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(9 + $prestige)) ){
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(10 + $prestige))){
+                        ~give_display_tea;
+                    } else{
+                        mes("You already have enough tea.");
+                        obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
+                    }
+                    obj_add(npc_coord, cbhat11, 1, 600);
+                } else{
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(9 + $prestige))){
+                        mes("You have a sneaking suspicion you would have received another chompy hat.");
+                        ~give_display_tea;
+                    } else{
+                        mes("Oh no, you don't have enough tea! Drop any black Forester chompy hats you own.");
+                    }
+                }
+            } else if ( $obj1 = cbhat9 | calc( inv_total(inv, cbhat9) + inv_total(cbhat9) ) > 0 ) {                  
+                if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(8 + $prestige)) ){
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(9 + $prestige))){
+                        ~give_display_tea;
+                    } else{
+                        mes("You already have enough tea.");
+                        obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
+                    }
+                    obj_add(npc_coord, cbhat10, 1, 600);
+                } else{
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(8 + $prestige))){
+                        mes("You have a sneaking suspicion you would have received another chompy hat.");
+                        ~give_display_tea;
+                    } else{
+                        mes("Oh no, you don't have enough tea! Drop any red Forester chompy hats you own.");
+                    }
+                }
+            } else if ( $obj1 = cbhat8 | calc( inv_total(inv, cbhat8) + inv_total(cbhat8) ) > 0 ) {                  
+                if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(7 + $prestige)) ){
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(8 + $prestige))){
+                        ~give_display_tea;
+                    } else{
+                        mes("You already have enough tea.");
+                        obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
+                    }
+                    obj_add(npc_coord, cbhat9, 1, 600);
+                } else{
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(7 + $prestige))){
+                        mes("You have a sneaking suspicion you would have received another chompy hat.");
+                        ~give_display_tea;
+                    } else{
+                        mes("Oh no, you don't have enough tea! Drop any green Woodsman chompy hats you own.");
+                    }
+                }
+            } else if ( $obj1 = cbhat7 | calc( inv_total(inv, cbhat7) + inv_total(cbhat7) ) > 0 ) {                  
+                if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(6 + $prestige)) ){
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(7 + $prestige))){
+                        ~give_display_tea;
+                    } else{
+                        mes("You already have enough tea.");
+                        obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
+                    }
+                    obj_add(npc_coord, cbhat8, 1, 600);
+                } else{
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(6 + $prestige))){
+                        mes("You have a sneaking suspicion you would have received another chompy hat.");
+                        ~give_display_tea;
+                    } else{
+                        mes("Oh no, you don't have enough tea! Drop any white Woodsman chompy hats you own.");
+                    }
+                }
+            } else if ( $obj1 = cbhat6 | calc( inv_total(inv, cbhat6) + inv_total(cbhat6) ) > 0 ) {                  
+                if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(5 + $prestige)) ){
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(6 + $prestige))){
+                        ~give_display_tea;
+                    } else{
+                        mes("You already have enough tea.");
+                        obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
+                    }
+                    obj_add(npc_coord, cbhat7, 1, 600);
+                } else{
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(5 + $prestige))){
+                        mes("You have a sneaking suspicion you would have received another chompy hat.");
+                        ~give_display_tea;
+                    } else{
+                        mes("Oh no, you don't have enough tea! Drop any yellow Marksman chompy hats you own.");
+                    }
+                }
+            } else if ( $obj1 = cbhat5 | calc( inv_total(inv, cbhat5) + inv_total(cbhat5) ) > 0 ) {                  
+                if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(4 + $prestige)) ){
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(5 + $prestige))){
+                        ~give_display_tea;
+                    } else{
+                        mes("You already have enough tea.");
+                        obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
+                    }
+                    obj_add(npc_coord, cbhat6, 1, 600);
+                } else{
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(4 + $prestige))){
+                        mes("You have a sneaking suspicion you would have received another chompy hat.");
+                        ~give_display_tea;
+                    } else{
+                        mes("Oh no, you don't have enough tea! Drop any blue Marksman chompy hats you own.");
+                    }
+                }
+            } else if ( $obj1 = cbhat4 | calc( inv_total(inv, cbhat4) + inv_total(cbhat4) ) > 0 ) {                  
+                if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(3 + $prestige)) ){
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(4 + $prestige))){
+                        ~give_display_tea;
+                    } else{
+                        mes("You already have enough tea.");
+                        obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
+                    }
+                    obj_add(npc_coord, cbhat5, 1, 600);
+                } else{
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(3 + $prestige))){
+                        mes("You have a sneaking suspicion you would have received another chompy hat.");
+                        ~give_display_tea;
+                    } else{
+                        mes("Oh no, you don't have enough tea! Drop any black Yeoman chompy hats you own.");
+                    }
+                }
+            } else if ( $obj1 = cbhat3 | calc( inv_total(inv, cbhat3) + inv_total(cbhat3) ) > 0 ) {                  
+                if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(2 + $prestige)) ){
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(3 + $prestige))){
+                        ~give_display_tea;
+                    } else{
+                        mes("You already have enough tea.");
+                        obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
+                    }
+                    obj_add(npc_coord, cbhat4, 1, 600);
+                } else{
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(2 + $prestige))){
+                        mes("You have a sneaking suspicion you would have received another chompy hat.");
+                        ~give_display_tea;
+                    } else{
+                        mes("Oh no, you don't have enough tea! Drop any red Yeoman chompy hats you own.");
+                    }
+                }
+            } else if ( $obj1 = cbhat2 | calc( inv_total(inv, cbhat2) + inv_total(cbhat2) ) > 0 ) {                  
+                if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(1 + $prestige)) ){
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(2 + $prestige))){
+                        ~give_display_tea;
+                    } else{
+                        mes("You already have enough tea.");
+                        obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
+                    }
+                    obj_add(npc_coord, cbhat3, 1, 600);
+                } else{
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(1 + $prestige))){
+                        mes("You have a sneaking suspicion you would have received another chompy hat.");
+                        ~give_display_tea;
+                    } else{
+                        mes("Oh no, you don't have enough tea! Drop any green Bowman chompy hats you own.");
+                    }
+                }
+            } else if ( $obj1 = cbhat1 | calc( inv_total(inv, cbhat1) + inv_total(cbhat1) ) > 0 ) {                  
+                if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > $prestige) ){
+                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(1 + $prestige))){
+                        ~give_display_tea;
+                    } else{
+                        mes("You already have enough tea.");
+                        obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
+                    }
+                    obj_add(npc_coord, cbhat2, 1, 600);
+                } else if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = $prestige)){
+                    mes("You have a sneaking suspicion you would have received another chompy hat.");
                     ~give_display_tea;
-                }else{
-                    mes("You already have enough tea.");
-                    obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
                 }
-                obj_add(npc_coord, cbhat18, 1, 600);
-                if($prestige = 0 ){
-                    session_log(^log_adventure, "Defeated a <npc_name> and received a second Chompy Bird Hat!");
-                } else if($prestige = 18 ){
-                    session_log(^log_adventure, "Defeated a <npc_name> and received a second Chompy Bird Hat!");
-                } else if($prestige = 36 ){
-                    session_log(^log_adventure, "Defeated a <npc_name> and received a third Chompy Bird Hat!");
-                } else if($prestige = 54 ){
-                    session_log(^log_adventure, "Defeated a <npc_name> and received a fourth Chompy Bird Hat!");
-                } else if($prestige = 72 ){
-                    session_log(^log_adventure, "Defeated a <npc_name> and received a fifth Chompy Bird Hat!");
-                } else if($prestige = 90 ){
-                    session_log(^log_adventure, "Defeated a <npc_name> and received a sixth Chompy Bird Hat!");
-                }
-
-            } else if (($obj1 = cbhat16 | inv_total(inv, cbhat16) > 0 | inv_total(bank, cbhat16) > 0) & (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >  calc(15 + $prestige))) {
-                if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(16 + $prestige))){
-                    ~give_display_tea;
-                }else{
-                    mes("You already have enough tea.");
-                    obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
-                }
-                obj_add(npc_coord, cbhat17, 1, 600);
-
-            } else if (($obj1 = cbhat15 | inv_total(inv, cbhat15) > 0 | inv_total(bank, cbhat15) > 0) & (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >  calc(14 + $prestige))) {
-                if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(15 + $prestige))){
-                    ~give_display_tea;
-                }else{
-                    mes("You already have enough tea.");
-                    obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
-                }
-                obj_add(npc_coord, cbhat16, 1, 600);
-
-            } else if (($obj1 = cbhat14 | inv_total(inv, cbhat14) > 0 | inv_total(bank, cbhat14) > 0) & (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >  calc(13 + $prestige))) {
-                if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(14 + $prestige))){
-                    ~give_display_tea;
-                }else{
-                    mes("You already have enough tea.");
-                    obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
-                }
-                obj_add(npc_coord, cbhat15, 1, 600);
-
-            } else if (($obj1 = cbhat13 | inv_total(inv, cbhat13) > 0 | inv_total(bank, cbhat13) > 0) & (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >  calc(12 + $prestige))) {
-                if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(13 + $prestige))){
-                    ~give_display_tea;
-                }else{
-                    mes("You already have enough tea.");
-                    obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
-                }
-                obj_add(npc_coord, cbhat14, 1, 600);
-
-            } else if (($obj1 = cbhat12 | inv_total(inv, cbhat12) > 0 | inv_total(bank, cbhat12) > 0) & (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >  calc(11 + $prestige))) {
-                if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(12 + $prestige))){
-                    ~give_display_tea;
-                }else{
-                    mes("You already have enough tea.");
-                    obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
-                }
-                obj_add(npc_coord, cbhat13, 1, 600);
-
-            } else if (($obj1 = cbhat11 | inv_total(inv, cbhat11) > 0 | inv_total(bank, cbhat11) > 0) & (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >  calc(10 + $prestige))) {
-                if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(11 + $prestige))){
-                    ~give_display_tea;
-                }else{
-                    mes("You already have enough tea.");
-                    obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
-                }
-                obj_add(npc_coord, cbhat12, 1, 600);
-
-            } else if (($obj1 = cbhat10 | inv_total(inv, cbhat10) > 0 | inv_total(bank, cbhat10) > 0) & (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >  calc(9 + $prestige))) {
-                if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(10 + $prestige))){
-                    ~give_display_tea;
-                }else{
-                    mes("You already have enough tea.");
-                    obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
-                }
-                obj_add(npc_coord, cbhat11, 1, 600);
-
-            } else if (($obj1 = cbhat9 | inv_total(inv, cbhat9) > 0 | inv_total(bank, cbhat9) > 0) & (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >  calc(8 + $prestige))) {
-                if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(9 + $prestige))){
-                    ~give_display_tea;
-                }else{
-                    mes("You already have enough tea.");
-                    obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
-                }
-                obj_add(npc_coord, cbhat10, 1, 600);
-  
-            } else if (($obj1 = cbhat8 | inv_total(inv, cbhat8) > 0 | inv_total(bank, cbhat8) > 0) & (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >  calc(7 + $prestige))) {
-                if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(8 + $prestige))){
-                    ~give_display_tea;
-                }else{
-                    mes("You already have enough tea.");
-                    obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
-                }
-                obj_add(npc_coord, cbhat9, 1, 600);
-
-            } else if (($obj1 = cbhat7 | inv_total(inv, cbhat7) > 0 | inv_total(bank, cbhat7) > 0) & (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >  calc(6 + $prestige))) {
-                if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(7 + $prestige))){
-                    ~give_display_tea;
-                }else{
-                    mes("You already have enough tea.");
-                    obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
-                }
-                obj_add(npc_coord, cbhat8, 1, 600);
-
-            } else if (($obj1 = cbhat6 | inv_total(inv, cbhat6) > 0 | inv_total(bank, cbhat6) > 0) & (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >  calc(5 + $prestige))) {
-                if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(6 + $prestige))){
-                    ~give_display_tea;
-                }else{
-                    mes("You already have enough tea.");
-                    obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
-                }
-                obj_add(npc_coord, cbhat7, 1, 600);
-
-            } else if (($obj1 = cbhat5 | inv_total(inv, cbhat5) > 0 | inv_total(bank, cbhat5) > 0) & (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >  calc(4 + $prestige))) {
-                if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(5 + $prestige))){
-                    ~give_display_tea;
-                }else{
-                    mes("You already have enough tea.");
-                    obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
-                }
-                obj_add(npc_coord, cbhat6, 1, 600);
-   
-            } else if (($obj1 = cbhat4 | inv_total(inv, cbhat4) > 0 | inv_total(bank, cbhat4) > 0) & (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >  calc(3 + $prestige))) {
-                if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(4 + $prestige))){
-                    ~give_display_tea;
-                }else{
-                    mes("You already have enough tea.");
-                    obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
-                }
-                obj_add(npc_coord, cbhat5, 1, 600);
- 
-            } else if (($obj1 = cbhat3 | inv_total(inv, cbhat3) > 0 | inv_total(bank, cbhat3) > 0) & (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >  calc(2 + $prestige))) {
-                if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(3 + $prestige))){
-                    ~give_display_tea;
-                }else{
-                    mes("You already have enough tea.");
-                    obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
-                }
-                obj_add(npc_coord, cbhat4, 1, 600);
-  
-            } else if (($obj1 = cbhat2 | inv_total(inv, cbhat2) > 0 | inv_total(bank, cbhat2) > 0) & (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >  calc(1 + $prestige))) {
-                if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(2 + $prestige))){
-                    ~give_display_tea;
-                }else{
-                    mes("You already have enough tea.");
-                    obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
-                }
-                obj_add(npc_coord, cbhat3, 1, 600);
-     
-            } else if (($obj1 = cbhat1 | inv_total(inv, cbhat1) > 0 | inv_total(bank, cbhat1) > 0) & (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >  calc(0 + $prestige))) {
-                if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(1 + $prestige))){
-                    ~give_display_tea;
-                }else{
-                    mes("You already have enough tea.");
-                    obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
-                }
-                obj_add(npc_coord, cbhat2, 1, 600);
-
-            }  else if ((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = $prestige)) {
+            } else if ((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = $prestige)) {
                 ~give_display_tea;
                 mes("Congratulations. You have reached the next chompy hat prestige.");
-                mes("Keep your expert dragon archer chompy hat, and the most recent one that drops.");
-                mes("A display tea will appear in your inventory if you have at least one free slot.");
-                mes("Keep the display teas in your bank or inventory to progress. Best of luck!");
+                mes("Pick up new chompy hat drops and discard lower tiers.");
+                mes("(Do NOT drop your yellow Expert chompy hats!)")
+                mes("Keep at least one inventory slot free for display teas.");
+                mes("These must be kept in your bank or inventory to progress. Best of luck!");
                 obj_add(npc_coord, cbhat1, 1, 600);
             } else{
                 obj_add(npc_coord, cbhat1, 1, 600);
@@ -1233,7 +1355,8 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
     }else{
          ~edible_roll;
     }
-} else if ((calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 0) & (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = 0)) { // no hat and no tea
+} else if ((calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 0) & 
+           (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = 0)) { // no hat and no tea
         if (($obj1 = cbhat17 | inv_total(inv, cbhat17) > 0 | inv_total(bank, cbhat17) > 0)) {
             obj_add(npc_coord, cbhat18, 1, 600);
             session_log(^log_adventure, "Defeated a <npc_name> and received a Chompy Bird Hat!");
@@ -1270,9 +1393,10 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
         } else if (($obj1 = cbhat1 | inv_total(inv, cbhat1) > 0 | inv_total(bank, cbhat1) > 0)) {
             obj_add(npc_coord, cbhat2, 1, 600);
         } else {
-             obj_add(npc_coord, cbhat1, 1, 600);
+            obj_add(npc_coord, cbhat1, 1, 600);
         } 
-} else{
+} else {
+    obj_add(npc_coord, cbhat1, 1, 600);
     mes("Discard your display teas to start collecting chompy hats."); 
 }
 
@@ -1350,7 +1474,7 @@ $random = random(20);
 
 // rare roll potential only if player has at least one untradeable holiday item (bank, inv, or worn)
 if ( inv_total(worn, bunnyears) > 0 | inv_total(inv, bunnyears) > 0 | inv_total(bank, bunnyears) > 0 | inv_total(worn, scythe) > 0 | inv_total(inv, scythe) > 0 | inv_total(bank, scythe) > 0 | inv_total(inv, grandtree_warship) > 0 | inv_total(bank, grandtree_warship) > 0 ) {
-    $random = random(26); // 26 for easter event
+    $random = random(28); // 30 for easter event
 } 
 
 if (inv_total(worn, bunnyears) = 0 & inv_total(inv, bunnyears) = 0 & inv_total(bank, bunnyears) = 0) {
@@ -1359,15 +1483,22 @@ if (inv_total(worn, bunnyears) = 0 & inv_total(inv, bunnyears) = 0 & inv_total(b
     obj_add(npc_coord, scythe, 1, 600);
 }
 
-if ($random < 2) {
+if ($random < 2) { // god capes
+    def_obj $god_cape_obtained = calc(  inv_total(worn, saradomin_cape) + inv_total(inv, saradomin_cape) + inv_total(bank, saradomin_cape) + 
+                                        inv_total(worn, guthix_cape) + inv_total(inv, guthix_cape) + inv_total(bank, guthix_cape) + 
+                                        inv_total(worn, zamorak_cape) + inv_total(inv, zamorak_cape) + inv_total(bank, zamorak_cape) 
+                                        ) > 0
+    if ($god_cape_obtained = true) {
         $random = random(3);  
-        if ($random < 1) { // strange talismans
-            obj_add(npc_coord, soul_talisman, 1, ^lootdrop_duration);
+        if ( $random < 1 )
+            obj_add(npc_coord, saradomin_cape, 1, 600);
         } else if ($random < 2) {
-            obj_add(npc_coord, blood_talisman, 1, ^lootdrop_duration);
+            obj_add(npc_coord, guthix_cape, 1, 600);
         } else if ($random < 3) {
-            obj_add(npc_coord, death_talisman, 1, ^lootdrop_duration);
-        } 
+            obj_add(npc_coord, zamorak_cape, 1, 600);
+    } else {
+        ~edible_roll;
+    }
 } else if ($random < 4) {
     obj_add(npc_coord, gauntlets_of_cooking, 1, ^lootdrop_duration);
 } else if ($random < 6) {

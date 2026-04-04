@@ -1107,7 +1107,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
                         mes("Oh no, you don't have enough tea! Drop any red Archer chompy hats you own.");
                     }
                 }
-            } else if ( $obj1 = cbhat14 | calc( inv_total(inv, cbhat14) + inv_total(cbhat14) ) > 0 ) {                  
+            } else if ( $obj1 = cbhat14 | calc( inv_total(inv, cbhat14) + inv_total(bank, cbhat14) ) > 0 ) {                  
                 if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(13 + $prestige)) ){
                     if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(14 + $prestige))){
                         ~give_display_tea;
@@ -1124,7 +1124,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
                         mes("Oh no, you don't have enough tea! Drop any green Expert chompy hats you own.");
                     }
                 }
-            } else if ( $obj1 = cbhat13 | calc( inv_total(inv, cbhat13) + inv_total(cbhat13) ) > 0 ) {                  
+            } else if ( $obj1 = cbhat13 | calc( inv_total(inv, cbhat13) + inv_total(bank, cbhat13) ) > 0 ) {                  
                 if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(12 + $prestige)) ){
                     if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(13 + $prestige))){
                         ~give_display_tea;
@@ -1141,7 +1141,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
                         mes("Oh no, you don't have enough tea! Drop any white Expert chompy hats you own.");
                     }
                 }
-            } else if ( $obj1 = cbhat12 | calc( inv_total(inv, cbhat12) + inv_total(cbhat12) ) > 0 ) {                  
+            } else if ( $obj1 = cbhat12 | calc( inv_total(inv, cbhat12) + inv_total(bank, cbhat12) ) > 0 ) {                  
                 if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(11 + $prestige)) ){
                     if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(12 + $prestige))){
                         ~give_display_tea;
@@ -1158,7 +1158,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
                         mes("Oh no, you don't have enough tea! Drop any yellow Bowmaster chompy hats you own.");
                     }
                 }
-            } else if ( $obj1 = cbhat11 | calc( inv_total(inv, cbhat11) + inv_total(cbhat11) ) > 0 ) {                  
+            } else if ( $obj1 = cbhat11 | calc( inv_total(inv, cbhat11) + inv_total(bank, cbhat11) ) > 0 ) {                  
                 if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(10 + $prestige)) ){
                     if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(11 + $prestige))){
                         ~give_display_tea;
@@ -1175,7 +1175,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
                         mes("Oh no, you don't have enough tea! Drop any blue Bowmaster chompy hats you own.");
                     }
                 }
-            } else if ( $obj1 = cbhat10 | calc( inv_total(inv, cbhat10) + inv_total(cbhat10) ) > 0 ) {                  
+            } else if ( $obj1 = cbhat10 | calc( inv_total(inv, cbhat10) + inv_total(bank, cbhat10) ) > 0 ) {                  
                 if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(9 + $prestige)) ){
                     if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(10 + $prestige))){
                         ~give_display_tea;
@@ -1192,7 +1192,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
                         mes("Oh no, you don't have enough tea! Drop any black Forester chompy hats you own.");
                     }
                 }
-            } else if ( $obj1 = cbhat9 | calc( inv_total(inv, cbhat9) + inv_total(cbhat9) ) > 0 ) {                  
+            } else if ( $obj1 = cbhat9 | calc( inv_total(inv, cbhat9) + inv_total(bank, cbhat9) ) > 0 ) {                  
                 if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(8 + $prestige)) ){
                     if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(9 + $prestige))){
                         ~give_display_tea;
@@ -1209,7 +1209,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
                         mes("Oh no, you don't have enough tea! Drop any red Forester chompy hats you own.");
                     }
                 }
-            } else if ( $obj1 = cbhat8 | calc( inv_total(inv, cbhat8) + inv_total(cbhat8) ) > 0 ) {                  
+            } else if ( $obj1 = cbhat8 | calc( inv_total(inv, cbhat8) + inv_total(bank, cbhat8) ) > 0 ) {                  
                 if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(7 + $prestige)) ){
                     if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(8 + $prestige))){
                         ~give_display_tea;
@@ -1226,7 +1226,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
                         mes("Oh no, you don't have enough tea! Drop any green Woodsman chompy hats you own.");
                     }
                 }
-            } else if ( $obj1 = cbhat7 | calc( inv_total(inv, cbhat7) + inv_total(cbhat7) ) > 0 ) {                  
+            } else if ( $obj1 = cbhat7 | calc( inv_total(inv, cbhat7) + inv_total(bank, cbhat7) ) > 0 ) {                  
                 if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(6 + $prestige)) ){
                     if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(7 + $prestige))){
                         ~give_display_tea;
@@ -1243,7 +1243,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
                         mes("Oh no, you don't have enough tea! Drop any white Woodsman chompy hats you own.");
                     }
                 }
-            } else if ( $obj1 = cbhat6 | calc( inv_total(inv, cbhat6) + inv_total(cbhat6) ) > 0 ) {                  
+            } else if ( $obj1 = cbhat6 | calc( inv_total(inv, cbhat6) + inv_total(bank, cbhat6) ) > 0 ) {                  
                 if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(5 + $prestige)) ){
                     if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(6 + $prestige))){
                         ~give_display_tea;
@@ -1260,7 +1260,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
                         mes("Oh no, you don't have enough tea! Drop any yellow Marksman chompy hats you own.");
                     }
                 }
-            } else if ( $obj1 = cbhat5 | calc( inv_total(inv, cbhat5) + inv_total(cbhat5) ) > 0 ) {                  
+            } else if ( $obj1 = cbhat5 | calc( inv_total(inv, cbhat5) + inv_total(bank, cbhat5) ) > 0 ) {                  
                 if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(4 + $prestige)) ){
                     if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(5 + $prestige))){
                         ~give_display_tea;
@@ -1277,7 +1277,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
                         mes("Oh no, you don't have enough tea! Drop any blue Marksman chompy hats you own.");
                     }
                 }
-            } else if ( $obj1 = cbhat4 | calc( inv_total(inv, cbhat4) + inv_total(cbhat4) ) > 0 ) {                  
+            } else if ( $obj1 = cbhat4 | calc( inv_total(inv, cbhat4) + inv_total(bank, cbhat4) ) > 0 ) {                  
                 if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(3 + $prestige)) ){
                     if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(4 + $prestige))){
                         ~give_display_tea;
@@ -1294,7 +1294,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
                         mes("Oh no, you don't have enough tea! Drop any black Yeoman chompy hats you own.");
                     }
                 }
-            } else if ( $obj1 = cbhat3 | calc( inv_total(inv, cbhat3) + inv_total(cbhat3) ) > 0 ) {                  
+            } else if ( $obj1 = cbhat3 | calc( inv_total(inv, cbhat3) + inv_total(bank, cbhat3) ) > 0 ) {                  
                 if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(2 + $prestige)) ){
                     if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(3 + $prestige))){
                         ~give_display_tea;
@@ -1311,7 +1311,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
                         mes("Oh no, you don't have enough tea! Drop any red Yeoman chompy hats you own.");
                     }
                 }
-            } else if ( $obj1 = cbhat2 | calc( inv_total(inv, cbhat2) + inv_total(cbhat2) ) > 0 ) {                  
+            } else if ( $obj1 = cbhat2 | calc( inv_total(inv, cbhat2) + inv_total(bank, cbhat2) ) > 0 ) {                  
                 if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(1 + $prestige)) ){
                     if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(2 + $prestige))){
                         ~give_display_tea;
@@ -1328,7 +1328,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
                         mes("Oh no, you don't have enough tea! Drop any green Bowman chompy hats you own.");
                     }
                 }
-            } else if ( $obj1 = cbhat1 | calc( inv_total(inv, cbhat1) + inv_total(cbhat1) ) > 0 ) {                  
+            } else if ( $obj1 = cbhat1 | calc( inv_total(inv, cbhat1) + inv_total(bank, cbhat1) ) > 0 ) {                  
                 if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > $prestige) ){
                     if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(1 + $prestige))){
                         ~give_display_tea;

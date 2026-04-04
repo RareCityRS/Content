@@ -466,7 +466,7 @@ if ($random < 77) {
         def_obj $god_cape_obtained = calc(  inv_total(worn, saradomin_cape) + inv_total(inv, saradomin_cape) + inv_total(bank, saradomin_cape) + 
                                             inv_total(worn, guthix_cape) + inv_total(inv, guthix_cape) + inv_total(bank, guthix_cape) + 
                                             inv_total(worn, zamorak_cape) + inv_total(inv, zamorak_cape) + inv_total(bank, zamorak_cape) 
-                                            ) > 0
+                                            ) > 0;
         if ($god_cape_obtained = true) {
             $random = random(3);  
             if ( $random < 1 )
@@ -1487,7 +1487,7 @@ if ($random < 2) { // god capes
     def_obj $god_cape_obtained = calc(  inv_total(worn, saradomin_cape) + inv_total(inv, saradomin_cape) + inv_total(bank, saradomin_cape) + 
                                         inv_total(worn, guthix_cape) + inv_total(inv, guthix_cape) + inv_total(bank, guthix_cape) + 
                                         inv_total(worn, zamorak_cape) + inv_total(inv, zamorak_cape) + inv_total(bank, zamorak_cape) 
-                                        ) > 0
+                                        ) > 0;
     if ($god_cape_obtained = true) {
         $random = random(3);  
         if ( $random < 1 )

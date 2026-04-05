@@ -465,3 +465,7 @@ members=yes
 wearpos=hat
 tradeable=no
 weight=1lb
+param=magicattack,6
+param=rangeattack,6
+param=strengthbonus,3
+param=prayerbonus,3

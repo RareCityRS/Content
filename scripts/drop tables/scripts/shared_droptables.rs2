@@ -1073,35 +1073,28 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
     }
     if ($random < 1) {
         mes("You get a chompy hat!");
-            if ( $obj1 = cbhat17 | calc( inv_total(inv, cbhat17) + inv_total(bank, cbhat17) ) > 0 ) {
-                if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(16 + $prestige)) ){
-                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(17 + $prestige))){
-                        ~give_display_tea;
-                    } else{
-                        mes("You already have enough tea.");
-                        obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
-                    }
-                    obj_add(npc_coord, cbhat18, 1, 600);
-                    if($prestige = 0 ){
-                        session_log(^log_adventure, "Defeated a <npc_name> and received a second Chompy Bird Hat!");
-                    } else if($prestige = 18 ){
-                        session_log(^log_adventure, "Defeated a <npc_name> and received a second Chompy Bird Hat!");
-                    } else if($prestige = 36 ){
-                        session_log(^log_adventure, "Defeated a <npc_name> and received a third Chompy Bird Hat!");
-                    } else if($prestige = 54 ){
-                        session_log(^log_adventure, "Defeated a <npc_name> and received a fourth Chompy Bird Hat!");
-                    } else if($prestige = 72 ){
-                        session_log(^log_adventure, "Defeated a <npc_name> and received a fifth Chompy Bird Hat!");
-                    } else if($prestige = 90 ){
-                        session_log(^log_adventure, "Defeated a <npc_name> and received a sixth Chompy Bird Hat!");
-                    }
+            if (    ( $obj1 = cbhat17 | calc( inv_total(inv, cbhat17) + inv_total(bank, cbhat17) ) > 0 ) & 
+                    ( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= calc(17 + $prestige) )    
+                    ) {
+                if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(17 + $prestige))){
+                    ~give_display_tea;
                 } else{
-                    if((calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc(16 + $prestige))){
-                        mes("You have a sneaking suspicion that you would've received an Expert chompy hat.");
-                        ~give_display_tea;
-                    } else{
-                        mes("Oh no, you don't have enough tea! Drop any blue Expert chompy hats you own.");
-                    }
+                    mes("You already have enough tea.");
+                    obj_add(npc_coord, display_tea, 1, ^lootdrop_duration);
+                }
+                obj_add(npc_coord, cbhat18, 1, 600);
+                if($prestige = 0 ){
+                    session_log(^log_adventure, "Defeated a <npc_name> and received a second Chompy Bird Hat!");
+                } else if($prestige = 18 ){
+                    session_log(^log_adventure, "Defeated a <npc_name> and received a second Chompy Bird Hat!");
+                } else if($prestige = 36 ){
+                    session_log(^log_adventure, "Defeated a <npc_name> and received a third Chompy Bird Hat!");
+                } else if($prestige = 54 ){
+                    session_log(^log_adventure, "Defeated a <npc_name> and received a fourth Chompy Bird Hat!");
+                } else if($prestige = 72 ){
+                    session_log(^log_adventure, "Defeated a <npc_name> and received a fifth Chompy Bird Hat!");
+                } else if($prestige = 90 ){
+                    session_log(^log_adventure, "Defeated a <npc_name> and received a sixth Chompy Bird Hat!");
                 }
             } else if ( $obj1 = cbhat16 | calc( inv_total(inv, cbhat16) + inv_total(bank, cbhat16) ) > 0 ) {                  
                 if ( (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) > calc(15 + $prestige)) ){

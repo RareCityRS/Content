@@ -946,6 +946,9 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
         $prestige = 18;
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
             ~superrare_getitem;
+        } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = ($prestige - 1) ){
+            mes("Guthix shows mercy and gives you another display tea.");
+            ~give_display_tea;   
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
@@ -956,6 +959,9 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
             ~superrare_getitem;
             ~superrare_getitem;
+        } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = ($prestige - 1) ){
+            mes("Guthix shows mercy and gives you another display tea.");
+            ~give_display_tea;   
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
@@ -965,6 +971,9 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
             ~superrare_getitem;
             ~superrare_getitem;
+        } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = ($prestige - 1) ){
+            mes("Guthix shows mercy and gives you another display tea.");
+            ~give_display_tea;   
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
@@ -974,6 +983,9 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
             ~superrare_getitem;
             ~superrare_getitem;
+        } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = ($prestige - 1) ){
+            mes("Guthix shows mercy and gives you another display tea.");
+            ~give_display_tea;   
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
@@ -984,6 +996,9 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
             ~superrare_getitem;
             ~superrare_getitem;
             ~superrare_getitem;
+        } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = ($prestige - 1) ){
+            mes("Guthix shows mercy and gives you another display tea.");
+            ~give_display_tea;   
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
@@ -994,6 +1009,9 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
             ~superrare_getitem;
             ~superrare_getitem;
             ~superrare_getitem;
+        } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = ($prestige - 1) ){
+            mes("Guthix shows mercy and gives you another display tea.");
+            ~give_display_tea;   
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
@@ -1004,6 +1022,9 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
             ~superrare_getitem;
             ~superrare_getitem;
             ~superrare_getitem;
+        } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = ($prestige - 1) ){
+            mes("Guthix shows mercy and gives you another display tea.");
+            ~give_display_tea;   
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
@@ -1014,6 +1035,9 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
             ~superrare_getitem;
             ~superrare_getitem;
             ~superrare_getitem;
+        } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = ($prestige - 1) ){
+            mes("Guthix shows mercy and gives you another display tea.");
+            ~give_display_tea;   
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
@@ -1025,6 +1049,9 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
             ~superrare_getitem;
             ~superrare_getitem;
             ~superrare_getitem;
+        } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = ($prestige - 1) ){
+            mes("Guthix shows mercy and gives you another display tea.");
+            ~give_display_tea;   
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
@@ -1036,6 +1063,9 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
             ~superrare_getitem;
             ~superrare_getitem;
             ~superrare_getitem;
+        } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = ($prestige - 1) ){
+            mes("Guthix shows mercy and gives you another display tea.");
+            ~give_display_tea;   
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }

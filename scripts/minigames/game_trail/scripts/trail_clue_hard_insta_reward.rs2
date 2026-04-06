@@ -1,6 +1,5 @@
 [proc,trail_clue_hard_insta_reward]
 def_int $random = random(25);
-obj_add(npc_coord, black_platebody_trim, 1, ^lootdrop_duration);
 switch_int ($random) {
     case 0 : obj_add(npc_coord, robinhoodhat, 1, ^lootdrop_duration); 
     case 1 : obj_add(npc_coord, rune_full_helm_trim, 1, ^lootdrop_duration); 

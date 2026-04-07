@@ -1341,7 +1341,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
 }
 
 
-[proc,give_display_tea]
+[proc,give_display_tea]()(namedobj, int)
 def_int $space = inv_freespace(inv);
 if($space = 0) {
     mes("You gently set the cup of display tea down... on the ground.");
@@ -1550,3 +1550,17 @@ if($random < 1){
 }
 inv_add(inv, $drop, 1);
 session_log(^log_adventure, "Defeated a <npc_name> and received a <oc_name($drop)>!");
+
+
+[proc,edible_roll_proc]()(namedobj, int)
+def_namedobj $drop = null;
+def_int $random = 0;
+$random = random(2);
+
+if($random < 1){
+    $drop = easter_egg;
+} else {
+    $drop = pumpkin;
+}
+inv_add(inv, $drop, 1);
+session_log(^log_adventure, "Received a <oc_name($drop)>!");

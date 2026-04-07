@@ -24,69 +24,42 @@ if ($random < 32) {
     }
 } else if ($random < 74) {
     $random = random(2);
-    if ($random < 1) {
-        return (cert_unidentified_tarromin, 12);
-    }else {
-        return (cert_limpwurt_root, calc(8 + random(4)) );
-    }
+    if ($random < 1) { return (cert_unidentified_tarromin, 12); }
+    else { return (cert_limpwurt_root, calc(8 + random(4)) ); }
 } else if ($random < 88) {
     $random = random(2);
-    if ($random < 1) {
-        return (cert_unidentified_harralander, 11);
-    }else {
-        return (cert_red_spiders_eggs, calc(7 + random(4)) );
-    }
+    if ($random < 1) {return (cert_unidentified_harralander, 11);}
+    else {return (cert_red_spiders_eggs, calc(7 + random(4)) );}
 } else if ($random < 99) {
     $random = random(2);
-    if ($random < 1) {
-        return (cert_unidentified_ranarr, 10);
-    }else {
-        return (cert_snape_grass, calc(6 + random(4)) );
-    }
+    if ($random < 1) {return (cert_unidentified_ranarr, 10);}
+    else { return (cert_snape_grass, calc(6 + random(4)) );}
 } else if ($random < 107) {
     $random = random(2);
-    if ($random < 1) {
-        return (cert_unidentified_irit, 9);
-    }else {
-        return (cert_eye_of_newt, calc(5 + random(4)) );
-    }
+    if ($random < 1) {return (cert_unidentified_irit, 9);}
+    else {return (cert_eye_of_newt, calc(5 + random(4)) );}
 } else if ($random < 113) {
     $random = random(2);
-    if ($random < 1) {
-        return (cert_unidentified_avantoe, 8);
-    }else {
-        return (cert_mortmyremushroom, calc(5 + random(3)) );
-    } 
+    if ($random < 1) {return (cert_unidentified_avantoe, 8);}
+    else {return (cert_mortmyremushroom, calc(5 + random(3)) );} 
 } else if ($random < 118) {
     $random = random(2);
-    if ($random < 1) {
-        return (cert_unidentified_kwuarm, 7);
-    }else {
-        return (cert_limpwurt_root, calc(4 + random(3)) );
-    }
+    if ($random < 1) {return (cert_unidentified_kwuarm, 7);}
+    else {return (cert_limpwurt_root, calc(4 + random(3)) );}
 } else if ($random < 122) {
     $random = random(2);
-    if ($random < 1) {
-        return (cert_unidentified_cadantine, 6);
-    }else {
-        return (cert_white_berries, calc(4 + random(2)) );
-    }
+    if ($random < 1) {return (cert_unidentified_cadantine, 6);}
+    else {return (cert_white_berries, calc(4 + random(2)) );}
 } else if ($random < 125) {
     $random = random(2);
-    if ($random < 1) {
-        return (cert_unidentified_lantadyme, 5);
-    }else {
-        return (cert_blue_dragon_scale, calc(3 + random(2)) );
-    }
+    if ($random < 1) {return (cert_unidentified_lantadyme, 5);}
+    else {return (cert_blue_dragon_scale, calc(3 + random(2)) );}
 } else if ($random < 128) {
     return (cert_unidentified_toadflax, 4);
 } else if ($random < 130) {
     $random = random(2);
-    if ($random < 1) {
-        return (cert_unidentified_dwarf_weed, 3);
-    }else {
-        return (cert_wine_of_zamorak, calc(2 + random(2)) );
-    }
+    if ($random < 1) {return (cert_unidentified_dwarf_weed, 3);}
+    else {return (cert_wine_of_zamorak, calc(2 + random(2)) );}
 } else if ($random < 131) {
     return (cert_unidentified_snapdragon, 2);
 } else if ($random < 132) {
@@ -258,13 +231,15 @@ if ($random < 3) {
 // Giga rare table
 [proc,gigararetable]()(namedobj, int)
 def_int $random = 0;
-$random = random(10);
+$random = random(200);
 
-if ($random < 1) { 
+if ($random < 2) { 
     obj_add(npc_coord, poisoned_dagger_p, 1, 600);
     session_log(^log_adventure, "Defeated a <npc_name> and received a Poisoned dagger(p)!");
+} if ($random < 10) { 
+    ~rare_roll;
 }else { 
-    obj_add(npc_coord, dart_poisoned_p, 100, ^lootdrop_duration);
+    obj_add(npc_coord, dart_poisoned_p, 1000, ^lootdrop_duration);
 }
 
 
@@ -476,7 +451,7 @@ if ($random < 77) {
             } else if ($random < 3) {
                 obj_add(npc_coord, zamorak_cape, 1, 600);
         } else {
-            ~edible_roll;
+            ~roll_food;
         }
     } else if ($random < 102) {
         obj_add(npc_coord, cert_shiloshipticket, 1, ^lootdrop_duration);
@@ -855,7 +830,7 @@ if ($random < 6) {
         obj_add(npc_coord, growncatobject_browngrey, 1, ^lootdrop_duration);
     }
 } else if ($random < 50) {
-    ~edible_roll;
+    ~roll_food;
 } else if ($random < 54) {
     ~randomherb;
 } else if ($random < 67) {
@@ -869,63 +844,6 @@ if ($random < 6) {
 }
 
 
-// Name unconfirmed
-[proc,edible_roll]()(namedobj, int)
-def_int $random = 0;
-$random = random(60);
-
-if ($random < 5) {
-    obj_add(npc_coord, macro_triffidfruit, 1, ^lootdrop_duration); 
-} else if ($random < 25) {
-    obj_add(npc_coord, poison_chalice, 1, ^lootdrop_duration); 
-} else {
-    $random = random(10);
-
-    if ($random < 1) {
-        obj_add(npc_coord, ugthanki_kebab_bad, 1, ^lootdrop_duration); 
-    } else if ($random < 5) {
-        obj_add(npc_coord, ugthanki_kebab, 1, ^lootdrop_duration);
-    } else {
-        obj_add(npc_coord, kebab, 1, ^lootdrop_duration);
-    }
-}
-
-[proc,lucky_draw]()(namedobj, int)
-def_int $random = 0;
-$random = random(50);
-def_obj $obj1 = inv_getobj(worn, ^wearpos_hat);
-
-if ($random < 4) {
-    obj_add(npc_coord, cert_poison_chalice, 1, ^lootdrop_duration);
-} else if ($random < 10) {
-    $random = random(10);
-    if ($random < 4) {
-        obj_add(npc_coord, cert_ugthanki_kebab, 1, ^lootdrop_duration); 
-    } else {
-        obj_add(npc_coord, cert_kebab, 1, ^lootdrop_duration);
-    }
-} else if ($random < 15) {
-    obj_add(npc_coord, feather, calc(40 + random(90)), ^lootdrop_duration);
-} else if ($random < 19) {
-    obj_add(npc_coord, cert_flax, 10, ^lootdrop_duration);
-} else if ($random < 29) {
-    obj_add(npc_coord, cert_bigoysterpearls, 1, ^lootdrop_duration);
-} else if ($random < 39) {
-    $random = random(10);
-    if ($random < 9) {
-        obj_add(npc_coord, cert_casket, calc(4 + random(4)), ^lootdrop_duration);
-    } else {
-        obj_add(npc_coord, cert_casket, calc(10 + random(9)), ^lootdrop_duration);
-    } 
-} else if ($random < 41) {
-    ~chompy_hat_get;
-} else if (($obj1 = cbhat18 | inv_total(inv, cbhat18) > 0 | inv_total(bank, cbhat18) > 0)){
-    ~superrare_getitem;
-} else{
-    ~chompy_hat_get;
-}
-
-
 // Check under your seats everyone! You (might) get a chompy bird hunting hat! You (might) get a chompy bird hunting hat! You get (might) a chompy bird hunting hat!
 [proc,chompy_hat_get]()(namedobj, int)
 def_obj $obj1 = inv_getobj(worn, ^wearpos_hat);
@@ -933,7 +851,6 @@ def_int $cbhat18_worn = 0;
 if ($obj1 = cbhat18){
     $cbhat18_worn = 1;
 }
-
 
 if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 0 ){
     def_int $random = 0;
@@ -947,8 +864,8 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
             ~superrare_getitem;
         } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc($prestige - 1) ){
-            mes("Guthix shows mercy and gives you another display tea.");
-            ~give_display_tea;   
+            mes("Guthix restores balance by giving you another display tea.");
+            return(~give_display_tea);   
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
@@ -960,8 +877,8 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
             ~superrare_getitem;
             ~superrare_getitem;
         } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc($prestige - 1) ){
-            mes("Guthix shows mercy and gives you another display tea.");
-            ~give_display_tea;   
+            mes("Guthix restores balance by giving you another display tea.");
+            return(~give_display_tea);   
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
@@ -972,8 +889,8 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
             ~superrare_getitem;
             ~superrare_getitem;
         } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc($prestige - 1) ){
-            mes("Guthix shows mercy and gives you another display tea.");
-            ~give_display_tea;   
+            mes("Guthix restores balance by giving you another display tea.");
+            return(~give_display_tea);   
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
@@ -984,8 +901,8 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
             ~superrare_getitem;
             ~superrare_getitem;
         } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc($prestige - 1) ){
-            mes("Guthix shows mercy and gives you another display tea.");
-            ~give_display_tea;   
+            mes("Guthix restores balance by giving you another display tea.");
+            return(~give_display_tea);   
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
@@ -997,8 +914,8 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
             ~superrare_getitem;
             ~superrare_getitem;
         } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc($prestige - 1) ){
-            mes("Guthix shows mercy and gives you another display tea.");
-            ~give_display_tea;   
+            mes("Guthix restores balance by giving you another display tea.");
+            return(~give_display_tea);    
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
@@ -1010,8 +927,8 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
             ~superrare_getitem;
             ~superrare_getitem;
         } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc($prestige - 1) ){
-            mes("Guthix shows mercy and gives you another display tea.");
-            ~give_display_tea;   
+            mes("Guthix restores balance by giving you another display tea.");
+            return(~give_display_tea);   
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
@@ -1023,8 +940,8 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
             ~superrare_getitem;
             ~superrare_getitem;
         } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc($prestige - 1) ){
-            mes("Guthix shows mercy and gives you another display tea.");
-            ~give_display_tea;   
+            mes("Guthix restores balance by giving you another display tea.");
+            return(~give_display_tea);   
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
@@ -1036,8 +953,8 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
             ~superrare_getitem;
             ~superrare_getitem;
         } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc($prestige - 1) ){
-            mes("Guthix shows mercy and gives you another display tea.");
-            ~give_display_tea;   
+            mes("Guthix restores balance by giving you another display tea.");
+            return(~give_display_tea);   
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
@@ -1050,8 +967,8 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
             ~superrare_getitem;
             ~superrare_getitem;
         } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc($prestige - 1) ){
-            mes("Guthix shows mercy and gives you another display tea.");
-            ~give_display_tea;   
+            mes("Guthix restores balance by giving you another display tea.");
+            return(~give_display_tea);   
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
@@ -1064,8 +981,8 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
             ~superrare_getitem;
             ~superrare_getitem;
         } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc($prestige - 1) ){
-            mes("Guthix shows mercy and gives you another display tea.");
-            ~give_display_tea;   
+            mes("Guthix restores balance by giving you another display tea.");
+            return(~give_display_tea);   
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
@@ -1376,7 +1293,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
                 obj_add(npc_coord, cbhat1, 1, 600);
             }
     }else{
-         ~edible_roll;
+         ~roll_food;
     }
 } else if ((calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 0) & 
            (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = 0)) { // no hat and no tea
@@ -1490,15 +1407,64 @@ $random = random(13);
     }
 
 
+// Name unconfirmed
+[proc,roll_food]()(namedobj, int)
+def_int $random = 0;
+$random = random(60);
+
+if ($random < 5) {
+    obj_add(npc_coord, macro_triffidfruit, 1, ^lootdrop_duration); 
+} else if ($random < 25) {
+    obj_add(npc_coord, poison_chalice, 1, ^lootdrop_duration); 
+} else if ($random < 28) {
+    obj_add(npc_coord, ugthanki_kebab_bad, 1, ^lootdrop_duration); 
+} else if ($random < 42) {
+    obj_add(npc_coord, ugthanki_kebab, 1, ^lootdrop_duration);
+} else {
+    obj_add(npc_coord, kebab, 1, ^lootdrop_duration);
+}
+
+
+[proc,lucky_draw]()(namedobj, int)
+def_int $random = 0;
+$random = random(50);
+def_obj $obj1 = inv_getobj(worn, ^wearpos_hat);
+
+if ($random < 4) {
+    obj_add(npc_coord, cert_poison_chalice, 1, ^lootdrop_duration);
+} else if ($random < 10) {
+    $random = random(10);
+    if ($random < 4) {
+        obj_add(npc_coord, cert_ugthanki_kebab, 1, ^lootdrop_duration); 
+    } else {
+        obj_add(npc_coord, cert_kebab, 1, ^lootdrop_duration);
+    }
+} else if ($random < 15) {
+    obj_add(npc_coord, feather, calc(40 + random(90)), ^lootdrop_duration);
+} else if ($random < 19) {
+    obj_add(npc_coord, cert_flax, 10, ^lootdrop_duration);
+} else if ($random < 29) {
+    obj_add(npc_coord, cert_bigoysterpearls, 1, ^lootdrop_duration);
+} else if ($random < 39) {
+    $random = random(10);
+    if ($random < 9) {
+        obj_add(npc_coord, cert_casket, calc(4 + random(4)), ^lootdrop_duration);
+    } else {
+        obj_add(npc_coord, cert_casket, calc(10 + random(9)), ^lootdrop_duration);
+    } 
+} else if ($random < 41) {
+    ~chompy_hat_get;
+} else if (($obj1 = cbhat18 | inv_total(inv, cbhat18) > 0 | inv_total(bank, cbhat18) > 0)){
+    ~superrare_getitem;
+} else{
+    ~chompy_hat_get;
+}
+
+
 // Unobtainable item table
 [proc,unobtain_roll]()(namedobj, int)
 def_int $random = 0;
 $random = random(20);
-
-// rare roll potential only if player has at least one untradeable holiday item (bank, inv, or worn)
-if ( inv_total(worn, bunnyears) > 0 | inv_total(inv, bunnyears) > 0 | inv_total(bank, bunnyears) > 0 | inv_total(worn, scythe) > 0 | inv_total(inv, scythe) > 0 | inv_total(bank, scythe) > 0 | inv_total(inv, grandtree_warship) > 0 | inv_total(bank, grandtree_warship) > 0 ) {
-    $random = random(28); // 30 for easter event
-} 
 
 if (inv_total(worn, bunnyears) = 0 & inv_total(inv, bunnyears) = 0 & inv_total(bank, bunnyears) = 0) {
     obj_add(npc_coord, bunnyears, 1, 600);
@@ -1520,7 +1486,7 @@ if ($random < 2) { // god capes
         } else if ($random < 3) {
             obj_add(npc_coord, zamorak_cape, 1, 600);
     } else {
-        ~edible_roll;
+        ~roll_food;
     }
 } else if ($random < 4) {
     obj_add(npc_coord, gauntlets_of_cooking, 1, ^lootdrop_duration);
@@ -1540,37 +1506,47 @@ if ($random < 2) { // god capes
     obj_add(npc_coord, felinemedal, 1, ^lootdrop_duration); 
 } else if ($random < 20) { 
     obj_add(npc_coord, ice_gloves, 1, ^lootdrop_duration); 
-} else{
-    ~rare_roll;
 }
 
 
-// Holiday item drops (easter event)
 [proc,rare_roll]()(namedobj, int)
 def_namedobj $drop = null;
-//def_int $random = 0;
-//$random = random(380);
-//if ($random < 20) {
-//    $drop = discofreturning;
-//} else if ($random < 30) {
-//    $drop = half_full_wine_jug;
-//} else if ($random < 60) {
-//    $drop = santa_hat;
-//} else if ($random < 80) {
-//    $drop = halloweenmask_green;
-//} else if ($random < 90) {
-//    $drop = halloweenmask_blue;
-//} else if ($random < 100) {
-//    $drop = halloweenmask_red;
-//} else if ($random < 120) {
-//    $drop = christmas_cracker;
-//} else if ($random < 180) {
-//    $drop = pumpkin;
-//} else if ($random < 380) {
-//    $drop = easter_egg;
-//}
+def_int $random = 0;
+$random = random(25);
 
-$drop = easter_egg;
+if($random < 1){
+    $random = random(100);
+    if ($random < 20) {
+        $drop = discofreturning;
+    } else if ($random < 30) {
+        $drop = half_full_wine_jug;
+    } else if ($random < 50) {
+        $drop = santa_hat;
+    } else if ($random < 70) {
+        $drop = halloweenmask_green;
+    } else if ($random < 80) {
+        $drop = halloweenmask_blue;
+    } else if ($random < 90) {
+        $drop = halloweenmask_red;
+    } else if ($random < 100) {
+        $drop = christmas_cracker;
+    }
+} else{
+    ~edible_roll;
+}
+inv_add(inv, $drop, 1);
+session_log(^log_adventure, "Defeated a <npc_name> and received a <oc_name($drop)>!");
 
-obj_add(npc_coord, $drop, 1, 600);
+
+[proc,edible_roll]()(namedobj, int)
+def_namedobj $drop = null;
+def_int $random = 0;
+$random = random(2);
+
+if($random < 1){
+    $drop = easter_egg;
+} else {
+    $drop = pumpkin;
+}
+inv_add(inv, $drop, 1);
 session_log(^log_adventure, "Defeated a <npc_name> and received a <oc_name($drop)>!");

@@ -238,7 +238,7 @@ if ($random < 6000) { // 10/128 coins for each
     inv_add(inv, cert_uncut_ruby, 1);
     ~objbox(uncut_ruby, "You open the casket. Inside you find an uncut ruby.", 250, 0, divide(^objbox_height, 2));
 } else if ($random < 11802) { 
-    ~edible_roll;
+    ~edible_roll_proc;
 }  else if ($random < 12200) { // 8/128 cosmic talisman
     inv_add(inv, cert_cosmic_talisman, 1);
     ~objbox(cosmic_talisman, "You open the casket. Inside you find a cosmic talisman.", 250, 0, 0);

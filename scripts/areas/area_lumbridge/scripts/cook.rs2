@@ -42,7 +42,5 @@ inv_add(inv, trail_clue_medium_anagram002_challenge, 1);
 
 [opnpcu,cook]
 switch_obj(last_useitem) {
-    case easter_egg : ~grand_egg_exchange;
-    case cert_easter_egg : mes("Noted eggs can't be opened!"); 
-    case default : mes("The cook doesn't want that."); // osrs
+    case default : mes("The cook doesn't want that right now.");
 }

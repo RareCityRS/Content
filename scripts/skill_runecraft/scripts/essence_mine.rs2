@@ -31,165 +31,165 @@ def_int $level = stat(runecraft);
 mes("You feel a powerful force take hold of you...");
 spotanim_pl(curse_impact, 124, 30);
 sound_synth(teleport_all, 0, 0);
-p_delay(3);
+p_delay(2);
 if ($level > 53) {
-    if (random($chance) < 10) {
+    if ($chance < 10) {
         p_telejump(map_findsquare(0_44_75_25_30,0,0,0)); // air altar
         return;
-    } else if (random($chance) < 20) {
+    } else if ($chance < 20) {
         p_telejump(map_findsquare(0_43_75_41_29,0,0,0)); // mind altar
         return;
-    } else if (random($chance) < 25) {
+    } else if ($chance < 25) {
         p_telejump(map_findsquare(0_42_75_37_32,0,0,0)); // water altar
         return;
-    } else if (random($chance) < 30) {
+    } else if ($chance < 30) {
         p_telejump(map_findsquare(0_41_75_33_30,0,0,0)); // earth altar
         return;
-    } else if (random($chance) < 35) {
+    } else if ($chance < 35) {
         p_telejump(map_findsquare(0_40_75_16_48,0,0,0)); // fire altar
         return;
-    } else if (random($chance) < 40) {
+    } else if ($chance < 40) {
         p_telejump(map_findsquare(0_39_75_27_38,0,2,0)); // body altar
         return;
-    } else if (random($chance) < 50) {
+    } else if ($chance < 50) {
         p_telejump(map_findsquare(0_33_75_10_33,0,0,0)); // cosmic altar
         return;
-    } else if (random($chance) < 60) {
+    } else if ($chance < 60) {
         p_telejump(map_findsquare(3_35_75_35_47,0,0,0)); // chaos altar
         return;
-    } else if (random($chance) < 80) {
+    } else if ($chance < 80) {
         p_telejump(map_findsquare(0_37_75_32_35,0,0,0)); // nature altar
         return;
     }
     p_telejump(map_findsquare(0_38_75_32_19,0,0,0)); // law altar
 } else if ($level > 43) {
-    if (random($chance) < 10) {
+    if ($chance < 10) {
         p_telejump(map_findsquare(0_44_75_25_30,0,0,0)); // air altar
         return;
-    } else if (random($chance) < 20) {
+    } else if ($chance < 20) {
         p_telejump(map_findsquare(0_43_75_41_29,0,0,0)); // mind altar
         return;
-    } else if (random($chance) < 30) {
+    } else if ($chance < 30) {
         p_telejump(map_findsquare(0_42_75_37_32,0,0,0)); // water altar
         return;
-    } else if (random($chance) < 40) {
+    } else if ($chance < 40) {
         p_telejump(map_findsquare(0_41_75_33_30,0,0,0)); // earth altar
         return;
-    } else if (random($chance) < 50) {
+    } else if ($chance < 50) {
         p_telejump(map_findsquare(0_40_75_16_48,0,0,0)); // fire altar
         return;
-    } else if (random($chance) < 55) {
+    } else if ($chance < 55) {
         p_telejump(map_findsquare(0_39_75_27_38,0,2,0)); // body altar
         return;
-    } else if (random($chance) < 70) {
+    } else if ($chance < 70) {
         p_telejump(map_findsquare(0_33_75_10_33,0,0,0)); // cosmic altar
         return;
-    } else if (random($chance) < 85) {
+    } else if ($chance < 85) {
         p_telejump(map_findsquare(3_35_75_35_47,0,0,0)); // chaos altar
         return;
     }
     p_telejump(map_findsquare(0_37_75_32_35,0,0,0)); // nature altar
 } else if ($level > 34) {
-    if (random($chance) < 12) {
+    if ($chance < 12) {
         p_telejump(map_findsquare(0_44_75_25_30,0,0,0)); // air altar
         return;
-    } else if (random($chance) < 25) {
+    } else if ($chance < 25) {
         p_telejump(map_findsquare(0_43_75_41_29,0,0,0)); // mind altar
         return;
-    } else if (random($chance) < 35) {
+    } else if ($chance < 35) {
         p_telejump(map_findsquare(0_42_75_37_32,0,0,0)); // water altar
         return;
-    } else if (random($chance) < 45) {
+    } else if ($chance < 45) {
         p_telejump(map_findsquare(0_41_75_33_30,0,0,0)); // earth altar
         return;
-    } else if (random($chance) < 58) {
+    } else if ($chance < 58) {
         p_telejump(map_findsquare(0_40_75_16_48,0,0,0)); // fire altar
         return;
-    } else if (random($chance) < 70) {
+    } else if ($chance < 70) {
         p_telejump(map_findsquare(0_39_75_27_38,0,2,0)); // body altar
         return;
-    } else if (random($chance) < 85) {
+    } else if ($chance < 85) {
         p_telejump(map_findsquare(0_33_75_10_33,0,0,0)); // cosmic altar
         return;
     }
     p_telejump(map_findsquare(3_35_75_35_47,0,0,0)); // chaos altar
 } else if ($level > 26) {
-    if (random($chance) < 14) {
+    if ($chance < 14) {
         p_telejump(map_findsquare(0_44_75_25_30,0,0,0)); // air altar
         return;
-    } else if (random($chance) < 29) {
+    } else if ($chance < 29) {
         p_telejump(map_findsquare(0_43_75_41_29,0,0,0)); // mind altar
         return;
-    } else if (random($chance) < 43) {
+    } else if ($chance < 43) {
         p_telejump(map_findsquare(0_42_75_37_32,0,0,0)); // water altar
         return;
-    } else if (random($chance) < 57) {
+    } else if ($chance < 57) {
         p_telejump(map_findsquare(0_41_75_33_30,0,0,0)); // earth altar
         return;
-    } else if (random($chance) < 73) {
+    } else if ($chance < 73) {
         p_telejump(map_findsquare(0_40_75_16_48,0,0,0)); // fire altar
         return;
-    } else if (random($chance) < 87) {
+    } else if ($chance < 87) {
         p_telejump(map_findsquare(0_39_75_27_38,0,2,0)); // body altar
         return;
     }
     p_telejump(map_findsquare(0_33_75_10_33,0,0,0)); // cosmic altar
 } else if ($level > 19) {
-    if (random($chance) < 17) {
+    if ($chance < 17) {
         p_telejump(map_findsquare(0_44_75_25_30,0,0,0)); // air altar
         return;
-    } else if (random($chance) < 34) {
+    } else if ($chance < 34) {
         p_telejump(map_findsquare(0_43_75_41_29,0,0,0)); // mind altar
         return;
-    } else if (random($chance) < 51) {
+    } else if ($chance < 51) {
         p_telejump(map_findsquare(0_42_75_37_32,0,0,0)); // water altar
         return;
-    } else if (random($chance) < 68) {
+    } else if ($chance < 68) {
         p_telejump(map_findsquare(0_41_75_33_30,0,0,0)); // earth altar
         return;
-    } else if (random($chance) < 85) {
+    } else if ($chance < 85) {
         p_telejump(map_findsquare(0_40_75_16_48,0,0,0)); // fire altar
         return;
     }
     p_telejump(map_findsquare(0_39_75_27_38,0,2,0)); // body altar
 } else if ($level > 13) {
-    if (random($chance) < 20) {
+    if ($chance < 20) {
         p_telejump(map_findsquare(0_44_75_25_30,0,0,0)); // air altar
         return;
-    } else if (random($chance) < 40) {
+    } else if ($chance < 40) {
         p_telejump(map_findsquare(0_43_75_41_29,0,0,0)); // mind altar
         return;
-    } else if (random($chance) < 60) {
+    } else if ($chance < 60) {
         p_telejump(map_findsquare(0_42_75_37_32,0,0,0)); // water altar
         return;
-    } else if (random($chance) < 80) {
+    } else if ($chance < 80) {
         p_telejump(map_findsquare(0_41_75_33_30,0,0,0)); // earth altar
         return;
     }
     p_telejump(map_findsquare(0_40_75_16_48,0,0,0)); // fire altar
 } else if ($level > 8) {
-    if (random($chance) < 25) {
+    if ($chance < 25) {
         p_telejump(map_findsquare(0_44_75_25_30,0,0,0)); // air altar
         return;
-    } else if (random($chance) < 50) {
+    } else if ($chance < 50) {
         p_telejump(map_findsquare(0_43_75_41_29,0,0,0)); // mind altar
         return;
-    } else if (random($chance) < 75) {
+    } else if ($chance < 75) {
         p_telejump(map_findsquare(0_42_75_37_32,0,0,0)); // water altar
         return;
     }
     p_telejump(map_findsquare(0_41_75_33_30,0,0,0)); // earth altar
 } else if ($level > 4) {
-    if (random($chance) < 40) {
+    if ($chance < 40) {
         p_telejump(map_findsquare(0_44_75_25_30,0,0,0)); // air altar
         return;
-    } else if (random($chance) < 80) {
+    } else if ($chance < 80) {
         p_telejump(map_findsquare(0_43_75_41_29,0,0,0)); // mind altar
         return;
     }
     p_telejump(map_findsquare(0_42_75_37_32,0,0,0)); // water altar
 } else if ($level > 1) {
-    if (random($chance) < 50) {
+    if ($chance < 50) {
         p_telejump(map_findsquare(0_44_75_25_30,0,0,0)); // air altar
         return;
     }

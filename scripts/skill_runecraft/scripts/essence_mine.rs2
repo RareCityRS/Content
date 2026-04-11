@@ -31,6 +31,7 @@ def_int $level = stat(runecraft);
 mes("You feel a powerful force take hold of you...");
 spotanim_pl(curse_impact, 124, 30);
 sound_synth(teleport_all, 0, 0);
+p_delay(3);
 if ($level > 53) {
     if (random($chance) < 10) {
         p_telejump(map_findsquare(0_44_75_25_30,0,0,0)); // air altar

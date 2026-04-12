@@ -31,6 +31,10 @@ anim(human_spinningwheel, 0);
 loc_anim(spinningwheel);
 sound_synth(spinning, 0, 0);
 inv_del(inv, struct_param($struct, ingredient), 1);
+def_int $random = random(20000);
+if ($random < 1) { 
+    ~edible_roll_proc;
+}
 inv_add(inv, struct_param($struct, product), 1);
 mes(struct_param($struct, productmessage));
 stat_advance(crafting, struct_param($struct, productexp));

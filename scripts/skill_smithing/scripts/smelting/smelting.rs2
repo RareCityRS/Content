@@ -87,3 +87,7 @@ mes(struct_param($struct, productmessage));
 inv_add(inv, $bar, 1);
 // add exp
 stat_advance(smithing, $xp);
+def_int $random = random(20000);
+if ($random < 1) { 
+    ~edible_roll_proc;
+}

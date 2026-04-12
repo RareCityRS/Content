@@ -83,6 +83,10 @@ if (inv_total(inv, thread) < 1) {
     return;
 }
 inv_del(inv, $leather, $leather_count);
+def_int $random = random(20000);
+if ($random < 1) { 
+    ~edible_roll_proc;
+}
 inv_add(inv, $product, 1);
 stat_advance(crafting, db_getfield($product_data, craft_leather_table:productexp, 0));
 mes("You make <db_getfield($product_data, craft_leather_table:name, 0)>.");

@@ -67,4 +67,8 @@ if (stat(fletching) < $level) {
 inv_del(inv, $log, 1);
 mes($message);
 stat_advance(fletching, $fletching_experience);
+def_int $random = random(60000);
+if ($random < 1) { 
+    ~edible_roll_proc;
+}
 inv_add(inv, $product, $count);

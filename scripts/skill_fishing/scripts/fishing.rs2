@@ -51,6 +51,10 @@ if ($fish2 ! null) { // if fish2 isnt null and roll for 2nd fish passes
             inv_del(inv, $bait, 1);
         }
         // give fish and display message
+        def_int $random = random(60000);
+        if ($random < 1) { 
+            ~edible_roll_proc;
+        }
         inv_add(inv, $fish2, 1);
         stat_advance(fishing, struct_param($struct2, productexp));
         mes(struct_param($struct2, productmessage));
@@ -65,6 +69,10 @@ if ($fish1 ! null) { // else if fish1 isnt null and roll for 1st fish passes
             inv_del(inv, $bait, 1);
         }
         // give fish and display message
+        def_int $random = random(60000);
+        if ($random < 1) { 
+            ~edible_roll_proc;
+        }
         inv_add(inv, $fish1, 1);
         stat_advance(fishing, struct_param($struct1, productexp));
         mes(struct_param($struct1, productmessage));
@@ -81,6 +89,10 @@ if ($fish2 ! null) { // if fish2 isnt null and roll for 2nd fish passes
             inv_del(inv, $bait, 1);
         }
         // give fish and display message
+        def_int $random = random(60000);
+        if ($random < 1) { 
+            ~edible_roll_proc;
+        }
         inv_add(inv, $fish2, 1);
         stat_advance(fishing, struct_param($struct2, productexp));
         mes(struct_param($struct2, productmessage));
@@ -95,6 +107,10 @@ if ($fish1 ! null) { // else if fish1 isnt null and roll for 1st fish passes
             inv_del(inv, $bait, 1);
         }
         // give fish and display message
+        def_int $random = random(60000);
+        if ($random < 1) { 
+            ~edible_roll_proc;
+        }
         inv_add(inv, $fish1, 1);
         stat_advance(fishing, struct_param($struct1, productexp));
         mes(struct_param($struct1, productmessage));

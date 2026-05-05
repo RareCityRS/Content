@@ -1,7 +1,7 @@
 [opnpc1,dragonslayer_ned]
 // just incase the player gets to crandor with this varp value
 // since ned is also on crandor
-if ((%dragonquest = ^quest_dragon_ned_given_map | %dragonquest = ^quest_dragon_sailed_to_crandor | %dragonquest >= ^dragon_complete) & coordy(coord) = 3) {
+if ((%dragonquest = ^quest_dragon_ned_given_map | %dragonquest = ^quest_dragon_sailed_to_crandor) & coordy(coord) = 3) {
     ~chatnpc("<p,quiz>Ah! There you are! Ready to go?");
     def_int $choice = ~p_choice2("Yep lets go!", 1, "No I'm not quite ready yet...", 2);
     if ($choice = 2) {
@@ -19,9 +19,7 @@ if ((%dragonquest = ^quest_dragon_ned_given_map | %dragonquest = ^quest_dragon_s
     midi_jingle("sailing journey");
 
     p_telejump(^crandor_tele_coord);
-    if (%dragonquest = ^quest_dragon_ned_given_map){
-        %dragonquest = ^quest_dragon_sailed_to_crandor;
-    }
+    %dragonquest = ^quest_dragon_sailed_to_crandor;
     %dragon_ned_hired = ^false;
     %dragonquestvar = 0;
     p_delay(11);

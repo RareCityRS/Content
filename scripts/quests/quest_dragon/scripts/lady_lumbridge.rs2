@@ -1,5 +1,5 @@
 [oploc1,dragonshipgangplank_on]
-if (%dragonquest < ^quest_dragon_bought_ship ) {
+if (%dragonquest < ^quest_dragon_bought_ship | %dragonquest >= ^dragon_complete) {
     if (npc_find(coord, klarense, 5, 0) = true) {
         ~chatnpc("<p,neutral>Hey, stay off my ship! That's private property!");
     }
@@ -32,9 +32,9 @@ switch_int (loc_angle) {
 
 [oploc1,dragonshipladdertop]
 p_arrivedelay; //osrs
-if (%dragonquestvar < 3 & %dragonquest < ^dragon_complete ) {
+if (%dragonquestvar < 3) {
     ~climb_ladder(1_47_150_39_40, true);
-} else if (((%dragonquest = ^quest_dragon_ned_given_map | %dragonquest = ^quest_dragon_sailed_to_crandor) & %dragon_ned_hired = ^true) | %dragonquest >= ^dragon_complete ) {
+} else if ((%dragonquest = ^quest_dragon_ned_given_map | %dragonquest = ^quest_dragon_sailed_to_crandor) & %dragon_ned_hired = ^true) {
     ~climb_ladder(3_47_150_39_40, true);
 }else {
     ~climb_ladder(2_47_150_39_40, true);

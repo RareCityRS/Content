@@ -1,7 +1,5 @@
 // death
-[ai_queue3,elvarg] @elvarg_death;
-
-[label,elvarg_death]
+[ai_queue3,elvarg]
 gosub(npc_death);
 // requires kill credit? https://youtu.be/6ZU7EIZcU4o?list=PLn23LiLYLb1aqrojPTi1_Np81LJku2Nd0&t=141
 if (npc_findhero = ^false) {

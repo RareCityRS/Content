@@ -32,7 +32,7 @@ mes("You feel a little better.");
 ~chatplayer("<p,quiz>How do I get further into the monastery?");
 ~chatnpc("<p,neutral>You'll need to talk to Abbot Langley about that. He's|usually to be found walking the halls of the monastery.");
 
-[ai_queue3,monk]
+[ai_queue3,monk] @gnome_drop_table;
 if (npc_stat(hitpoints) ! 0) {
     return;
 }

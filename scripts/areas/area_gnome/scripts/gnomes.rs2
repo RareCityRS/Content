@@ -276,3 +276,26 @@ switch_int ($rand) {
         ~chatnpc("<p,neutral>No, I'm just singing.");
         ~chatnpc("<p,happy>I'm gonna sweep you off your feet.");
 }
+
+
+[ai_queue3,gnome] @gnome_drop_table;
+[ai_queue3,browclothedgnome] @gnome_drop_table;
+[ai_queue3,darkskinned_gnome] @gnome_drop_table;
+[ai_queue3,gnomefemale] @gnome_drop_table;
+[ai_queue3,gnomefemale_dskinned] @gnome_drop_table;
+
+[label,gnome_drop_table]
+gosub(npc_death);
+if (npc_findhero = ^false) {
+    return;
+}
+// Default drop from config.
+obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+
+~roll_tide;
+
+def_int $random = random(2);
+
+if ($random < 1) {
+    ~roll_tide;
+}

@@ -13,8 +13,8 @@
 ~chatnpc("<p,happy>Thank goodness you opened that door!|I've been trapped here since last night!");
 ~chatplayer("<p,happy>No problem!");
 
-[ai_queue3,_death_archer]
-gosub(npc_death);
+[ai_queue3,_death_archer] gnomeknight_drop_table;
+gosub(npc_death);   
 if (npc_findhero = ^false) {
     return;
 }

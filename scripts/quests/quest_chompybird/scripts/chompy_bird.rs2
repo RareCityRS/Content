@@ -184,12 +184,11 @@ p_opnpc(5);
 spotanim_pl(oc_param($ammo, proj_launch), 50, 0);
 return(~npc_projectile(coord, npc_uid, oc_param($ammo, proj_travel), 40, 36, 41, 15, 5, 11, 5));
 
-[ai_queue3,chompy_bird]
+[ai_queue3,chompy_bird] @guard_bandit_drop_table;
 if(npc_findhero = ^true) { // happens before npc_death
     queue(chompybird_kill, 0, 0);
 }
 gosub(npc_death);
-~strong_boi_roll;
 // todo confirm duration
 npc_add(npc_coord, chompybird_dead, 100);
 

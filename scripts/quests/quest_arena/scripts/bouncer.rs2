@@ -1,4 +1,4 @@
-[ai_queue3,arena_bouncer] @guard_bandit_drop_table;
+[ai_queue3,arena_bouncer]
 gosub(npc_death);
 if(npc_findhero = ^true) {
     if_close;

@@ -102,7 +102,7 @@ if (npc_find(movecoord(coord, 8, 0, 0), general_khazard, 15, 0) = false | ~npc_r
 %arenaquest = ^arena_freed_servils;
 ~npc_retaliate(0);
 
-[ai_queue3,general_khazard] @guard_bandit_drop_table;
+[ai_queue3,general_khazard]
 gosub(npc_death);
 if(npc_findhero = ^true) {
     if_close;

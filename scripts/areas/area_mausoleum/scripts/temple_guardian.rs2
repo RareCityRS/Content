@@ -1,17 +1,10 @@
-[ai_queue3,priestperilguarddog] @gnomeknight_drop_table;
+[ai_queue3,priestperilguarddog]
 gosub(npc_death);
 if(npc_findhero = ^true) {
     if(p_finduid(uid) = true) { // get protected access, if not then queue
         @defeat_guard_dog;
     }
     queue(queue_defeat_guard_dog, 0, 0); // reg queue no if_close (OSRS behaviour)
-}
-
-
-
-def_int $random = random(2);
-if ($random < 1) {
-    ~roll_tide;
 }
 
 [queue,queue_defeat_guard_dog] @defeat_guard_dog;

@@ -31,9 +31,8 @@ if (npc_findhero = ^false) {
 
 ~roll_tide;
 ~roll_tide;
-~roll_tide;
 
-def_int $random = random(2);
+def_int $random = random(10);
 if ($random < 1) {
     ~roll_tide;
 }

@@ -33,7 +33,7 @@ if (~check_fish_equipment(lobster_pot) = false) {
 // check if inv is full
 if (inv_freespace(inv) < 1) {
     anim(null, 0);
-    ~mesbox("You can't carry any more lobsters.");
+    ~mesbox("You can't carry any more Lobsters."); // https://www.youtube.com/watch?t=436&v=RDx7HdaJkMo
     return;
 }
 if (%action_delay < map_clock) {
@@ -69,7 +69,7 @@ if (~check_fish_equipment(lobster_pot) = false) {
 // check if inv is full again
 if (inv_freespace(inv) < 1) {
     anim(null, 0);
-    ~mesbox("You can't carry any more lobsters.");
+    ~mesbox("You can't carry any more Lobsters."); // https://www.youtube.com/watch?t=436&v=RDx7HdaJkMo
     return;
 }
 if (%action_delay < map_clock) {

@@ -7,7 +7,7 @@ if(inv_total(inv, the_shield_of_arrav) > 0) {
     mes("You already own 'The Shield of Arrav', the book that was kept here.");
     return;
 }
-~chatplayer("<p,happy>Aha! 'The Shield of Arrav'!|Exactly what I was looking for.");
+~chatplayer("<p,happy>Aha! 'The Shield Of Arrav'!|Exactly what I was looking for."); // https://i.imgur.com/nr0U6e8.png
 ~mesbox("You take the book from the bookcase.");
 inv_add(inv, the_shield_of_arrav, 1);
 
@@ -123,6 +123,6 @@ if(%phoenixgang = ^phoenixgang_joined) {
     %blackarmgang = ^blackarmgang_complete;
     session_log(^log_adventure, "Quest complete: Shield of Arrav (Black Arm Gang)");
 }
-~send_quest_complete(questlist:blackarmgang, coins, 250, ^blackarmgang_questpoints, "You have completed the\\nShield of Arrav Quest!");
+~send_quest_complete(questlist:blackarmgang, coins, 250, ^blackarmgang_questpoints, "You have completed the\\nShield Of Arrav Quest!"); // https://rsrclan.com/media/quests/F2P/sldarrav/10227.png
 inv_del(inv, arravcertificate, 1);
 inv_add(inv, coins, 600);

@@ -3,7 +3,9 @@
 
 [oploc2,shilo_brokencart]
 if(coordx(coord) <= coordx(loc_coord)) {
+    mes("You climb up onto the cart."); // https://youtu.be/mxX7rB1PnEM?si=XKr8CZwpZT0GPPUu&t=47 
     mes("You nimbly jump from one side of the cart...");
+    p_delay(1);
     mes("...to the other and climb down again.");
     p_telejump(movecoord(loc_coord, 3, 0, 1));
     return;
@@ -16,8 +18,8 @@ if(npc_find(coord, mosol_rei, 8, 0) = true) {
 ~mesbox("It looks as if you can climb across the cart. Would you like to try?");
 switch_int(~p_choice2("Yes, I am very nimble and agile!", 1, "No, I am happy where I am thanks!", 2)) {
     case 1 :
-        mes("You nimbly jump from one side of the cart...");
-        mes("...to the other and climb down again.");
+        mes("You search the cart."); // https://i.imgur.com/ZCWLdBC.png
+        mes("You attempt to climb up onto the cart...");
         p_telejump(movecoord(loc_coord, -1, 0, 1));
     case 2 :
         if_close;

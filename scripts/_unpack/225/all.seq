@@ -53,7 +53,7 @@ frame22=anim_4641
 frame23=anim_4635
 
 [fish_seq_3]
-stretches=yes
+reachforward=yes
 frame1=anim_3291
 frame2=anim_3298
 frame3=anim_3305
@@ -2799,7 +2799,7 @@ frame7=anim_8694
 frame8=anim_8695
 
 [troll_attack]
-stretches=yes
+reachforward=yes
 priority=6
 frame1=anim_8625
 frame2=anim_8626
@@ -3848,7 +3848,7 @@ frame8=anim_6883
 [human_ddagger_lunge]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
-stretches=yes
+reachforward=yes
 frame1=anim_976
 frame2=anim_1261
 frame3=anim_1542
@@ -3978,7 +3978,7 @@ frame11=anim_1553
 [human_sword_stab]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
-stretches=yes
+reachforward=yes
 frame1=anim_1149
 frame2=anim_1436
 frame3=anim_1735
@@ -4028,7 +4028,7 @@ frame10=anim_1345
 [human_sword_slash]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
-stretches=yes
+reachforward=yes
 frame1=anim_1648
 frame2=anim_1945
 frame3=anim_2247
@@ -4057,7 +4057,7 @@ frame10=anim_2113
 [human_sword_lunge]
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 priority=6
-stretches=yes
+reachforward=yes
 frame1=anim_1235
 frame2=anim_1516
 frame3=anim_1811
@@ -7139,7 +7139,7 @@ priority=0
 loops=8
 maxloops=3
 postanim_move=abortanim
-duplicatebehavior=reset
+duplicatebehaviour=reset
 frame1=anim_584
 frame2=anim_876
 frame3=anim_1156
@@ -7160,7 +7160,7 @@ priority=0
 loops=8
 maxloops=8
 postanim_move=abortanim
-duplicatebehavior=reset
+duplicatebehaviour=reset
 frame1=anim_584
 frame2=anim_876
 frame3=anim_1156
@@ -7181,7 +7181,7 @@ priority=0
 loops=8
 maxloops=7
 postanim_move=abortanim
-duplicatebehavior=reset
+duplicatebehaviour=reset
 frame1=anim_584
 frame2=anim_876
 frame3=anim_1156
@@ -7202,7 +7202,7 @@ priority=0
 loops=8
 maxloops=6
 postanim_move=abortanim
-duplicatebehavior=reset
+duplicatebehaviour=reset
 frame1=anim_584
 frame2=anim_876
 frame3=anim_1156
@@ -7223,7 +7223,7 @@ priority=0
 loops=8
 maxloops=4
 postanim_move=abortanim
-duplicatebehavior=reset
+duplicatebehaviour=reset
 frame1=anim_584
 frame2=anim_876
 frame3=anim_1156
@@ -7244,7 +7244,7 @@ priority=0
 loops=8
 maxloops=5
 postanim_move=abortanim
-duplicatebehavior=reset
+duplicatebehaviour=reset
 frame1=anim_584
 frame2=anim_876
 frame3=anim_1156
@@ -9744,7 +9744,7 @@ priority=0
 loops=9
 maxloops=3
 postanim_move=abortanim
-duplicatebehavior=reset
+duplicatebehaviour=reset
 frame1=anim_513
 frame2=anim_811
 frame3=anim_1093
@@ -10375,7 +10375,7 @@ frame3=anim_2475
 frame4=anim_762
 
 [human_gnome_tackle]
-stretches=yes
+reachforward=yes
 replaceheldright=hide
 replaceheldleft=hide
 frame1=anim_788
@@ -10410,7 +10410,7 @@ frame12=anim_2037
 frame13=anim_1738
 
 [human_gnome_tackle_fail]
-stretches=yes
+reachforward=yes
 frame1=anim_1831
 frame2=anim_2131
 frame3=anim_2429
@@ -10422,7 +10422,7 @@ frame8=anim_1861
 frame9=anim_2158
 
 [human_gnome_tackle_ready]
-stretches=yes
+reachforward=yes
 loops=1
 frame1=anim_531
 
@@ -10791,7 +10791,7 @@ frame15=anim_1543
 [cattleprod]
 replaceheldleft=hide
 replaceheldright=cattleprod
-stretches=yes
+reachforward=yes
 frame1=anim_597
 frame2=anim_894
 frame3=anim_1174
@@ -10935,7 +10935,7 @@ frame13=anim_1857
 frame14=anim_2155
 
 [human_ready]
-stretches=yes
+reachforward=yes
 frame1=anim_1555
 frame2=anim_1848
 frame3=anim_2147
@@ -10950,7 +10950,7 @@ frame11=anim_1882
 frame12=anim_2180
 
 [human_ds_ready]
-stretches=yes
+reachforward=yes
 frame1=anim_1855
 frame2=anim_2153
 frame3=anim_2448
@@ -11014,7 +11014,7 @@ frame16=anim_1805
 frame17=anim_2102
 
 [human_staffready]
-stretches=yes
+reachforward=yes
 frame1=anim_1821
 frame2=anim_2121
 frame3=anim_2418
@@ -11133,7 +11133,7 @@ frame23=anim_877
 frame24=anim_585
 
 [human_walk_f]
-stretches=yes
+reachforward=yes
 frame1=anim_2422
 frame2=anim_703
 frame3=anim_990
@@ -11144,7 +11144,7 @@ frame7=anim_2149
 frame8=anim_2446
 
 [human_walk_b]
-stretches=yes
+reachforward=yes
 frame1=anim_2446
 frame2=anim_2149
 frame3=anim_1850
@@ -11155,28 +11155,28 @@ frame7=anim_703
 frame8=anim_2422
 
 [human_walk_l]
-stretches=yes
+reachforward=yes
 frame1=anim_818
 frame2=anim_1100
 frame3=anim_1385
 frame4=anim_1675
 
 [human_walk_r]
-stretches=yes
+reachforward=yes
 frame1=anim_1225
 frame2=anim_1508
 frame3=anim_1804
 frame4=anim_2101
 
 [human_turnonspot]
-stretches=yes
+reachforward=yes
 frame1=anim_1126
 frame2=anim_1410
 frame3=anim_1702
 frame4=anim_1997
 
 [human_running]
-stretches=yes
+reachforward=yes
 frame1=anim_1765
 frame2=anim_2064
 frame3=anim_2368
@@ -11187,7 +11187,7 @@ frame7=anim_1502
 frame8=anim_1799
 
 [human_ready_dh]
-stretches=yes
+reachforward=yes
 frame1=anim_533
 frame2=anim_830
 frame3=anim_1113
@@ -11202,7 +11202,7 @@ frame11=anim_468
 frame12=anim_767
 
 [human_walk_f_dh]
-stretches=yes
+reachforward=yes
 frame1=anim_495
 frame2=anim_795
 frame3=anim_1079
@@ -11409,7 +11409,7 @@ frame14=anim_489
 frame15=anim_790
 
 [human_transwalk_f]
-stretches=yes
+reachforward=yes
 frame1=anim_509
 frame2=anim_808
 frame3=anim_1092
@@ -11420,7 +11420,7 @@ frame7=anim_2267
 frame8=anim_547
 
 [human_transready]
-stretches=yes
+reachforward=yes
 frame1=anim_700
 frame2=anim_988
 frame3=anim_1274
@@ -11435,7 +11435,7 @@ frame11=anim_2313
 frame12=anim_590
 
 [human_transdeath]
-stretches=yes
+reachforward=yes
 priority=10
 replaceheldright=hide
 replaceheldleft=hide
@@ -11469,7 +11469,7 @@ frame2=anim_851
 [human_stumble_back]
 priority=0
 postanim_move=abortanim
-duplicatebehavior=reset
+duplicatebehaviour=reset
 frame1=anim_922
 frame2=anim_1202
 frame3=anim_1486
@@ -11483,7 +11483,7 @@ frame10=anim_2364
 frame11=anim_644
 
 [human_ready_scythe]
-stretches=yes
+reachforward=yes
 frame1=anim_1151
 frame2=anim_1439
 frame3=anim_1737
@@ -11498,7 +11498,7 @@ frame11=anim_1394
 frame12=anim_1684
 
 [human_stunned]
-stretches=yes
+reachforward=yes
 frame1=anim_1899
 frame2=anim_2197
 frame3=anim_483
@@ -11832,7 +11832,7 @@ priority=0
 loops=6
 maxloops=4
 postanim_move=abortanim
-duplicatebehavior=reset
+duplicatebehaviour=reset
 frame1=anim_2020
 frame2=anim_2321
 frame3=anim_599
@@ -11859,7 +11859,7 @@ priority=0
 loops=6
 maxloops=4
 postanim_move=abortanim
-duplicatebehavior=reset
+duplicatebehaviour=reset
 frame1=anim_2020
 frame2=anim_2321
 frame3=anim_599
@@ -11886,7 +11886,7 @@ priority=0
 loops=6
 maxloops=4
 postanim_move=abortanim
-duplicatebehavior=reset
+duplicatebehaviour=reset
 frame1=anim_2020
 frame2=anim_2321
 frame3=anim_599
@@ -11913,7 +11913,7 @@ priority=0
 loops=6
 maxloops=4
 postanim_move=abortanim
-duplicatebehavior=reset
+duplicatebehaviour=reset
 frame1=anim_2020
 frame2=anim_2321
 frame3=anim_599
@@ -11940,7 +11940,7 @@ priority=0
 loops=6
 maxloops=4
 postanim_move=abortanim
-duplicatebehavior=reset
+duplicatebehaviour=reset
 frame1=anim_2020
 frame2=anim_2321
 frame3=anim_599
@@ -11967,7 +11967,7 @@ priority=0
 loops=6
 maxloops=4
 postanim_move=abortanim
-duplicatebehavior=reset
+duplicatebehaviour=reset
 frame1=anim_2020
 frame2=anim_2321
 frame3=anim_599
@@ -11994,7 +11994,7 @@ priority=0
 loops=6
 maxloops=4
 postanim_move=abortanim
-duplicatebehavior=reset
+duplicatebehaviour=reset
 frame1=anim_2020
 frame2=anim_2321
 frame3=anim_599
@@ -12412,10 +12412,10 @@ frame22=anim_7064
 [human_playhorsey_brown]
 replaceheldright=horsey_brown
 replaceheldleft=hide
-stretches=yes
+reachforward=yes
 priority=0
 postanim_move=abortanim
-duplicatebehavior=reset
+duplicatebehaviour=reset
 frame1=anim_7076
 frame2=anim_7078
 frame3=anim_7080
@@ -12436,10 +12436,10 @@ frame16=anim_7078
 [human_playhorsey_white]
 replaceheldright=horsey_white
 replaceheldleft=hide
-stretches=yes
+reachforward=yes
 priority=0
 postanim_move=abortanim
-duplicatebehavior=reset
+duplicatebehaviour=reset
 frame1=anim_7076
 frame2=anim_7078
 frame3=anim_7080
@@ -12460,10 +12460,10 @@ frame16=anim_7078
 [human_playhorsey_black]
 replaceheldright=horsey_black
 replaceheldleft=hide
-stretches=yes
+reachforward=yes
 priority=0
 postanim_move=abortanim
-duplicatebehavior=reset
+duplicatebehaviour=reset
 frame1=anim_7076
 frame2=anim_7078
 frame3=anim_7080
@@ -12484,10 +12484,10 @@ frame16=anim_7078
 [human_playhorsey_grey]
 replaceheldright=horsey_grey
 replaceheldleft=hide
-stretches=yes
+reachforward=yes
 priority=0
 postanim_move=abortanim
-duplicatebehavior=reset
+duplicatebehaviour=reset
 frame1=anim_7076
 frame2=anim_7078
 frame3=anim_7080
@@ -12519,7 +12519,7 @@ frame10=anim_7116
 
 [impale]
 priority=6
-stretches=yes
+reachforward=yes
 walkmerge=label_1,label_2,label_9,label_11,label_13,label_15,label_17,label_19,label_37,label_39,label_41,label_43,label_45
 frame1=anim_4604
 frame2=anim_4662
@@ -12959,7 +12959,7 @@ frame1=anim_4005
 delay1=14464
 
 [chompy_attack]
-stretches=yes
+reachforward=yes
 frame1=anim_4012
 frame2=anim_4019
 frame3=anim_4028
@@ -12997,7 +12997,7 @@ frame12=anim_4026
 frame13=anim_4036
 
 [chompy_death]
-stretches=yes
+reachforward=yes
 frame1=anim_4038
 frame2=anim_4050
 frame3=anim_4060
@@ -13096,7 +13096,7 @@ frame8=anim_4073
 frame9=anim_4075
 
 [human_ogre_bellow]
-stretches=yes
+reachforward=yes
 frame1=anim_3964
 frame2=anim_3967
 frame3=anim_3970
@@ -13128,7 +13128,7 @@ frame10=anim_3978
 [human_chompybird_ogrebellows]
 replaceheldright=hide
 replaceheldleft=hide
-stretches=yes
+reachforward=yes
 priority=10
 frame1=anim_3995
 frame2=anim_3998

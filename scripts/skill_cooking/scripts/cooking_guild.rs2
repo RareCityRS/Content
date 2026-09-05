@@ -12,7 +12,7 @@ if ($is_inside = false) {
         return;
     }
     if (inv_total(worn, chefs_hat) < 1) {
-        ~chatnpc_specific("Head chef", head_chef, "<p,neutral>You can't come in here unless you're wearing a chef's hat, or something like that.");
+        ~chatnpc_specific("Head chef", head_chef, "<p,neutral>You can't come in here unless you're wearing a chef's|hat."); // https://i.imgur.com/A9JnAzL.png
         return;
     }
 }

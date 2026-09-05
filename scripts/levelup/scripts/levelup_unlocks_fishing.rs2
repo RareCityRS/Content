@@ -8,7 +8,7 @@ switch_int(stat_base(fishing)) {
     case 20 : ~doubleobjbox(raw_trout,fly_fishing_rod,"You can now try fly fishing for @dbl@Trout.", 200);
     case 23 : ~doubleobjbox(raw_cod,net,"Members can now try fishing for @dbl@Cod with a large net.", 200);
     case 25 : ~doubleobjbox(raw_pike,fishing_rod,"You can now try fishing for @dbl@Pike.", 200);
-    case 28 : ~doubleobjbox(mort_slimey_eel,fishing_rod,"Members can now try fishing for @dbl@slimey eels.", 200);
+    case 28 : ~doubleobjbox(mort_slimey_eel,fishing_rod,"Members can now try fishing for @dbl@slimey eel.", 200); // https://www.youtube.com/watch?t=678&v=thHuATlGYag
     case 30 : ~doubleobjbox(raw_salmon,fly_fishing_rod,"You can now try fly fishing for @dbl@Salmon.", 200);
     case 35 : ~doubleobjbox(raw_tuna,harpoon,"You can now try harpooning @dbl@Tuna.", 200);
     case 40 : ~doubleobjbox(raw_lobster,lobster_pot,"You can now try to catch @dbl@Lobsters.", 200);

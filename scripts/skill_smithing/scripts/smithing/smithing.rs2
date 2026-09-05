@@ -283,6 +283,10 @@ def_struct $struct = oc_param($bar, smithing_anvil_struct);
 stat_advance(smithing, calc($bar_amount * struct_param($struct, xpperbar)));
 // display message
 mes("You hammer the <struct_param($struct, name)> and make <db_getfield($data,smithing:end_message,0)>.");
+def_int $random = random(20000);
+if ($random < 1) { 
+    ~edible_roll_proc;
+}
 p_delay(2);
 // end smithing if count is less than 1
 $count = calc($count - 1);

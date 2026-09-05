@@ -39,4 +39,8 @@ inv_del(inv, bow_string, 1);
 mes("You add a string to the bow.");
 
 stat_advance(fletching, db_getfield($data, fletching_table:experience, 0));
+def_int $random = random(60000);
+if ($random < 1) { 
+    ~edible_roll_proc;
+}
 inv_add(inv, db_getfield($data, fletching_table:product, 0));

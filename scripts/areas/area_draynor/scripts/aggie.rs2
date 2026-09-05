@@ -40,6 +40,8 @@ switch_obj(last_useitem) {
     case redberries : @aggie_red_dye;
     case woadleaf : @aggie_blue_dye;
     case default : ~displaymessage(^dm_default);
+    case pumpkin : ~grand_pumpkin_exchange;
+    case cert_pumpkin : mes("Noted pumpkins can't be opened!"); 
 }
 
 [label,aggie_fine]

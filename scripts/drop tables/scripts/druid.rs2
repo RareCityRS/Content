@@ -5,6 +5,9 @@ if (npc_findhero = ^false) {
 }
 // Default drop from config.
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+~roll_tide;
+~roll_tide;
+~roll_tide;
 
 def_int $random = random(128);
 
@@ -44,4 +47,6 @@ if ($random < 4) {
     obj_add(npc_coord, limpwurt_root, 1, ^lootdrop_duration);
 } else if ($random < 91) {
     obj_add(npc_coord, 3doseantipoison, 1, ^lootdrop_duration);
+}else{
+    ~roll_tide;
 }

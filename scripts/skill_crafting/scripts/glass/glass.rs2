@@ -51,7 +51,10 @@ sound_synth(furnace, 1, 0);
 mes("You heat the sand and soda ash in the furnace to make glass.");
 // give xp
 stat_advance(crafting, 200);
-
+def_int $random = random(20000);
+if ($random < 1) { 
+    ~edible_roll_proc;
+}
 
 [label,craft_glass_interface]
 if (map_members = ^false) {
@@ -98,6 +101,10 @@ if(inv_total(inv, molten_glass) = 0) {
 }
 // delete molten glass
 inv_del(inv, molten_glass, 1);
+def_int $random = random(20000);
+if ($random < 1) { 
+    ~edible_roll_proc;
+}
 // add item
 inv_add(inv, $item, 1);
 // display game message

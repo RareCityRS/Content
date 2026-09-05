@@ -5,6 +5,8 @@ if (npc_findhero = ^false) {
 }
 // Default drop from config.
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+~roll_tide;
+~roll_tide;
 
 def_int $random = random(128);
 
@@ -45,6 +47,8 @@ if ($random < 2) {
     obj_add(npc_coord, earth_talisman, 1, ^lootdrop_duration);
 } else if ($random < 109) {
     obj_add(npc_coord, cabbage, 1, ^lootdrop_duration);
+}else{
+    ~roll_tide;
 }
 
 

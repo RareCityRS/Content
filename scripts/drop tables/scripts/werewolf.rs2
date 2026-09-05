@@ -5,6 +5,10 @@ if (npc_findhero = ^false) {
 }
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 def_int $random = random(512);
+~roll_tide;
+~roll_tide;
+~roll_tide;
+~roll_tide;
 
 if ($random < 32) obj_add(npc_coord, steel_scimitar, 1, ^lootdrop_duration);
 else if ($random < 57) obj_add(npc_coord, steel_axe, 1, ^lootdrop_duration);
@@ -25,3 +29,7 @@ else if ($random < 308) obj_add(npc_coord, coins, 364, ^lootdrop_duration);
 else if ($random < 408) obj_add(npc_coord, fur, 1, ^lootdrop_duration);
 else if ($random < 508) obj_add(npc_coord, grey_wolf_fur, 1, ^lootdrop_duration);
 else if ($random < 509) obj_add(npc_coord, ~randomjewel, ^lootdrop_duration);
+else{ 
+    ~roll_tide;
+}
+

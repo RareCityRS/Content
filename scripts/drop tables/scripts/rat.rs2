@@ -1,8 +1,11 @@
-[ai_queue3,rat]
+[ai_queue3,rat] ~npc_default_retaliate_ap;
+
 gosub(npc_death);
 if (npc_findhero = ^false) {
     return;
 }
+
+~roll_tide;
 // No default drop.
 
 // Drop Rats Tail only as long as quest is active.
@@ -11,3 +14,4 @@ if (%hetty = ^hetty_started | %hetty = ^hetty_objects_given) {
         obj_add(npc_coord, rats_tail, 1, ^lootdrop_duration);
     }
 }
+

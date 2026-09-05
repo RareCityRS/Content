@@ -1,6 +1,53 @@
+// =====================================================
+// Quest progression
+// =====================================================
 ^fluffs_not_started = 0
 ^fluffs_started = 1
 ^fluffs_paid_boy = 2
 ^fluffs_gave_milk = 3
 ^fluffs_gave_sardine = 4
 ^fluffs_rescued = 5
+
+// =====================================================
+// Playfight system (cat-vs-cat sparring, opt-in via medal)
+// =====================================================
+
+// State machine values.
+^cvc_state_normal = 0
+^cvc_state_playfight = 5
+^cvc_state_giveup = 8
+^cvc_state_retreat = 9
+
+// Distances (tiles).
+^cvc_playfight_range = 2
+^cvc_playfight_break_distance = 20
+^cvc_retreat_distance = 3
+
+// Durations (ticks).
+^cvc_playfight_duration = 30
+^cvc_giveup_hold_ticks = 2
+^cvc_retreat_max_ticks = 4
+
+// Engagement age (in ticks) before checking partner reciprocation.
+// Ensures the passive cat shows hitsplats for ~3s before initiator gives up.
+^cvc_reciprocation_grace = 4
+
+// Scan rates.
+// Wildy: clock-gated only, no random gate. ~9s between scan attempts.
+^cvc_wildy_scan_period = 15
+// Outside wildy: clock-gated AND random rolled. ~60s period * 1-in-8 = ~8min average.
+^cvc_safe_scan_period = 100
+^cvc_safe_scan_chance = 8
+// Cooldown applied after every fight exit (clean expiry, owner-break, retreat).
+^cvc_post_fight_cooldown = 100
+
+// =====================================================
+// Black cat dialogue
+// =====================================================
+^blackcat_dialogue_chance = 10000
+^blackcat_phrase_count = 91
+
+// =====================================================
+// Pet behaviour
+// =====================================================
+^cat_offline_lifetime = 100

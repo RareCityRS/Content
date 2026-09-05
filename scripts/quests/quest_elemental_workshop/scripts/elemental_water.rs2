@@ -1,4 +1,4 @@
-[ai_queue3,elemental_water]
+[ai_queue3,elemental_water] @gnomeknight_drop_table;
 gosub(npc_death);
 if (npc_findhero = ^false) {
     return;

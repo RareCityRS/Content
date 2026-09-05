@@ -1,0 +1,15 @@
+[ai_queue3,spider] ~npc_default_retaliate_ap;
+[ai_queue3,giantspider1] ~npc_default_retaliate_ap;
+
+gosub(npc_death);
+if (npc_findhero = ^false) {
+    return;
+}
+
+def_int $random = random(2);
+
+if ($random < 1) {
+    ~roll_tide;
+}
+
+// No default drop.

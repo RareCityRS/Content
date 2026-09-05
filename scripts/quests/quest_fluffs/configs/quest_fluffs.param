@@ -9,3 +9,52 @@ default=null
 [cat_next_id]
 type=npc
 default=null
+
+// =====================================================
+// CvC stat params (per-stage hardcoded)
+// =====================================================
+
+// Higher = lower flee chance. Kitten=4, Cat=3, Overgrown=1.
+[cvc_agility]
+type=int
+default=3
+
+// Floor of the stat_mod roll at this stage.
+[cvc_stat_base]
+type=int
+default=10
+
+// Random range added on top of base.
+// stat_mod = cvc_stat_base + random(cvc_stat_random)
+[cvc_stat_random]
+type=int
+default=10
+
+// =====================================================
+// Nature & vocal params (per-NPC hardcoded)
+// =====================================================
+
+// 1 = clingy: rare wander, short range, often returns to owner
+// 0 = independent: frequent wander, longer range
+[cat_needy]
+type=int
+default=0
+
+// 1 = playful: occasional rollovers, idle anims; combined with
+//     needy=0 also triggers auto-vermin-hunt
+// 0 = stoic
+[cat_playful]
+type=int
+default=0
+
+// 1 = friendly: peaceful, won't initiate playfights with strangers
+// 0 = unfriendly: occasionally play-fights nearby unfriendly cats
+[cat_friendly]
+type=int
+default=1
+
+// 1 = vocal (black cats): rare random dialogue from blackcat_phrases
+// 0 = silent
+[cat_vocal]
+type=int
+default=0

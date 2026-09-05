@@ -18,3 +18,21 @@ switch_int(random(3)) {
 [ai_queue1,d_skingnomeknight] ~npc_default_retaliate_ap;
 [ai_opplayer2,d_skingnomeknight] npc_setmode(applayer2);
 [ai_applayer2,d_skingnomeknight] ~npc_rangeattack;
+
+[ai_queue3,gnomeknight] @gnomeknight_drop_table;
+[ai_queue3,d_skingnomeknight] @gnomeknight_drop_table;
+
+
+[label,gnomeknight_drop_table]
+gosub(npc_death);
+if (npc_findhero = ^false) {
+    return;
+}
+
+~roll_tide;
+~roll_tide;
+
+def_int $random = random(10);
+if ($random < 1) {
+    ~roll_tide;
+}

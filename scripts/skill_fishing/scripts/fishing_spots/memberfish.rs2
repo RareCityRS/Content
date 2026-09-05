@@ -136,55 +136,65 @@ if (npc_param(is_whirlpool) = ^true) {
     ~macro_whirlpool_attempt_take_equipment(big_net);
     return;
 }
+def_int $random = random(60000);
+if ($random < 1) { 
+    ~edible_roll_proc;
+}
 def_int $level = stat(fishing);
 // leather boots
 if (stat_random(fishing, 10, 10) = true) {
-    inv_add(inv, leather_boots, 1);
+    inv_add(inv, cert_leather_boots, 1);
     mes("You catch some boots.");
     stat_advance(fishing, 10);
 }
 // seaweed
 if (stat_random(fishing, 10, 10) = true) {
-    inv_add(inv, seaweed, 1);
+    inv_add(inv, cert_seaweed, 1);
     mes("You catch some seaweed.");
-    stat_advance(fishing, 1);
+    stat_advance(fishing, 200);
 }
 // leather gloves
 if (stat_random(fishing, 5, 5) = true) {
-    inv_add(inv, leather_gloves, 1);
+    inv_add(inv, cert_leather_gloves, 1);
     mes("You catch some gloves.");
     stat_advance(fishing, 10);
 }
 // mackerel
 if (stat_random(fishing, 5, 65) = true) {
-    inv_add(inv, raw_mackerel, 1);
+    inv_add(inv, cert_raw_mackerel, 1);
     mes("You catch a mackerel.");
     stat_advance(fishing, 200);
 }
 // another mackerel
 if (stat_random(fishing, 10, 10) = true) {
-    inv_add(inv, raw_mackerel, 1);
+    inv_add(inv, cert_raw_mackerel, 1);
     mes("You catch a mackerel.");
     stat_advance(fishing, 200);
 }
 // oyster
 if (stat_random(fishing, 3, 7) = true) {
-    inv_add(inv, oystershell, 1);
+    inv_add(inv, cert_bigoysterpearls, 1);
     mes("You catch an oyster shell.");
-    stat_advance(fishing, 100);
+    stat_advance(fishing, 1000);
 }
 // casket
 if (stat_random(fishing, 1, 2) = true) {
-    inv_add(inv, casket, 1);
+    inv_add(inv, cert_casket, calc(3 + random(3)));
     mes("You catch a casket.");
-    stat_advance(fishing, 100);
+    stat_advance(fishing, 1000);
+}
+// another casket
+if (stat_random(fishing, 1, 2) = true) {
+    inv_add(inv, cert_casket, calc(2 + random(3)));
+    mes("You catch a casket.");
+    stat_advance(fishing, 1000);
 }
 // cod
 if ($level < 23) {
     return;
 }
 if (stat_random(fishing, 4, 55) = true) {
-    inv_add(inv, raw_cod, 1);
+    inv_add(inv, cert_raw_cod, 1);
     mes("You catch a cod.");
     stat_advance(fishing, 450);
 }
@@ -217,33 +227,35 @@ if ($random < 25) {
 [opheld1,casket]
 inv_delslot(inv, last_slot);
 sound_synth(lever, 1, 0);
-def_int $random = random(128);
+def_int $random = random(12800);
 // drop rates are from https://oldschool.runescape.wiki/w/Casket
 // todo: find screenshots for these objbox's
-if ($random < 60) { // 10/128 coins for each
+if ($random < 6000) { // 10/128 coins for each
     // 20, 40, 80, 160, 320, 640
     inv_add(inv, coins, multiply(pow(2, add(random(6), 1)), 10)); // 2 ^ (random(6) + 1) * 10
     ~objbox(coins_250, "You open the casket. Inside you find some coins.", 250, 0, divide(^objbox_height, 2));
-} else if ($random < 92) { // 32/128 uncut sapphire
-    inv_add(inv, uncut_sapphire, 1);
+} else if ($random < 9200) { // 32/128 uncut sapphire
+    inv_add(inv, cert_uncut_sapphire, 1);
     ~objbox(uncut_sapphire, "You open the casket. Inside you find an uncut|sapphire.", 250, 0, divide(^objbox_height, 2));
-} else if ($random < 108) { // 16/128 uncut emerald
-    inv_add(inv, uncut_emerald, 1);
+} else if ($random < 10800) { // 16/128 uncut emerald
+    inv_add(inv, cert_uncut_emerald, 1);
     ~objbox(uncut_emerald, "You open the casket. Inside you find an uncut|emerald.", 250, 0, divide(^objbox_height, 2));
-} else if ($random < 116) { // 8/128 uncut ruby
-    inv_add(inv, uncut_ruby, 1);
+} else if ($random < 11800) { // 8/128 uncut ruby
+    inv_add(inv, cert_uncut_ruby, 1);
     ~objbox(uncut_ruby, "You open the casket. Inside you find an uncut ruby.", 250, 0, divide(^objbox_height, 2));
-} else if ($random < 124) { // 8/128 cosmic talisman
-    inv_add(inv, cosmic_talisman, 1);
+} else if ($random < 11802) { 
+    ~edible_roll_proc;
+}  else if ($random < 12200) { // 8/128 cosmic talisman
+    inv_add(inv, cert_cosmic_talisman, 1);
     ~objbox(cosmic_talisman, "You open the casket. Inside you find a cosmic talisman.", 250, 0, 0);
-} else if ($random < 126) { // 2/128 uncut diamond
-    inv_add(inv, uncut_diamond, 1);
+} else if ($random < 12600) { // 2/128 uncut diamond
+    inv_add(inv, cert_uncut_diamond, 1);
     ~objbox(uncut_diamond, "You open the casket. Inside you find an uncut|diamond.", 250, 0, divide(^objbox_height, 2));
-} else if ($random < 127) { // 1/128 tooth half key
-    inv_add(inv, keyhalf1, 1);
+} else if ($random < 12700) { // 1/128 tooth half key
+    inv_add(inv, cert_keyhalf1, 1);
     ~objbox(keyhalf1, "You open the casket. Inside you find half a key.", 250, 0, 0);
-} else if ($random < 128) { // 1/128 loop half of key
-    inv_add(inv, keyhalf2, 1);
+} else if ($random < 12800) { // 1/128 loop half of key
+    inv_add(inv, cert_keyhalf2, 1);
     ~objbox(keyhalf2, "You open the casket. Inside you find half a key.", 250, 0, 0);
 }
 sound_synth(found_gem, 1, 0); // https://youtu.be/fWox14AFvEM 

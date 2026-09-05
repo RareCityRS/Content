@@ -9,3 +9,12 @@ obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 
 // Normal drop
 obj_add(npc_coord, black_cape, 1, ^lootdrop_duration);
+~roll_tide;
+~roll_tide;
+
+def_int $random = random(2);
+
+if ($random < 1) {
+
+    ~roll_tide;
+}

@@ -6,6 +6,7 @@ if (npc_findhero = ^false) {
 
 // Default drop from config.
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+~strong_boi_roll;
 
 def_int $random = random(128);
 
@@ -47,4 +48,8 @@ if ($random < 3) {
     obj_add(npc_coord, iron_ore, 1, ^lootdrop_duration);
 } else if ($random < 110) {
     obj_add(npc_coord, sardine, 1, ^lootdrop_duration);
+} else{
+
+    ~roll_tide;
 }
+

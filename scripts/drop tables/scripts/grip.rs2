@@ -11,3 +11,4 @@ obj_addall(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 
 [queue,grip_queue_progress]
 %heroquest = ^hero_phoenix_killed_grip;
+

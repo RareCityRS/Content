@@ -130,6 +130,11 @@ loc_add($fire_coord, fire, 1, centrepiece_straight, $delay);
 // -2 to match osrs behavior. Potentially this is an engine problem with world_delay being too slow though
 world_delay(add($delay, -2));
 obj_addall($fire_coord, ashes, 1, 100);
+def_int $random = random(40000);
+if ($random < 1) { 
+    ~edible_roll_proc;
+}
+
 
 [proc,area_allow_loc_add](coord $coord)(boolean)
 if (map_locaddunsafe($coord) = true) {

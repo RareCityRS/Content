@@ -1,11 +1,154 @@
-[ai_timer,_petcat]
+// =====================================================================
+// Cat AI dispatch
+//
+// Per-tick dispatch logic owns all player-context work (coord, uid,
+// medal mirror). State-specific tick procs in pet_cvc.rs2 are pure
+// NPC-context.
+//
+// State machine: NORMAL / PLAYFIGHT / GIVEUP / RETREAT.
+//
+// Critical structural rule: state branches are mutually exclusive
+// (if/else if chain). A cat in PLAYFIGHT must not also fall into the
+// scan branch on the same tick — that's what caused the previous
+// "playfight ends after one tick" bug.
+// =====================================================================
+
+[ai_timer,_petcat] @petcat_ai_tick;
+
+[label,petcat_ai_tick]
 if (finduid(%npc_attacking_uid) = true) {
-    if (coordy(coord) ! coordy(npc_coord) | npc_range(coord) > 15) {
-        npc_tele(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk));
+    // Reset offline counter (used by playfight scan filter to skip ghosts).
+    if (%cvc_offline_ticks ! 0) {
+        %cvc_offline_ticks = 0;
     }
-    return;
+
+    // Mirror owner's worn-medal status into a varn so scan procs can
+    // read it without doing a cross-player-context worn-inv lookup.
+    if (inv_total(worn, felinemedal) > 0) {
+        %cvc_medal_worn = 1;
+    } else {
+        %cvc_medal_worn = 0;
+    }
+
+    def_int $wildy_level = ~wilderness_level(coord);
+
+    // ===========================================================
+    // State dispatch (mutually exclusive).
+    //
+    // NORMAL cats fall into the scan branch if eligible. Cats in
+    // active states run their respective tick handlers and skip
+    // the scan branch entirely.
+    // ===========================================================
+    if (%cvc_state = ^cvc_state_playfight) {
+        ~cvc_playfight_tick;
+    } else if (%cvc_state = ^cvc_state_giveup) {
+        ~cvc_giveup_tick;
+    } else if (%cvc_state = ^cvc_state_retreat) {
+        ~cvc_retreat_tick;
+    } else if (%cvc_state = ^cvc_state_normal
+        & npc_param(cat_friendly) = 0
+        & %cvc_medal_worn = 1
+        & map_clock > %cvc_scan_clock) {
+        // Eligible to scan. Branch on wildy/safe.
+        if ($wildy_level > 0) {
+            // Wildy: clock-gated only, no random gate. Cats engage
+            // reliably when a partner is in range.
+            %cvc_scan_clock = add(map_clock, ^cvc_wildy_scan_period);
+            ~cvc_playfight_scan;
+        } else {
+            // Safe areas: clock-gated period + 1-in-N inner roll.
+            %cvc_scan_clock = add(map_clock, ^cvc_safe_scan_period);
+            if (random(^cvc_safe_scan_chance) = 0) {
+                ~cvc_playfight_scan;
+            }
+        }
+    }
+
+    // Idle behaviour (only runs if state is NORMAL — including cats
+    // that just exited a fight cleanly during this tick's dispatch).
+    if (%cvc_state = ^cvc_state_normal) {
+        // Black cat dialogue.
+        if (npc_param(cat_vocal) = 1 & random(^blackcat_dialogue_chance) = 0) {
+            npc_say(enum(int, string, blackcat_phrases, random(^blackcat_phrase_count)));
+        }
+
+        // Far/wrong-plane: leash back to player.
+        if (coordy(coord) ! coordy(npc_coord) | npc_range(coord) > 15) {
+            npc_tele(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk));
+            npc_setmode(playerfollow);
+        }
+        else if (npc_range(coord) > 6) {
+            // Player has moved away: catch up.
+            npc_setmode(playerfollow);
+        }
+        else {
+            // Close to player: idle behaviour driven by nature params.
+            def_int $wander_die = 60;
+            def_int $wander_radius = 2;
+            if (npc_param(cat_needy) = 1) {
+                $wander_die = 80;
+                $wander_radius = 1;
+            } else {
+                $wander_die = 60;
+                $wander_radius = 2;
+            }
+
+            if (npc_param(cat_playful) = 1 & random(500) = 0) {
+                npc_anim(cat_rollingover, 0);
+                npc_say("Purr...");
+            }
+            else if (npc_param(cat_needy) = 1 & random(300) = 0) {
+                npc_say("Meeeew!");
+                npc_setmode(playerfollow);
+            }
+            else if (random($wander_die) = 0) {
+                def_coord $target = map_findsquare(coord, $wander_radius, $wander_radius, ^map_findsquare_lineofwalk);
+                if ($target ! null) {
+                    npc_setmode(none);
+                    npc_walk($target);
+                }
+            }
+        }
+    }
+
+    // Duplicate cleanup.
+    def_npc $my_type = npc_type;
+    def_int $expected = inv_total(pets, nc_param(npc_type, pet_item_id));
+    def_int $count = 0;
+    def_npc_uid $my_uid = npc_uid;
+    npc_findallzone(coord);
+    while (npc_findnext = true) {
+        if (%npc_attacking_uid = uid & npc_type = $my_type) {
+            $count = calc($count + 1);
+        }
+    }
+    if ($count > $expected) {
+        if (npc_finduid($my_uid) = true) {
+            npc_del;
+        }
+    }
+} else {
+    // Owner offline. Force exit any non-NORMAL state.
+    if (%cvc_state ! ^cvc_state_normal) {
+        %cvc_state = ^cvc_state_normal;
+        %cvc_target_uid = null;
+        %cvc_clock = 0;
+    }
+
+    %cvc_offline_ticks = add(%cvc_offline_ticks, 1);
+    if (%cvc_offline_ticks >= ^cat_offline_lifetime) {
+        npc_del;
+        return;
+    }
+    if (random(10) = 0) {
+        def_coord $target = map_findsquare(npc_coord, 5, 5, ^map_findsquare_lineofwalk);
+        if ($target ! null) {
+            npc_setmode(none);
+            npc_walk($target);
+        }
+    }
 }
-npc_del;
+return;
 
 [timer,petcat_growth]
 if (%follower_uid = null) {
@@ -18,8 +161,8 @@ if (npc_finduid(%follower_uid) = true) {
         cleartimer(petcat_growth);
         return;
     }
-    def_int $growth = getbit_range(%cat_growth, 11, 19); //growth       (0-120-320)
-    npc_say("Meow!"); //done every 90s, no random chance
+    def_int $growth = getbit_range(%cat_growth, 11, 19);
+    npc_say("Meow!");
     %cat_growth = setbit_range_toint(%cat_growth, min(320,max(calc($growth + 1),-1)), 11, 19);
     if ($cat_cat = cat) {
         @cat_growth;
@@ -28,38 +171,52 @@ if (npc_finduid(%follower_uid) = true) {
         @kitten_growth;
     }
 } else {
+    %follower_uid = null;
+    %follower_obj = null;
     cleartimer(petcat_growth);
 }
 
 [label,cat_growth]
 if (getbit_range(%cat_growth, 11, 19) = 320) {
+    def_namedobj $old_item = nc_param(npc_type, pet_item_id);
     npc_changetype_keepall(nc_param(npc_type, cat_next_id), ^max_32bit_int);
+    def_namedobj $new_item = nc_param(npc_type, pet_item_id);
+    if (inv_total(pets, $old_item) > 0) {
+        inv_del(pets, $old_item, 1);
+        inv_add(pets, $new_item, 1);
+    }
     %follower_uid = npc_uid;
-    %follower_obj = nc_param(npc_type, pet_item_id);
-    %cat_growth = 0; //according to ash, this gets wiped when the cat becomes overgrown
+    %follower_obj = $new_item;
+    %cat_growth = 0;
     npc_say("Meeeooowww!");
-    ~mesbox("Your cat has grown into a mighty feline,|but it will no longer be able to chase vermin."); //linebreak is guessed
+    ~mesbox("Your cat has grown into a mighty feline,|but it will no longer be able to chase vermin.");
 }
 
 [label,kitten_growth]
-def_int $hunger = getbit_range(%cat_growth, 0, 4); //hunger       (0-16-18-20)
-def_int $attent = getbit_range(%cat_growth, 5, 10); //attention    (0-40-45-50)
+def_int $hunger = getbit_range(%cat_growth, 0, 4);
+def_int $attent = getbit_range(%cat_growth, 5, 10);
 if ($attent = 0) { 
-    $attent = 28; //default attent for a new kitten is supposed to be 28
+    $attent = 28;
 }
 if (getbit_range(%cat_growth, 11, 19) = 120) {
+    def_namedobj $old_item = nc_param(npc_type, pet_item_id);
     npc_changetype_keepall(nc_param(npc_type, cat_next_id), ^max_32bit_int);
+    def_namedobj $new_item = nc_param(npc_type, pet_item_id);
+    if (inv_total(pets, $old_item) > 0) {
+        inv_del(pets, $old_item, 1);
+        inv_add(pets, $new_item, 1);
+    }
     %follower_uid = npc_uid;
-    %follower_obj = nc_param(npc_type, pet_item_id);
+    %follower_obj = $new_item;
     npc_say("Meeeooowww!");
-    ~mesbox("Your kitten has grown into a healthy cat,|that can hunt for itself."); //imgur.com/ni0BBTb
+    ~mesbox("Your kitten has grown into a healthy cat,|that can hunt for itself.");
     return;
 }
 %cat_growth = setbit_range_toint(%cat_growth, calc($hunger + 1), 0, 4);
 switch_int (getbit_range(%cat_growth, 0, 4)) {
     case 16 :
         npc_say("Miaow!");
-        ~chatplayer("<p,scared>I think it's hungry!"); //youtu.be/1vY_uGOq6qM //mes added later
+        ~chatplayer("<p,scared>I think it's hungry!");
     case 18 :
         npc_say("Meeeooowww!");
         ~chatplayer("<p,scared>I think it's really hungry!");
@@ -75,7 +232,7 @@ switch_int (getbit_range(%cat_growth, 5, 10)) {
         ~chatplayer("<p,neutral>I think it wants some attention.");
     case 45 :
         npc_say("Meeeooowww...");
-        ~chatplayer("<p,neutral>I think it's feeling lonely."); //738
+        ~chatplayer("<p,neutral>I think it's feeling lonely.");
     case 50 :
         mes("Your kitten got lonely and ran off.");
         ~follower_death;
@@ -104,19 +261,19 @@ switch_int (getbit_range(%cat_growth, 5, 10)) {
 
 
 [opnpcu,_petcat]
-if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
-    mes("This is not your cat."); //imgur.com/acr5ER2
+if (%npc_attacking_uid ! uid) {
+    mes("This is not your cat.");
     return;
 }
 switch_obj(last_useitem) {
-    case ball_of_wool : //timing and p_delay is guessed off videos
-        %cat_growth = setbit_range_toint(%cat_growth, 6, 5, 10); //51 minutes without warning (6 to 40)
+    case ball_of_wool :
+        %cat_growth = setbit_range_toint(%cat_growth, 6, 5, 10);
         anim(human_pickupfloor, 0);
         npc_anim(cat_rollingover, 40); 
         npc_say("Purr!");
         p_delay(2);
-        ~chatplayer("<p,happy>That kitten loves to play with that ball of wool.|I think it is its favourite."); //guessed linebreak
-    case bucket_milk : //https://youtu.be/1vY_uGOq6qM&t=97s
+        ~chatplayer("<p,happy>That kitten loves to play with that ball of wool.|I think it is its favourite.");
+    case bucket_milk :
         %cat_growth = setbit_range_toint(%cat_growth, 0, 0, 4);
         inv_del(inv, last_useitem, 1);
         inv_add(inv, bucket_empty, 1);
@@ -124,37 +281,55 @@ switch_obj(last_useitem) {
         p_delay(0);
         mes("The kitten laps up the milk.");
         npc_say("Purpurr");
-    case raw_shrimp, raw_anchovies, raw_sardine, raw_trout, trout, raw_salmon, salmon, raw_tuna, tuna :
+    case raw_sardine :
+        %cat_growth = setbit_range_toint(%cat_growth, 0, 0, 4);
+        inv_del(inv, last_useitem, 1);
+        anim(human_pickupfloor, 0);
+        p_delay(0);
+        ~cvc_feed_sardine;
+        npc_say("Purr!");
+    case raw_shrimp, raw_anchovies, raw_trout, trout, raw_salmon, salmon, raw_tuna, tuna :
         %cat_growth = setbit_range_toint(%cat_growth, 0, 0, 4);
         def_string $fishname = lowercase(oc_name(last_useitem));
         inv_del(inv, last_useitem, 1);
         anim(human_pickupfloor, 0);
         p_delay(0);
-        mes("The kitten gobbles up the <$fishname>."); //youtu.be/suusfGcvi1w?t=195
+        mes("The kitten gobbles up the <$fishname>.");
         npc_say("Purr!");
     case default : ~displaymessage(^dm_default);
 }
 
 [opnpc1,_petcat]
-if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
-    mes("That isn't yours to take."); //youtu.be/WsvTr-1bZwM?t=175
+if (%npc_attacking_uid ! uid) {
+    mes("That isn't yours to take.");
+    return;
+}
+def_obj $item = npc_param(pet_item_id);
+if (inv_total(pets, $item) = 0) {
+    if (%follower_uid = npc_uid) {
+        %follower_obj = null;
+        %follower_uid = null;
+    }
+    npc_del;
     return;
 }
 if (inv_freespace(inv) = 0) {
-    mes("You don't have enough inventory space to pick up your cat."); //todo: verify the message for this
+    mes("You don't have enough inventory space to pick up your cat.");
     return;
 }
 p_delay(0);
-%follower_obj = null;
-%follower_uid = null;
-inv_add(inv, npc_param(pet_item_id), 1);
-sound_synth(pick, 1, 0);
+inv_moveitem_uncert(pets, inv, $item, 1);
+sound_synth(pick, 0, 0);
+if (%follower_uid = npc_uid) {
+    %follower_obj = null;
+    %follower_uid = null;
+}
 npc_del;
 
 [opnpc3,_petcat]
-if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
+if (%npc_attacking_uid ! uid) {
     mes("This is not your cat.");
-    return;
+//    return;
 }
 if(getbit_range(%cat_growth, 5, 10) = 28) { 
     %cat_growth = setbit_range_toint(%cat_growth, 23, 5, 10); 
@@ -169,25 +344,34 @@ npc_say("Purr...purr...");
 ~chatplayer("<p,happy>That cat sure loves to be stroked.");
 
 [opnpc4,_petcat]
-if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
+if (%npc_attacking_uid ! uid) {
     mes("This is not your cat.");
     return;
 }
 def_int $choice = ~p_choice2_header("Yes I am.", 1, "No I'm not.", 2, "Are you sure you want to shoo away the cat?");
 if ($choice = 2) {
-    mes("You choose not to shoo away the cat."); //osrs
+    mes("You choose not to shoo away the cat.");
     return;
 }
 if_close;
 say("Shoo cat!");
 npc_say("Meeeooow!");
 npc_setmode(playerescape);
-p_delay(4); //guessed delay
-mes("The cat has run away."); //after or before delay?
-~follower_death;
+p_delay(4);
+mes("The cat has run away.");
+def_obj $item = npc_param(pet_item_id);
+if (inv_total(pets, $item) > 0) {
+    inv_del(pets, $item, 1);
+}
+if (npc_uid = %follower_uid) {
+    %follower_uid = null;
+    %follower_obj = null;
+    %cat_growth = 0;
+}
+npc_del;
 
 [opnpc5,_petcat]
-if (%npc_attacking_uid ! uid | %follower_uid ! npc_uid) {
+if (%npc_attacking_uid ! uid) {
     mes("This is not your cat.");
     return;
 }
@@ -196,16 +380,16 @@ if (oc_category(nc_param(npc_type, pet_item_id)) = overgrown) {
     return;
 }
 if (.npc_find(coord, rat, 10, 1) = true) {  
-    def_int $chance = random(2); //50%
+    def_int $chance = random(2);
     def_int $vermin = getbit_range(%cat_growth, 20, 26);
-    say("Go on kitty...kill that rat!"); //imgur.com/4wTXnUT 26/07/2004
+    say("Go on kitty...kill that rat!");
     p_delay(0);
     npc_say("Meeeeeoooowww!");
     p_delay(0);
     .npc_say("Eek!");
-    sound_synth(rat_hit, 1, 0);
+    sound_synth(rat_hit, 0, 0);
     if(lineofwalk(coord, .npc_coord) = false) {
-        mes("Your cat cannot get to its prey."); //osrs
+        mes("Your cat cannot get to its prey.");
         return;
     }
     npc_setmode(none);
@@ -213,9 +397,8 @@ if (.npc_find(coord, rat, 10, 1) = true) {
     p_delay(1);
     npc_anim(cat_pounce, 0);
     p_delay(1);
-    npc_setmode(playerfollow);
     if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
-        $chance = random(10); //10% if not grown
+        $chance = random(10);
     }
     if($chance ! 0) {
         mes("The rat manages to get away!");
@@ -223,24 +406,33 @@ if (.npc_find(coord, rat, 10, 1) = true) {
     }
     .npc_del;
     npc_say("MeeeoooooW!");
-    say("Hey well done kitty, you got it!"); //"kitty" guessed
+    say("Hey well done kitty, you got it!");
     %cat_growth = setbit_range_toint(%cat_growth, min(100,max(calc($vermin + 1),-1)), 20, 26);
 } else {
-    mes("There aren't any rats or mice around."); // 2004 https://youtu.be/HQEpeWAUMbI?t=21
+    mes("There aren't any rats or mice around.");
 }
 
 [proc,cat_drop]
 if (map_members = ^false) {
-    mes(^mes_members_do_that); //todo: verify if there is a specific message for trying to drop in f2p
+    mes(^mes_members_do_that);
     return;
 }
-if (npc_finduid(%follower_uid) = true) {
-    mes("You already have a follower."); //osrs
+// Follower cap: 5 by default, 28 if wearing a feline medal.
+def_int $cap = 5;
+def_string $cap_msg = "You can't have any more followers without a feline medal.";
+if (inv_total(worn, felinemedal) > 0) {
+    $cap = 28;
+    $cap_msg = "You can't have any more followers.";
+}
+def_int $current = sub(inv_size(pets), inv_freespace(pets));
+if ($current >= $cap) {
+    mes($cap_msg);
     return;
 }
-inv_delslot(inv, last_slot);
-sound_synth(put_down, 1, 0);
-~cat_spawn(oc_param(last_item, follower_id));
+def_npc $follower_type = oc_param(last_item, follower_id);
+inv_moveitem_uncert(inv, pets, last_item, 1);
+sound_synth(put_down, 0, 0);
+~cat_spawn($follower_type);
 
 [proc,cat_spawn](npc $type)
 npc_add(coord, $type, ^max_32bit_int);
@@ -253,6 +445,9 @@ settimer(petcat_growth, 150);
 
 [proc,follower_death]
 if (npc_finduid(%follower_uid) = true) {
+    if (%follower_obj ! null & inv_total(pets, %follower_obj) > 0) {
+        inv_del(pets, %follower_obj, 1);
+    }
     %follower_uid = null;
     %follower_obj = null;
     %cat_growth = 0;
@@ -260,23 +455,103 @@ if (npc_finduid(%follower_uid) = true) {
 }
 
 [proc,follower_logout]
-if (npc_finduid(%follower_uid) = true) {
-    npc_del;
-    %follower_uid = null;
+return;
+
+[queue,follower_login]
+def_int $i = 0;
+def_int $size = inv_size(pets);
+while ($i < $size) {
+    def_obj $item = inv_getobj(pets, $i);
+    if ($item ! null) {
+        def_int $j = 0;
+        def_int $skip = 0;
+        while ($j < $i) {
+            if (inv_getobj(pets, $j) = $item) { $skip = 1; }
+            $j = calc($j + 1);
+        }
+        if ($skip = 0) {
+            ~reconcile_type($item);
+        }
+    }
+    $i = calc($i + 1);
 }
 
-[queue,follower_login] //cats get lost on f2p according to ash, no checks here
-if (%follower_obj ! null) {
-    if (oc_param(%follower_obj, follower_id) = null) { 
-        %follower_obj = null;
-        return;
+npc_findallzone(coord);
+while (npc_findnext = true) {
+    if (%npc_attacking_uid = uid) {
+        def_namedobj $type_item = nc_param(npc_type, pet_item_id);
+        if (inv_total(pets, $type_item) = 0) {
+            npc_del;
+        }
     }
-    if(npc_finduid(%follower_uid) = false) {
-        npc_add(coord, oc_param(%follower_obj, follower_id), ^max_32bit_int);
-        %npc_attacking_uid = uid;
-        %follower_uid = npc_uid;
+}
+
+def_npc_uid $tracked_uid = null;
+def_namedobj $tracked_obj = null;
+def_npc_uid $first_uid = null;
+def_namedobj $first_obj = null;
+
+npc_findallzone(coord);
+while (npc_findnext = true) {
+    if (%npc_attacking_uid = uid) {
+        def_namedobj $type_item = nc_param(npc_type, pet_item_id);
         npc_setmode(playerfollow);
-        npc_say("Meeeew!"); //youtu.be/6y_cOu5OQf4?t=110
-        settimer(petcat_growth, 150);
+        if ($first_uid = null) {
+            $first_uid = npc_uid;
+            $first_obj = $type_item;
+        }
+        if ($tracked_uid = null & %follower_obj ! null & $type_item = %follower_obj) {
+            $tracked_uid = npc_uid;
+            $tracked_obj = $type_item;
+        }
+    }
+}
+
+if ($tracked_uid = null) {
+    $tracked_uid = $first_uid;
+    $tracked_obj = $first_obj;
+}
+
+if ($tracked_uid = null) {
+    %follower_uid = null;
+    %follower_obj = null;
+    return;
+}
+
+%follower_uid = $tracked_uid;
+%follower_obj = $tracked_obj;
+settimer(petcat_growth, 150);
+
+[proc,reconcile_type](obj $item)
+def_npc $follower_type = oc_param($item, follower_id);
+if ($follower_type = null) return;
+def_int $expected = inv_total(pets, $item);
+
+def_int $existing = 0;
+npc_findallzone(coord);
+while (npc_findnext = true) {
+    if (%npc_attacking_uid = uid & npc_type = $follower_type) {
+        $existing = calc($existing + 1);
+    }
+}
+
+if ($existing > $expected) {
+    def_int $to_despawn = sub($existing, $expected);
+    npc_findallzone(coord);
+    while (npc_findnext = true) {
+        if ($to_despawn > 0 & %npc_attacking_uid = uid & npc_type = $follower_type) {
+            npc_del;
+            $to_despawn = sub($to_despawn, 1);
+        }
+    }
+}
+
+if ($existing < $expected) {
+    def_int $to_spawn = sub($expected, $existing);
+    while ($to_spawn > 0) {
+        npc_add(coord, $follower_type, ^max_32bit_int);
+        %npc_attacking_uid = uid;
+        npc_setmode(playerfollow);
+        $to_spawn = sub($to_spawn, 1);
     }
 }

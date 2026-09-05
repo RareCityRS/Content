@@ -193,7 +193,6 @@ if(npc_findhero = ^true) { // happens before npc_death
     queue(chompybird_kill, 0, 0);
 }
 gosub(npc_death);
-
 // todo confirm duration
 npc_add(npc_coord, chompybird_dead, 100);
 

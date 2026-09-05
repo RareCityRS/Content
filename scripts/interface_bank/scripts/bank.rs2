@@ -107,11 +107,6 @@ if ($deposit > 0) {
 return(true);
 
 [proc,bank_check_allowed](obj $obj, int $send_mes)(boolean)
-if (oc_param($obj, unbankable) = ^true) {
-    if($send_mes = ^true) mes("A magical force prevents you from banking this item!"); // osrs
-    return(false);
-}
-
 // https://www.youtube.com/watch?v=W5iZgykts2A // No mes when creating boxes via actions
 if ($obj = macro_cube) {
     ~try_add_macro_cube;

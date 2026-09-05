@@ -1,0 +1,229 @@
+// =====================================================================
+// Playfight system (cat-vs-cat sparring)
+//
+// Engagement:
+//   Initiator must have cat_friendly=0 and owner wearing felinemedal.
+//   Initiator's scan finds an unfriendly target and reads the target's
+//   medal status from %cvc_medal_worn (mirrored each tick by dispatch).
+//   - Target has medal: enters PLAYFIGHT, fights back.
+//   - Target lacks medal: stays NORMAL, takes hitsplats but no retaliation.
+//     Initiator detects non-reciprocation after grace period and gives up.
+//
+// State machine (also defined in dispatch):
+//   NORMAL    - default
+//   PLAYFIGHT - actively fighting
+//   GIVEUP    - 2-tick "Mrr?" hold after non-reciprocation detected
+//   RETREAT   - walking ~3 tiles away after giveup, then return to NORMAL
+//
+// All procs are NPC-context: no `uid`, no player varps, no `coord`.
+// =====================================================================
+
+// ---------------------------------------------------------------------
+// Scan for a nearby unfriendly cat from a different (online) owner
+// that's eligible to be engaged.
+//
+// Both cats' scan_clock is set on success — protects the partner from
+// being immediately scanned again by another cat.
+// ---------------------------------------------------------------------
+[proc,cvc_playfight_scan]
+def_npc_uid $self_uid = npc_uid;
+def_player_uid $self_owner = %npc_attacking_uid;
+def_coord $self_coord = npc_coord;
+def_npc_uid $found = null;
+
+npc_findallzone($self_coord);
+while (npc_findnext = true) {
+    if ($found = null
+        & npc_uid ! $self_uid
+        & npc_category = petcat
+        & %npc_attacking_uid ! $self_owner
+        & %npc_attacking_uid ! null
+        & %cvc_offline_ticks = 0
+        & %cvc_state = ^cvc_state_normal
+        & %cvc_target_uid = null
+        & npc_param(cat_friendly) = 0
+        & npc_range($self_coord) <= ^cvc_playfight_range) {
+        $found = npc_uid;
+    }
+}
+
+if ($found = null) {
+    if (npc_finduid($self_uid) = false) return;
+    return;
+}
+
+def_npc_uid $partner = $found;
+
+// Switch to partner. Read medal status (mirrored to varn each tick).
+if (npc_finduid($partner) = false) return;
+def_int $partner_has_medal = %cvc_medal_worn;
+
+// Always set partner's scan_clock — protects them from harassment by
+// other cats while this engagement plays out.
+%cvc_scan_clock = add(map_clock, ^cvc_post_fight_cooldown);
+
+if ($partner_has_medal = 1) {
+    // Partner reciprocates: full PLAYFIGHT engagement.
+    %cvc_state = ^cvc_state_playfight;
+    %cvc_target_uid = $self_uid;
+    %cvc_clock = add(map_clock, ^cvc_playfight_duration);
+    %cvc_engagement_age = 0;
+    npc_say("Mrrr!");
+}
+// else: partner stays in NORMAL state, will receive hitsplats passively.
+
+// Switch back to self. Always enter PLAYFIGHT regardless of partner's medal.
+if (npc_finduid($self_uid) = false) return;
+%cvc_state = ^cvc_state_playfight;
+%cvc_target_uid = $partner;
+%cvc_clock = add(map_clock, ^cvc_playfight_duration);
+%cvc_engagement_age = 0;
+npc_say("Mrrr!");
+
+// ---------------------------------------------------------------------
+// Per-tick handler for cats in PLAYFIGHT state. Order matters:
+//   1. Owner-break check (teleport breaks the fight)
+//   2. Duration expired (clean exit)
+//   3. Partner gone (clean exit)
+//   4. Reciprocation check (after grace; non-medal partners trigger giveup)
+//   5. Walk toward partner if not adjacent
+//   6. At adjacent: face, hitsplat, random anim
+// ---------------------------------------------------------------------
+[proc,cvc_playfight_tick]
+def_npc_uid $self_uid = npc_uid;
+%cvc_engagement_age = add(%cvc_engagement_age, 1);
+
+// 1. Owner-break: owner teleported or ran far. Break the fight.
+if (npc_range(coord) > ^cvc_playfight_break_distance) {
+    %cvc_state = ^cvc_state_normal;
+    %cvc_target_uid = null;
+    %cvc_clock = 0;
+    %cvc_engagement_age = 0;
+    %cvc_scan_clock = add(map_clock, ^cvc_post_fight_cooldown);
+    npc_setmode(playerfollow);
+    return;
+}
+
+// 2. Duration expired: clean exit.
+if (%cvc_clock <= map_clock) {
+    %cvc_state = ^cvc_state_normal;
+    %cvc_target_uid = null;
+    %cvc_clock = 0;
+    %cvc_engagement_age = 0;
+    %cvc_scan_clock = add(map_clock, ^cvc_post_fight_cooldown);
+    npc_setmode(playerfollow);
+    return;
+}
+
+// 3. Partner gone: clean exit.
+def_npc_uid $partner = %cvc_target_uid;
+def_int $age = %cvc_engagement_age;
+
+if (npc_finduid($partner) = false) {
+    if (npc_finduid($self_uid) = false) return;
+    %cvc_state = ^cvc_state_normal;
+    %cvc_target_uid = null;
+    %cvc_clock = 0;
+    %cvc_engagement_age = 0;
+    %cvc_scan_clock = add(map_clock, ^cvc_post_fight_cooldown);
+    npc_setmode(playerfollow);
+    return;
+}
+def_int $partner_state = %cvc_state;
+def_coord $partner_coord = npc_coord;
+
+if (npc_finduid($self_uid) = false) return;
+
+// 4. Reciprocation check (after grace period). Partner not in PLAYFIGHT
+// means they don't have a medal and can't fight back. Initiator gives up.
+if ($age > ^cvc_reciprocation_grace & $partner_state ! ^cvc_state_playfight) {
+    %cvc_state = ^cvc_state_giveup;
+    %cvc_clock = add(map_clock, ^cvc_giveup_hold_ticks);
+    %cvc_engagement_age = 0;
+    %cvc_home_coord = $partner_coord;
+    npc_setmode(none);
+    npc_say("Mrr?");
+    return;
+}
+
+// 5. Approach partner if not adjacent.
+npc_setmode(none);
+if (npc_range($partner_coord) > 1) {
+    npc_walk($partner_coord);
+    return;
+}
+
+// 6. Adjacent. Face partner, hitsplat, animate.
+npc_facesquare($partner_coord);
+
+if (npc_finduid($partner) = false) return;
+npc_damage(^hitmark_block, 0);
+if (npc_finduid($self_uid) = false) return;
+
+def_int $action = random(3);
+if ($action = 0) {
+    npc_anim(cat_pounce, 0);
+} else if ($action = 1) {
+    npc_anim(cat_rollingover, 0);
+}
+
+if (random(10) = 0) {
+    npc_say("Mrr!");
+}
+
+// ---------------------------------------------------------------------
+// Per-tick handler for cats in GIVEUP state. Holds in mode=none for
+// %cvc_clock duration with "Mrr?" said once at entry, then transitions
+// to RETREAT.
+// ---------------------------------------------------------------------
+[proc,cvc_giveup_tick]
+if (%cvc_clock > map_clock) {
+    npc_setmode(none);
+    return;
+}
+
+// Hold expired. Pick a retreat target (any walkable square ~3 tiles
+// from former target's position, stored in cvc_home_coord).
+def_coord $retreat_target = map_findsquare(%cvc_home_coord, ^cvc_retreat_distance, ^cvc_retreat_distance, ^map_findsquare_lineofwalk);
+if ($retreat_target = null) {
+    // Couldn't find a retreat coord. Skip retreat entirely.
+    %cvc_state = ^cvc_state_normal;
+    %cvc_target_uid = null;
+    %cvc_clock = 0;
+    %cvc_scan_clock = add(map_clock, ^cvc_post_fight_cooldown);
+    npc_setmode(playerfollow);
+    return;
+}
+
+%cvc_state = ^cvc_state_retreat;
+%cvc_home_coord = $retreat_target;
+%cvc_retreat_age = 0;
+npc_setmode(none);
+npc_walk($retreat_target);
+
+// ---------------------------------------------------------------------
+// Per-tick handler for cats in RETREAT state. Walks toward the retreat
+// target for up to ^cvc_retreat_max_ticks, then exits to NORMAL with
+// cooldown applied. Cat will then leash back to owner via NORMAL idle.
+// ---------------------------------------------------------------------
+[proc,cvc_retreat_tick]
+%cvc_retreat_age = add(%cvc_retreat_age, 1);
+
+if (%cvc_retreat_age >= ^cvc_retreat_max_ticks) {
+    %cvc_state = ^cvc_state_normal;
+    %cvc_target_uid = null;
+    %cvc_clock = 0;
+    %cvc_retreat_age = 0;
+    %cvc_scan_clock = add(map_clock, ^cvc_post_fight_cooldown);
+    npc_setmode(playerfollow);
+    return;
+}
+
+npc_setmode(none);
+npc_walk(%cvc_home_coord);
+
+// ---------------------------------------------------------------------
+// Sardine feeding handler (called from pet.rs2 opnpcu).
+// ---------------------------------------------------------------------
+[proc,cvc_feed_sardine]
+mes("The kitten gobbles up the sardine.");

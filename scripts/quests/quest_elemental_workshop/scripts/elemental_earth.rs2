@@ -1,4 +1,4 @@
-[ai_queue3,earth_elemental_rock_version]
+[ai_queue3,earth_elemental_rock_version] @gnomeknight_drop_table;
 gosub(npc_death);
 if (npc_findhero = ^false) {
     return;

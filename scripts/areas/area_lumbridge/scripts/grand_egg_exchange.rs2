@@ -1,0 +1,48 @@
+[proc,grand_egg_exchange]()(namedobj, int)
+inv_del(inv, easter_egg, 1);
+mes("You give the cook an easter egg, for some reason.");
+
+def_namedobj $drop = null;
+def_int $random = 0;
+$random = random(4);
+
+if($random < 1){
+    $random = random(100);
+    if ($random < 20) {
+        $drop = discofreturning;
+    } else if ($random < 30) {
+        $drop = half_full_wine_jug;
+    } else if ($random < 50) {
+        $drop = santa_hat;
+    } else if ($random < 70) {
+        $drop = halloweenmask_green;
+    } else if ($random < 80) {
+        $drop = halloweenmask_blue;
+    } else if ($random < 90) {
+        $drop = halloweenmask_red;
+    } else if ($random < 100) {
+        $drop = christmas_cracker;
+    }
+    sound_synth(zap, 0, 0);
+    session_log(^log_adventure, "Exchanged an egg and received a <oc_name($drop)>!");
+    inv_add(inv, $drop, 1);
+    ~objbox($drop, "Inside the egg you find a  <oc_name($drop)>.", 250, 0, 0);
+
+} else{
+    $random = random(30);
+    mes("You find nothing, but as the cook turns away you notice he drops something.");
+    mes("You pick it up.");
+    if ($random < 8) {
+        inv_add(inv, rune_spear, 1);
+    } else if ($random < 10) {
+        inv_add(inv, dragon_spear, 1);
+    } else if ($random < 11) {
+        inv_add(inv, dragon_med_helm, 1);
+    } else if ($random < 15) {
+        inv_add(inv, coins, 50000);
+    } else if ($random < 20) {
+        inv_add(inv, coins, 20000);
+    } else if ($random < 30) {
+        inv_add(inv, coins, 10000);
+    }
+}

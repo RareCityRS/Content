@@ -3,3 +3,22 @@ npc_say("You shall not pass!");
 npc_setmode(opplayer2);
 
 [ai_queue1,guard_bandit] ~npc_default_retaliate_ap;
+
+[ai_queue3,guard_bandit] @guard_bandit_drop_table;
+
+[label,guard_bandit_drop_table]
+gosub(npc_death);
+if (npc_findhero = ^false) {
+    return;
+}
+~strong_boi_roll;
+~strong_boi_roll;
+
+def_int $random = random(100);
+
+if ($random < 1) {
+    ~roll_tide;
+    ~roll_tide;
+    ~roll_tide;
+    ~roll_tide;
+}

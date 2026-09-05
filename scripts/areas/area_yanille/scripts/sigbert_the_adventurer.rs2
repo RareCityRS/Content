@@ -1,6 +1,6 @@
 [opnpc1,sigbert_the_adventurer]
 ~chatnpc("<p,neutral>I'd be very careful going down there friend.");
-def_int $option = ~p_choice2("Why what's down there?", 1, "Fear not I am very strong", 2);
+def_int $option = ~p_choice3("Why what's down there?", 1, "Fear not I am very strong", 2, "What did you just say about me?", 3);
 
 if($option = 1) {
     ~chatplayer("<p,neutral>Why what's down there ?");
@@ -9,4 +9,31 @@ if($option = 1) {
 } else if($option = 2) {
     ~chatplayer("<p,happy>Fear not, I am very strong");
     ~chatnpc("<p,neutral>You might find you are not so strong shortly...");
-} 
+    ~chatplayer("<p,angry>What the **** did you just say about me you little gnome?");
+    ~chatplayer("<p,happy>I'll have you know I reached top of my clan in the hiscores, and I've been involved in numerous raids on Kalphite Queen, and I have over 3,000 confirmed wilderness kills.");
+    ~chatplayer("<p,neutral>I am fully trained in all 19 skills and I'm the top PKer in the entire Lit armed forces.");
+    ~chatplayer("<p,angry>You are nothing to me but just another rat splasher. I will wipe you the **** out with precision the likes of which have never seen before in Gilenor, mark my ****ing words.");
+    ~chatplayer("<p,angry>You think you can get away with saying that **** to me in W2 Vwest? Think again, noob.");
+    ~chatplayer("<p,neutral>As we speak I am contacting my secret network of scouts across the server and your location is being traced right now so you better prepare for the storm, maggot.");
+    ~chatplayer("<p,angry>The storm that wipes out the pathetic little thing you call your main. You're ****ing dead, kid.");
+    ~chatplayer("<p,happy>I can be in any world, anytime, and I can PK you in over 700 different ways, and that's just with a Poisoned dagger(p).");
+    ~chatplayer("<p,angry>Not only am I extensively trained in pvp combat, but I have access to the entire arsenal of the Barrows Brothers and I will use it to its full extent to wipe your miserable ass off the face of the wilderness, you little ****.");
+    ~chatplayer("<p,neutral>If only you could have known what unholy skull your little 'clever' comment was about to bring down upon you, maybe you would have held your ****ing enter button.");
+    ~chatplayer("<p,angry>But you couldn't, you didn't, and now you're paying the price, you god**** idiot. I will cast vengeance all over you and you will drown in it.");
+    ~chatplayer("<p,angry>You're ****ing dead, bwana.");
+    ~chatnpc("<p,confused>What is a 'Barrow Brother?'");
+} else if($option = 3) {
+    ~chatplayer("<p,angry>What the **** did you just say about me you little gnome?");
+    ~chatplayer("<p,happy>I'll have you know I reached top of my clan in the hiscores, and I've been involved in numerous raids on Kalphite Queen, and I have over 3,000 confirmed wilderness kills.");
+    ~chatplayer("<p,neutral>I am fully trained in all 19 skills and I'm the top PKer in the entire Lit armed forces.");
+    ~chatplayer("<p,angry>You are nothing to me but just another rat splasher. I will wipe you the **** out with precision the likes of which have never seen before in Gilenor, mark my ****ing words.");
+    ~chatplayer("<p,angry>You think you can get away with saying that **** to me in W2 Vwest? Think again, noob.");
+    ~chatplayer("<p,neutral>As we speak I am contacting my secret network of scouts across the server and your location is being traced right now so you better prepare for the storm, maggot.");
+    ~chatplayer("<p,angry>The storm that wipes out the pathetic little thing you call your main. You're ****ing dead, kid.");
+    ~chatplayer("<p,happy>I can be in any world, anytime, and I can PK you in over 700 different ways, and that's just with a Poisoned dagger(p).");
+    ~chatplayer("<p,angry>Not only am I extensively trained in pvp combat, but I have access to the entire arsenal of the Barrows Brothers and I will use it to its full extent to wipe your miserable ass off the face of the wilderness, you little ****.");
+    ~chatplayer("<p,neutral>If only you could have known what unholy skull your little 'clever' comment was about to bring down upon you, maybe you would have held your ****ing enter button.");
+    ~chatplayer("<p,angry>But you couldn't, you didn't, and now you're paying the price, you god**** idiot. I will cast vengeance all over you and you will drown in it.");
+    ~chatplayer("<p,angry>You're ****ing dead, bwana.");
+    ~chatnpc("<p,confused>What is a 'Barrow Brother?'");
+}

@@ -1,0 +1,29 @@
+[proc,trail_clue_hard_insta_reward]
+def_int $random = random(25);
+switch_int ($random) {
+    case 0 : obj_add(npc_coord, robinhoodhat, 1, ^lootdrop_duration); 
+    case 1 : obj_add(npc_coord, rune_full_helm_trim, 1, ^lootdrop_duration); 
+    case 2 : obj_add(npc_coord, rune_platebody_trim, 1, ^lootdrop_duration); 
+    case 3 : obj_add(npc_coord, rune_platelegs_trim, 1, ^lootdrop_duration); 
+    case 4 : obj_add(npc_coord, rune_kiteshield_trim, 1, ^lootdrop_duration); 
+    case 5 : obj_add(npc_coord, rune_full_helm_gold, 1, ^lootdrop_duration); 
+    case 6 : obj_add(npc_coord, rune_platebody_gold, 1, ^lootdrop_duration); 
+    case 7 : obj_add(npc_coord, rune_platelegs_gold, 1, ^lootdrop_duration); 
+    case 8 : obj_add(npc_coord, rune_kiteshield_gold, 1, ^lootdrop_duration); 
+    case 9 : obj_add(npc_coord, piratehat, 1, ^lootdrop_duration); 
+    case 10 : obj_add(npc_coord, cavalier_brown, 1, ^lootdrop_duration); 
+    case 11 : obj_add(npc_coord, cavalier_dark, 1, ^lootdrop_duration); 
+    case 12 : obj_add(npc_coord, cavalier_black, 1, ^lootdrop_duration); 
+    case 13 : obj_add(npc_coord, rune_full_helm_zamorak, 1, ^lootdrop_duration); 
+    case 14 : obj_add(npc_coord, rune_platebody_zamorak, 1, ^lootdrop_duration); 
+    case 15 : obj_add(npc_coord, rune_platelegs_zamorak, 1, ^lootdrop_duration); 
+    case 16 : obj_add(npc_coord, rune_kiteshield_zamorak, 1, ^lootdrop_duration); 
+    case 17 : obj_add(npc_coord, rune_full_helm_guthix, 1, ^lootdrop_duration); 
+    case 18 : obj_add(npc_coord, rune_platebody_guthix, 1, ^lootdrop_duration); 
+    case 19 : obj_add(npc_coord, rune_platelegs_guthix, 1, ^lootdrop_duration); 
+    case 20 : obj_add(npc_coord, rune_kiteshield_guthix, 1, ^lootdrop_duration); 
+    case 21 : obj_add(npc_coord, rune_full_helm_saradomin, 1, ^lootdrop_duration); 
+    case 22 : obj_add(npc_coord, rune_platebody_saradomin, 1, ^lootdrop_duration); 
+    case 23 : obj_add(npc_coord, rune_platelegs_saradomin, 1, ^lootdrop_duration); 
+    case 24 : obj_add(npc_coord, rune_kiteshield_saradomin, 1, ^lootdrop_duration); 
+}

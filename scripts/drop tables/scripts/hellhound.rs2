@@ -6,3 +6,21 @@ if (npc_findhero = ^false) {
 // Tertiary
 ~trail_hardcluedrop(64, npc_coord);
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+~strong_boi_roll;
+~strong_boi_roll;
+
+def_int $random = random(128);
+
+if ($random < 1) {
+
+    ~trail_clue_hard_insta_reward;
+    ~roll_tide;
+    ~roll_tide;
+    ~roll_tide;
+
+}else{
+    ~roll_tide;
+    ~roll_tide;
+    ~roll_tide;
+    ~roll_tide;
+}

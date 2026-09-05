@@ -32,6 +32,9 @@ if (npc_findhero = ^false) {
 }
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 def_int $random = random(512);
+~roll_tide;
+~roll_tide;
+~roll_tide;
 
 if ($random < 10) {
     obj_add(npc_coord, steel_axe, 1, ^lootdrop_duration);

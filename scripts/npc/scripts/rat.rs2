@@ -1,0 +1,15 @@
+[ai_queue2,rat]
+if (random(1000) = 0 & sub(npc_stat(hitpoints), last_int) > 0) {
+    @rat_moo;
+    ~npc_rat_teleport;
+}
+
+[proc,npc_rat_teleport]
+spotanim_map(smokepuff, npc_coord, 124, 0);
+if (finduid(%npc_aggressive_player) = true & npc_getmode = opplayer2) {
+    npc_say("YYEEEEEAAARRRRGGHHHH!!!");
+    sound_synth(smokepuff, 0, 0);
+}
+npc_tele(map_findsquare(npc_coord, 0, 20, ^map_findsquare_none));
+spotanim_map(smokepuff, npc_coord, 124, 0);
+npc_setmode(null);

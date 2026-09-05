@@ -6,6 +6,7 @@ if (npc_findhero = ^false) {
 
 // Default drop from config.
 obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
+~roll_tide;
 
 // Tertiary
 ~trail_easycluedrop(128, npc_coord);
@@ -38,4 +39,15 @@ if ($random < 3) {
     obj_add(npc_coord, knife, 1, ^lootdrop_duration);
 } else if ($random < 88) {
     obj_add(npc_coord, cabbage, 1, ^lootdrop_duration);
+} if ($random < 92) {
+    $random = random(6);
+
+    if($random < 1){
+        ~trail_clue_easy_insta_reward;
+    }else{
+        ~roll_tide;
+    }
+    
+}else{
+    ~roll_tide;
 }

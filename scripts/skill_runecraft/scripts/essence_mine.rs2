@@ -26,16 +26,174 @@ p_telejump($coord);
 
 // portal
 [oploc1,blankrunestone_exit_portal]
-// IncompleteProjectile(id = 109, startHeight = 15, endHeight = 31, delay = 0, angle = 16, distOffset = 128)	| distance = 1, flightDuration = 30, visualStart = Location(x = 9557, y = 3778, z = 0)
-mes("You step through the portal...");
-def_int $duration = ~player_projectile(loc_coord, coord, uid, curse_travel, 15, 31, 0, 16, 0, 128, 5);
+def_int $chance = random(100);
+def_int $level = stat(runecraft);
+mes("You feel a powerful force take hold of you...");
 spotanim_pl(curse_impact, 124, 30);
 sound_synth(teleport_all, 1, 0);
-p_delay(1);
-if (%exit_essence_mine_coord = null) {
-    %exit_essence_mine_coord = ^essence_mine_to_sedridor;
-} else if (%exit_essence_mine_coord ! ^essence_mine_to_aubury & %exit_essence_mine_coord ! ^essence_mine_to_sedridor & map_members = ^false) {
-    %exit_essence_mine_coord = ^essence_mine_to_sedridor; // in osrs, if you hop to a f2p world from f2p when inside the ess mine, if your exit coord is in a p2p area it reset to sedridor!
+p_delay(2);
+if ($level > 53) {
+    if ($chance < 30) {
+        p_telejump(map_findsquare(0_44_75_25_30,0,0,0)); // air altar
+        return;
+    } else if ($chance < 31) {
+        p_telejump(map_findsquare(0_43_75_41_29,0,0,0)); // mind altar
+        return;
+    } else if ($chance < 32) {
+        p_telejump(map_findsquare(0_42_75_37_32,0,0,0)); // water altar
+        return;
+    } else if ($chance < 33) {
+        p_telejump(map_findsquare(0_41_75_33_30,0,0,0)); // earth altar
+        return;
+    } else if ($chance < 38) {
+        p_telejump(map_findsquare(0_40_75_16_48,0,0,0)); // fire altar
+        return;
+    } else if ($chance < 39) {
+        p_telejump(map_findsquare(0_39_75_27_38,0,2,0)); // body altar
+        return;
+    } else if ($chance < 59) {
+        p_telejump(map_findsquare(0_33_75_10_33,0,0,0)); // cosmic altar
+        return;
+    } else if ($chance < 60) {
+        p_telejump(map_findsquare(3_35_75_35_47,0,0,0)); // chaos altar
+        return;
+    } else if ($chance < 80) {
+        p_telejump(map_findsquare(0_37_75_32_35,0,0,0)); // nature altar
+        return;
+    }
+    p_telejump(map_findsquare(0_38_75_32_19,0,0,0)); // law altar
+} else if ($level > 43) {
+    if ($chance < 30) {
+        p_telejump(map_findsquare(0_44_75_25_30,0,0,0)); // air altar
+        return;
+    } else if ($chance < 35) {
+        p_telejump(map_findsquare(0_43_75_41_29,0,0,0)); // mind altar
+        return;
+    } else if ($chance < 40) {
+        p_telejump(map_findsquare(0_42_75_37_32,0,0,0)); // water altar
+        return;
+    } else if ($chance < 45) {
+        p_telejump(map_findsquare(0_41_75_33_30,0,0,0)); // earth altar
+        return;
+    } else if ($chance < 55) {
+        p_telejump(map_findsquare(0_40_75_16_48,0,0,0)); // fire altar
+        return;
+    } else if ($chance < 60) {
+        p_telejump(map_findsquare(0_39_75_27_38,0,2,0)); // body altar
+        return;
+    } else if ($chance < 80) {
+        p_telejump(map_findsquare(0_33_75_10_33,0,0,0)); // cosmic altar
+        return;
+    } else if ($chance < 85) {
+        p_telejump(map_findsquare(3_35_75_35_47,0,0,0)); // chaos altar
+        return;
+    }
+    p_telejump(map_findsquare(0_37_75_32_35,0,0,0)); // nature altar
+} else if ($level > 34) {
+    if ($chance < 30) {
+        p_telejump(map_findsquare(0_44_75_25_30,0,0,0)); // air altar
+        return;
+    } else if ($chance < 40) {
+        p_telejump(map_findsquare(0_43_75_41_29,0,0,0)); // mind altar
+        return;
+    } else if ($chance < 45) {
+        p_telejump(map_findsquare(0_42_75_37_32,0,0,0)); // water altar
+        return;
+    } else if ($chance < 50) {
+        p_telejump(map_findsquare(0_41_75_33_30,0,0,0)); // earth altar
+        return;
+    } else if ($chance < 60) {
+        p_telejump(map_findsquare(0_40_75_16_48,0,0,0)); // fire altar
+        return;
+    } else if ($chance < 70) {
+        p_telejump(map_findsquare(0_39_75_27_38,0,2,0)); // body altar
+        return;
+    } else if ($chance < 90) {
+        p_telejump(map_findsquare(0_33_75_10_33,0,0,0)); // cosmic altar
+        return;
+    }
+    p_telejump(map_findsquare(3_35_75_35_47,0,0,0)); // chaos altar
+} else if ($level > 26) {
+    if ($chance < 30) {
+        p_telejump(map_findsquare(0_44_75_25_30,0,0,0)); // air altar
+        return;
+    } else if ($chance < 40) {
+        p_telejump(map_findsquare(0_43_75_41_29,0,0,0)); // mind altar
+        return;
+    } else if ($chance < 45) {
+        p_telejump(map_findsquare(0_42_75_37_32,0,0,0)); // water altar
+        return;
+    } else if ($chance < 50) {
+        p_telejump(map_findsquare(0_41_75_33_30,0,0,0)); // earth altar
+        return;
+    } else if ($chance < 60) {
+        p_telejump(map_findsquare(0_40_75_16_48,0,0,0)); // fire altar
+        return;
+    } else if ($chance < 80) {
+        p_telejump(map_findsquare(0_39_75_27_38,0,2,0)); // body altar
+        return;
+    }
+    p_telejump(map_findsquare(0_33_75_10_33,0,0,0)); // cosmic altar
+} else if ($level > 19) {
+    if ($chance < 35) {
+        p_telejump(map_findsquare(0_44_75_25_30,0,0,0)); // air altar
+        return;
+    } else if ($chance < 52) {
+        p_telejump(map_findsquare(0_43_75_41_29,0,0,0)); // mind altar
+        return;
+    } else if ($chance < 67) {
+        p_telejump(map_findsquare(0_42_75_37_32,0,0,0)); // water altar
+        return;
+    } else if ($chance < 80) {
+        p_telejump(map_findsquare(0_41_75_33_30,0,0,0)); // earth altar
+        return;
+    } else if ($chance < 90) {
+        p_telejump(map_findsquare(0_40_75_16_48,0,0,0)); // fire altar
+        return;
+    }
+    p_telejump(map_findsquare(0_39_75_27_38,0,2,0)); // body altar
+} else if ($level > 13) {
+    if ($chance < 40) {
+        p_telejump(map_findsquare(0_44_75_25_30,0,0,0)); // air altar
+        return;
+    } else if ($chance < 60) {
+        p_telejump(map_findsquare(0_43_75_41_29,0,0,0)); // mind altar
+        return;
+    } else if ($chance < 70) {
+        p_telejump(map_findsquare(0_42_75_37_32,0,0,0)); // water altar
+        return;
+    } else if ($chance < 80) {
+        p_telejump(map_findsquare(0_41_75_33_30,0,0,0)); // earth altar
+        return;
+    }
+    p_telejump(map_findsquare(0_40_75_16_48,0,0,0)); // fire altar
+} else if ($level > 8) {
+    if ($chance < 40) {
+        p_telejump(map_findsquare(0_44_75_25_30,0,0,0)); // air altar
+        return;
+    } else if ($chance < 60) {
+        p_telejump(map_findsquare(0_43_75_41_29,0,0,0)); // mind altar
+        return;
+    } else if ($chance < 80) {
+        p_telejump(map_findsquare(0_42_75_37_32,0,0,0)); // water altar
+        return;
+    }
+    p_telejump(map_findsquare(0_41_75_33_30,0,0,0)); // earth altar
+} else if ($level > 4) {
+    if ($chance < 45) {
+        p_telejump(map_findsquare(0_44_75_25_30,0,0,0)); // air altar
+        return;
+    } else if ($chance < 80) {
+        p_telejump(map_findsquare(0_43_75_41_29,0,0,0)); // mind altar
+        return;
+    }
+    p_telejump(map_findsquare(0_42_75_37_32,0,0,0)); // water altar
+} else if ($level > 1) {
+    if ($chance < 50) {
+        p_telejump(map_findsquare(0_44_75_25_30,0,0,0)); // air altar
+        return;
+    }
+    p_telejump(map_findsquare(0_43_75_41_29,0,0,0)); // mind altar
+} else {
+    p_telejump(map_findsquare(0_44_75_25_30,0,0,0)); // air altar
 }
-def_coord $coord = map_findsquare(%exit_essence_mine_coord, 0, 2, ^map_findsquare_lineofwalk);
-p_telejump($coord);

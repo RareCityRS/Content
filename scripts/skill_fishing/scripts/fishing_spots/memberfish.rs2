@@ -136,7 +136,7 @@ if (npc_param(is_whirlpool) = ^true) {
     ~macro_whirlpool_attempt_take_equipment(big_net);
     return;
 }
-def_int $random = random(60000);
+def_int $random = random(30000);
 if ($random < 1) { 
     ~edible_roll_proc;
 }
@@ -179,13 +179,13 @@ if (stat_random(fishing, 3, 7) = true) {
 }
 // casket
 if (stat_random(fishing, 1, 2) = true) {
-    inv_add(inv, cert_casket, calc(3 + random(3)));
+    inv_add(inv, cert_casket, calc(6 + random(5)));
     mes("You catch a casket.");
     stat_advance(fishing, 1000);
 }
 // another casket
 if (stat_random(fishing, 1, 2) = true) {
-    inv_add(inv, cert_casket, calc(2 + random(3)));
+    inv_add(inv, cert_casket, calc(4 + random(5)));
     mes("You catch a casket.");
     stat_advance(fishing, 1000);
 }

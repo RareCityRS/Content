@@ -458,6 +458,10 @@ if (npc_finduid(%follower_uid) = true) {
 return;
 
 [queue,follower_login]
+if (%follower_obj ! null & inv_total(pets, %follower_obj) = 0 & oc_param(%follower_obj, follower_id) ! null) {
+    inv_add(pets, %follower_obj, 1);
+}
+
 def_int $i = 0;
 def_int $size = inv_size(pets);
 while ($i < $size) {

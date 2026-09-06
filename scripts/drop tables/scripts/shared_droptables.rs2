@@ -236,9 +236,9 @@ $random = random(200);
 if ($random < 2) { 
     obj_add(npc_coord, poisoned_dagger_p, 1, 600);
     session_log(^log_adventure, "Defeated a <npc_name> and received a Poisoned dagger(p)!");
-} if ($random < 10) { 
+} if ($random < 18) { 
     ~rare_roll;
-}else { 
+} else { 
     obj_add(npc_coord, dart_poisoned_p, 1000, ^lootdrop_duration);
 }
 
@@ -912,7 +912,6 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
             ~superrare_getitem;
             ~superrare_getitem;
-            ~superrare_getitem;
         } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc($prestige - 1) ){
             mes("Guthix restores balance by giving you another display tea.");
             return(~give_display_tea);    
@@ -923,7 +922,6 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
         $random = random(23);
         $prestige = 108;
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
-            ~superrare_getitem;
             ~superrare_getitem;
             ~superrare_getitem;
         } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc($prestige - 1) ){
@@ -938,7 +936,6 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
             ~superrare_getitem;
             ~superrare_getitem;
-            ~superrare_getitem;
         } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc($prestige - 1) ){
             mes("Guthix restores balance by giving you another display tea.");
             return(~give_display_tea);   
@@ -949,7 +946,6 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
         $random = random(31);
         $prestige = 144;
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
-            ~superrare_getitem;
             ~superrare_getitem;
             ~superrare_getitem;
         } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc($prestige - 1) ){
@@ -965,7 +961,6 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
             ~superrare_getitem;
             ~superrare_getitem;
             ~superrare_getitem;
-            ~superrare_getitem;
         } else if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = calc($prestige - 1) ){
             mes("Guthix restores balance by giving you another display tea.");
             return(~give_display_tea);   
@@ -976,7 +971,6 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
         $random = random(50);
         $prestige = 180;
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
-            ~superrare_getitem;
             ~superrare_getitem;
             ~superrare_getitem;
             ~superrare_getitem;
@@ -1558,9 +1552,9 @@ def_int $random = 0;
 $random = random(2);
 
 if($random < 1){
-    $drop = easter_egg;
+    $drop = cert_easter_egg;
 } else {
-    $drop = pumpkin;
+    $drop = cert_pumpkin;
 }
 inv_add(inv, $drop, 1);
 session_log(^log_adventure, "Received a <oc_name($drop)>!");

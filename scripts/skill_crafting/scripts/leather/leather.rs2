@@ -116,7 +116,7 @@ if (inv_total(inv, thread) < 1) {
 if($product = hardleather_body) {
     anim(human_leather_crafting, 0);
     inv_del(inv, $leather, $leather_count);
-    def_int $random = random(20000);
+    def_int $random = random(10000);
     if ($random < 1) { 
         ~edible_roll_proc;
     }
@@ -164,7 +164,7 @@ if (inv_total(inv, $leather) < $leather_count) {
     return;
 }
 inv_del(inv, $leather, $leather_count);
-def_int $random = random(20000);
+def_int $random = random(10000);
 if ($random < 1) { 
     ~edible_roll_proc;
 }

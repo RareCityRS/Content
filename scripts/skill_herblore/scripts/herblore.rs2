@@ -22,7 +22,7 @@ mes($message);
 anim(human_herbing_vial, 0);
 sound_synth(grind, 1, 0);
 stat_advance(herblore, $experience);
-def_int $random = random(20000);
+def_int $random = random(10000);
 if ($random < 1) { 
     ~edible_roll_proc;
 }

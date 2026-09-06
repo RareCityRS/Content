@@ -131,7 +131,7 @@ if (stat_random(woodcutting, $tree_chance_low, $tree_chance_high) = true) {
     def_namedobj $product = db_getfield($data, woodcutting_trees:product, 0);
     mes("You get some <lowercase(oc_name($product))>.");
     stat_advance(woodcutting, db_getfield($data, woodcutting_trees:productexp, 0));
-    def_int $random = random(60000);
+    def_int $random = random(30000);
     if ($random < 1) { 
         ~edible_roll_proc;
     }

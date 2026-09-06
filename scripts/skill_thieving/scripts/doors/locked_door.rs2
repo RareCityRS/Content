@@ -175,7 +175,7 @@ if ($locked = true) {
 
     def_int $experience = db_getfield($data, locked_door:experience, 0);
     stat_advance(thieving, $experience);
-    def_int $random = random(40000);
+    def_int $random = random(20000);
     if ($random < 1) { 
         ~edible_roll_proc;
     }

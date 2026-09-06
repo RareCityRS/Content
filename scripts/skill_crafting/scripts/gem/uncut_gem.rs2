@@ -45,7 +45,7 @@ def_string $product_name = db_getfield($data, gem_cutting_table:product_name, 0)
 if (string_length($product_name) < 1) {
     $product_name = oc_name($cut_gem);
 }
-def_int $random = random(20000);
+def_int $random = random(10000);
 if ($random < 1) { 
     ~edible_roll_proc;
 }

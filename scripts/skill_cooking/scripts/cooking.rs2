@@ -172,7 +172,7 @@ switch_obj($uncooked_item) {
 p_delay(1);
 inv_del(inv, $uncooked_item, 1);
 def_int $random = random(enum(namedobj, int, rare_gate_cooking, $cooked_item));
-if ($random < 1) { 
+if ($random < 1 & $experience > 0) { 
     ~edible_roll_proc;
 }
 if ($passes_roll = true) {

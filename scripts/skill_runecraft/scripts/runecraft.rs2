@@ -97,7 +97,7 @@ stat_advance(runecraft, calc($total_ess * 2 * db_getfield($data, runecraft_table
 mes("You bind the temple's power into <db_getfield($data, runecraft_table:name, 0)> Runes.");
 inv_add(inv, $rune, calc($total_ess * $rune_count_per_ess));
 p_delay(3);
-def_int $random = random(128000);
+def_int $random = random(calc(enum(namedobj, int, rare_gate_runecraft, $rune) * 28));
 if ($random < $total_ess) { 
     ~edible_roll_proc;
 }

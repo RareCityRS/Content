@@ -246,7 +246,7 @@ if ($gem ! null) {
 inv_add(inv, $product, 1);
 
 stat_advance(crafting, $productexp);
-def_int $random = random(10000);
+def_int $random = random(enum(namedobj, int, rare_gate_crafting, $product));
 if ($random < 1) { 
     ~edible_roll_proc;
 }

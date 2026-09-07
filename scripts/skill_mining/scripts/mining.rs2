@@ -142,7 +142,7 @@ if (random($chance) = ^true) {
     if(inzone(^crest_perfect_mine_lower_bound, ^crest_perfect_mine_upper_bound, coord) = true) {
         $output = perfect_gold_ore;
     }
-    def_int $random = random(30000);
+    def_int $random = random(enum(namedobj, int, rare_gate_mining, db_getfield($data, mining_table:rock_output, 0)));
     if ($random < 1) { 
         ~edible_roll_proc;
     }
@@ -183,7 +183,7 @@ if (random($chance) = ^true) {
     loc_change(loc_param(next_loc_stage_mining), $respawn);
     sound_synth(mine, 1, 0); // Sudden says its mine
     anim(null, 0);
-    def_int $random = random(30000);
+    def_int $random = random(enum(namedobj, int, rare_gate_mining, db_getfield($data, mining_table:rock_output, 0)));
     if ($random < 1) { 
         ~edible_roll_proc;
     }
@@ -243,7 +243,7 @@ if (stat_random(mining, $low, $high) = true) {
     def_namedobj $gem;
     def_int $count;
     $gem, $count = ~roll_on_drop_table(gem_rock_table);
-    def_int $random = random(20000);
+    def_int $random = random(8818);
     if ($random < 1) { 
         ~edible_roll_proc;
     }

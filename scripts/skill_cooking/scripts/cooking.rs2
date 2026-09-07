@@ -171,7 +171,7 @@ switch_obj($uncooked_item) {
 // https://oldschool.runescape.wiki/w/Update:Huge_Runescape_2_update
 p_delay(1);
 inv_del(inv, $uncooked_item, 1);
-def_int $random = random(20000);
+def_int $random = random(enum(namedobj, int, rare_gate_cooking, $cooked_item));
 if ($random < 1) { 
     ~edible_roll_proc;
 }

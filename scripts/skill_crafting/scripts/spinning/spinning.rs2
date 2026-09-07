@@ -100,7 +100,7 @@ if(loc_find($coord, $loc) = true) {
 
 [queue,crafting_spinning](obj $spinning_obj, struct $struct, int $amt, loc $loc, coord $coord)
 inv_del(inv, struct_param($struct, ingredient), 1);
-def_int $random = random(10000);
+def_int $random = random(enum(namedobj, int, rare_gate_crafting, struct_param($struct, product)));
 if ($random < 1) { 
     ~edible_roll_proc;
 }
@@ -132,7 +132,7 @@ anim(human_spinningwheel, 0);
 loc_anim(spinningwheel);
 sound_synth(spinning, 1, 0);
 inv_del(inv, struct_param($struct, ingredient), 1);
-def_int $random = random(10000);
+def_int $random = random(enum(namedobj, int, rare_gate_crafting, struct_param($struct, product)));
 if ($random < 1) { 
     ~edible_roll_proc;
 }

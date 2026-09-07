@@ -22,7 +22,7 @@ anim(human_pickpocket, 0);
 stat_advance(thieving, $experience);
 sound_synth(pick, 1, 0);
 mes("You pick the <$pocket>.");
-def_int $random = random(20000);
+def_int $random = random(enum(npc, int, rare_gate_pickpocket, db_getfield($data, pickpocket:npc, 0)));
 if ($random < 1) { 
     ~edible_roll_proc;
 }
@@ -101,7 +101,7 @@ switch_loc (loc_type) {
 }
 ~stealing_check_for_reward($data);
 stat_advance(thieving, $experience);
-def_int $random = random(20000);
+def_int $random = random(enum(loc, int, rare_gate_stall, db_getfield($data, stealing:loc, 0)));
 if ($random < 1) { 
     ~edible_roll_proc;
 }
@@ -141,7 +141,7 @@ anim(human_openchest, 0);
 ~trapped_chest_check_for_reward($data);
 def_int $experience = db_getfield($data, trapped_chest:experience, 0);
 stat_advance(thieving, $experience);
-def_int $random = random(30000);
+def_int $random = random(enum(loc, int, rare_gate_trapped_chest, $loc));
 if ($random < 1) { 
     ~edible_roll_proc;
 }

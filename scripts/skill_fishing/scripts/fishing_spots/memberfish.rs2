@@ -136,7 +136,7 @@ if (npc_param(is_whirlpool) = ^true) {
     ~macro_whirlpool_attempt_take_equipment(big_net);
     return;
 }
-def_int $random = random(30000);
+def_int $random = random(36645);
 if ($random < 1) { 
     ~edible_roll_proc;
 }

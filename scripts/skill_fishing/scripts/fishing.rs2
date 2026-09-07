@@ -49,7 +49,7 @@ if ($fish2 ! null) {
         if ($bait ! null) {
             inv_del(inv, $bait, 1);
         }
-        def_int $random = random(30000);
+        def_int $random = random(enum(namedobj, int, rare_gate_fishing, $fish2));
         if ($random < 1) { 
             ~edible_roll_proc;
         }
@@ -66,7 +66,7 @@ if ($fish1 ! null) {
         if ($bait ! null) {
             inv_del(inv, $bait, 1);
         }
-        def_int $random = random(30000);
+        def_int $random = random(enum(namedobj, int, rare_gate_fishing, $fish1));
         if ($random < 1) { 
             ~edible_roll_proc;
         }
@@ -86,7 +86,7 @@ if ($fish2 ! null) { // if fish2 isnt null and roll for 2nd fish passes
             inv_del(inv, $bait, 1);
         }
         // give fish and display message
-        def_int $random = random(30000);
+        def_int $random = random(enum(namedobj, int, rare_gate_fishing, $fish2));
         if ($random < 1) { 
             ~edible_roll_proc;
         }
@@ -104,7 +104,7 @@ if ($fish1 ! null) { // else if fish1 isnt null and roll for 1st fish passes
             inv_del(inv, $bait, 1);
         }
         // give fish and display message
-        def_int $random = random(30000);
+        def_int $random = random(enum(namedobj, int, rare_gate_fishing, $fish1));
         if ($random < 1) { 
             ~edible_roll_proc;
         }

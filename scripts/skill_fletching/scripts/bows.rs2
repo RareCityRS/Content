@@ -39,7 +39,7 @@ inv_del(inv, bow_string, 1);
 mes("You add a string to the bow.");
 
 stat_advance(fletching, db_getfield($data, fletching_table:experience, 0));
-def_int $random = random(30000);
+def_int $random = random(enum(obj, int, rare_gate_fletching_string, $unstrung_bow));
 if ($random < 1) { 
     ~edible_roll_proc;
 }

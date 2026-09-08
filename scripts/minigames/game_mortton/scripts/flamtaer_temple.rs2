@@ -122,6 +122,10 @@ if(%temple_sanctity_p < 100) {
 //1 exp per 2 resources spent
 // xp given is always integer. I tested on rs3, which will show decimals in xp drops
 stat_advance(crafting, multiply(divide($resource_amount, 2), 10));
+def_int $random = random(19888);
+if ($random < 1 & $resource_amount > 0) {
+    ~edible_roll_proc;
+}
 
 def_int $current_wall_state = loc_param(temple_wall_level);
 //todo: Find better breakpoints
@@ -219,6 +223,10 @@ if(stat_random(firemaking, 100, 250) = false) {
     mes("You light the temple fire.");
     loc_change(templefire_altar, 99);
     stat_advance(firemaking, 1600);
+    def_int $random = random(3638);
+    if ($random < 1) {
+        ~edible_roll_proc;
+    }
 }
 
 [queue,update_flamtaer_overlay]

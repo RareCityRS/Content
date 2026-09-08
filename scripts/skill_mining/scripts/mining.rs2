@@ -200,6 +200,7 @@ def_int $chance = 10;
 if (random($chance) < 1) {
     inv_add(inv, cert_blankrune, 1);
     stat_advance(mining, 100);
+    ~mining_essence_rare_roll;
 }
 db_find(mining_table:rock, loc_type);
 def_dbrow $data = db_findnext;
@@ -208,11 +209,21 @@ if ($data = null) {
     return;
 }
 if (inv_freespace(inv) > 0) {
+    ~mining_essence_rare_roll;
     inv_add(inv, db_getfield($data, mining_table:rock_output, 0), 1);
 }
 stat_advance(mining, db_getfield($data, mining_table:rock_exp, 0));
 // mes("You manage to mine an unbound rune stone."); probably removed with law altar?
 p_oploc(3);
+
+[proc,mining_essence_rare_roll]
+def_int $random = random(44273);
+if ($random < 1) {
+    if (inv_freespace(inv) < 1) {
+        inv_del(inv, blankrune, 1);
+    }
+    ~edible_roll_proc;
+}
 
 
 [label,get_ore_gem_rock]

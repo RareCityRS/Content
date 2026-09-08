@@ -125,6 +125,10 @@ inv_add(inv, chocolate_cake, 1);
 // doesnt give xp https://web.archive.org/web/20040905213850/http://www.runehq.com/CookingSkillGuide.php
 // https://classic.runescape.wiki/w/Chocolate_Cake
 stat_advance(cooking, 300);
+def_int $random = random(27409);
+if ($random < 1) {
+    ~edible_roll_proc;
+}
 // display message
 mes("You make a chocolate cake.");
 

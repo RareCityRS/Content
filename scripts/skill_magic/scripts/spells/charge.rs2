@@ -24,6 +24,10 @@ if (p_finduid(uid) = true) {
     sound_synth(charge, 1, 0);
     ~delete_spell_runes($spell_data);
     ~give_spell_xp($spell_data);
+    def_int $random = random(13560);
+    if ($random < 1) {
+        ~edible_roll_proc;
+    }
 }
 
 [timer,charge]

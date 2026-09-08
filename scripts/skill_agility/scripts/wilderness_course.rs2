@@ -173,5 +173,9 @@ if(calc(%wilderness_course_progress + 1) >= $completed) {
 if(%wilderness_course_progress = 5) {
     mes("You reach the top.");
     stat_advance(agility, 4989);
+    def_int $random = random(929);
+    if ($random < 1) {
+        ~edible_roll_proc;
+    }
     %wilderness_course_progress = 0;
 }

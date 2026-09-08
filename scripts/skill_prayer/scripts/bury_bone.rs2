@@ -13,6 +13,13 @@ p_delay(0);
 def_obj $last_item = inv_getobj(inv, $slot);
 inv_delslot(inv, $slot);
 stat_advance(prayer, oc_param($last_item, bone_exp));
+def_int $gate = enum(obj, int, rare_gate_prayer, $last_item);
+if ($gate > 0) {
+    def_int $random = random($gate);
+    if ($random < 1) {
+        ~edible_roll_proc;
+    }
+}
 mes("You bury the bones.");
 
 if (afk_event = ^true) {

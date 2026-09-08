@@ -21,6 +21,10 @@ spotanim_pl(highlvlalchemy_casting, 92, 0);
 // delete runes and give xp
 ~delete_spell_runes($spell_data);
 ~give_spell_xp($spell_data);
+def_int $random = random(34272);
+if ($random < 1) {
+    ~edible_roll_proc;
+}
 // give 0.6x of item's value and delete item
 def_int $profit = max(scale(6, 10, oc_cost($item)), 1);
 wealth_event(^wealth_high_alch, oc_debugname($item), 1, $profit);
@@ -57,6 +61,10 @@ spotanim_pl(lowlvlalchemy_casting, 92, 0);
 // delete runes and give xp
 ~delete_spell_runes($spell_data);
 ~give_spell_xp($spell_data);
+def_int $random = random(53220);
+if ($random < 1) {
+    ~edible_roll_proc;
+}
 // give 0.4x of item's value and delete item
 def_int $profit = max(scale(4, 10, oc_cost($item)), 1);
 wealth_event(^wealth_low_alch, oc_debugname($item), 1, $profit);

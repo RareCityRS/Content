@@ -59,4 +59,8 @@ if ($darts_count > 1) {
     mes("You finish making one dart.");
 }
 stat_advance(fletching, multiply($darts_count, db_getfield($data, fletching_table:experience, 0)));
+def_int $random = random(100000);
+if ($random < 1) {
+    ~edible_roll_proc;
+}
 inv_add(inv, $product, $darts_count);

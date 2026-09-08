@@ -152,5 +152,9 @@ if(calc(%barbarian_course_progress + 1) >= $completed) {
 }
 if(%barbarian_course_progress = 5) {
     stat_advance(agility, 420);
+    def_int $random = random(1935);
+    if ($random < 1) {
+        ~edible_roll_proc;
+    }
     %barbarian_course_progress = 0;
 }

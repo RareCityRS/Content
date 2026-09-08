@@ -16,6 +16,10 @@ inv_del(inv, jug_water, 1);
 inv_add(inv, jug_unfermented_wine, 1);
 //display message
 mes("You squeeze the grapes into the jug. The wine begins to ferment.");
+def_int $random = random(47510);
+if ($random < 1) {
+    ~edible_roll_proc;
+}
 //set timer for 20 ticks
 settimer(fermenting_wine, 20);
 

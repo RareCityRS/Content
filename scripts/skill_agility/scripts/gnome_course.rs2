@@ -92,5 +92,9 @@ if(calc(%gnome_course_progress + 1) >= $completed) {
 }
 if(%gnome_course_progress = 7) {
     stat_advance(agility, 390);
+    def_int $random = random(2167);
+    if ($random < 1) {
+        ~edible_roll_proc;
+    }
     %gnome_course_progress = 0;
 }

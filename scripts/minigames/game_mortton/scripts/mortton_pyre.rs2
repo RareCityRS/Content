@@ -40,6 +40,10 @@ if($doses = $doses_req) {
 }
 inv_setslot(inv, $logs_slot, $product, 1);
 stat_advance(firemaking, struct_param($struct, pyre_create_experience));
+def_int $random = random(18186);
+if ($random < 1) {
+    ~edible_roll_proc;
+}
 
 [oplocu,temple_pyre]
 if(last_useitem = hollow_bark) {
@@ -200,6 +204,10 @@ spotanim_map(temple_pyre_fire, ~get_pyre_coord(loc_coord, loc_angle), 0, 30);
 sound_synth(fire_lit, 1, 0);
 stat_advance(firemaking, struct_param($funeral_pyre_struct, pyre_fm_experience));
 stat_advance(prayer,add(oc_param(%mortton_current_shade, pyre_shade_exp),struct_param($funeral_pyre_struct, pyre_shade_exp_bonus)));
+def_int $random = random(5000);
+if ($random < 1) {
+    ~edible_roll_proc;
+}
 %pyre_loc = 0;
 clearqueue(clear_pyre_loc);
 world_delay(0);

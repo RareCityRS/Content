@@ -26,6 +26,10 @@ p_delay(0);
 ~agility_exactmove(human_doublepipesqueeze, 30, 3, 0_40_148_15_34, movecoord(0_40_148_15_34, calc(3 * $mod), 0, 0), 30, 126, $dir, true);
 sound_synth(squeeze_in, 1, 0);
 stat_advance(agility, 75);
+def_int $random = random(10000);
+if ($random < 1) {
+    ~edible_roll_proc;
+}
 
 [oploc1,balancing_ledge3]
 if(stat(agility) < 40) {
@@ -80,6 +84,10 @@ p_delay(0);
 anim($end_seq, 0);
 ~update_bas;
 stat_advance(agility, 225);
+def_int $random = random(10000);
+if ($random < 1) {
+    ~edible_roll_proc;
+}
 mes("You skillfully edge across the gap.");
 
 [oploc1,climbingcaverocks1]
@@ -88,6 +96,10 @@ if(stat(agility) < 67) {
     return;
 }
 ~agility_climb_up(55, 0_40_148_55_34);
+def_int $random = random(10000);
+if ($random < 1) {
+    ~edible_roll_proc;
+}
 mes("You climb up the pile of rubble...");
 
 [oploc1,climbingcaverocks2]

@@ -41,6 +41,10 @@ if ($land_coord = loc_coord) {
         %score_gnomeball_game = 0;
         stat_advance(ranged, 300);
         stat_advance(agility, 300);
+        def_int $random = random(3715);
+        if ($random < 1) {
+            ~edible_roll_proc;
+        }
     } else {
         stat_advance(ranged, multiply(add(%score_gnomeball_game, 3), 10));
     }

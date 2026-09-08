@@ -44,6 +44,10 @@ if ($arrow_count > 1) {
     mes("You attach a feather to an arrow shaft.");
 }
 stat_advance(fletching, multiply($arrow_count, 10));
+def_int $random = random(100000);
+if ($random < 1) {
+    ~edible_roll_proc;
+}
 inv_add(inv, headless_arrow, $arrow_count);
 
 
@@ -83,4 +87,8 @@ if ($arrows_count > 1) {
     mes("You attach <~add_article($metal)> head to your arrow."); // guess
 }
 stat_advance(fletching, multiply($arrows_count, db_getfield($data, fletching_table:experience, 0)));
+def_int $random = random(100000);
+if ($random < 1) {
+    ~edible_roll_proc;
+}
 inv_add(inv, $product, $arrows_count);

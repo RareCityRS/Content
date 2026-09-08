@@ -74,6 +74,10 @@ while ($i < %trawler_catch) {
     $i = add($i, 1);
 }
 %trawler = ^trawler_sailed;
+def_int $random = random(300);
+if ($random < 1) {
+    ~edible_roll_proc;
+}
 %trawler_catch = 0;
 
 

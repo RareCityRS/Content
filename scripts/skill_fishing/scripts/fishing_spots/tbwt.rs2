@@ -50,6 +50,10 @@ if (%action_delay = calc(map_clock + 3)) {
     p_opnpc(4);
 } else if (%action_delay = map_clock) {
     if (stat_random(fishing, 100, 250) = true) {
+        def_int $random = random(48298);
+        if ($random < 1) {
+            ~edible_roll_proc;
+        }
         inv_add(inv, tbwt_raw_karambwanji, 1);
         stat_advance(fishing, 50);
         mes("You catch a Karambwanji.");
@@ -85,6 +89,10 @@ if (%action_delay < map_clock) {
 } else if (%action_delay = map_clock) {
     anim(human_smallnet, 0);
     if (stat_random(fishing, 100, 250) = true) {
+        def_int $random = random(48298);
+        if ($random < 1) {
+            ~edible_roll_proc;
+        }
         inv_add(inv, tbwt_raw_karambwanji, 1);
         stat_advance(fishing, 50);
         mes("You catch a Karambwanji.");
@@ -122,6 +130,10 @@ mes("You lower the Karambwan vessel.");
 sound_synth(fishing_cast, 1, 0);
 p_delay(5);
 if (stat_random(fishing, 5, 160) = true) {
+    def_int $random = random(27090);
+    if ($random < 1) {
+        ~edible_roll_proc;
+    }
     inv_del(inv, tbwt_karambwan_vessel_loaded_with_karambwanji, 1);
     inv_add(inv, tbwt_karambwan_vessel, 1);
     inv_add(inv, tbwt_raw_karambwan, 1);

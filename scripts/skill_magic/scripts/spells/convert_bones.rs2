@@ -36,6 +36,10 @@ if (p_finduid(uid) = true) {
     // delete runes and give xp
     ~delete_spell_runes($spell_data);
     ~give_spell_xp($spell_data);
+    def_int $random = random(56564);
+    if ($random < 1) {
+        ~edible_roll_proc;
+    }
     // doesnt delay in current osrs, but it did in early osrs:
     // https://youtu.be/OQWflbHRYLo?t=859
     // https://oldschool.runescape.wiki/w/Update:Bugfixes_%26_Combining_Tentacles

@@ -102,4 +102,8 @@ anim(human_pickupfloor, 0);
 p_delay(0);
 mes("You manage to fix the net."); // osrs
 stat_advance(crafting, 50);
+def_int $random = random(4087);
+if ($random < 1) {
+    ~edible_roll_proc;
+}
 inv_del(inv, rope, 1);

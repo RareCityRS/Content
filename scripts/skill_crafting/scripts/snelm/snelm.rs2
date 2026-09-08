@@ -13,6 +13,10 @@ inv_add(inv, oc_param($shell, next_obj_stage), 1);
 mes("You chisel the shell into a helmet.");
 anim(human_snailshellcutting, 0);
 stat_advance(crafting, 325);
+def_int $random = random(33901);
+if ($random < 1) {
+    ~edible_roll_proc;
+}
 sound_synth(chisel, 1, 0);
 
 [proc,snelm_reduction](int $damage)(int)

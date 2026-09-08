@@ -34,6 +34,10 @@ inv_del(inv, $item, 1);
 // includes count
 inv_add(inv, db_getfield($data, fletching_table:product, 0));
 stat_advance(fletching, db_getfield($data, fletching_table:experience, 0));
+def_int $random = random(100000);
+if ($random < 1) {
+    ~edible_roll_proc;
+}
 // osrs
 def_seq $anim = db_getfield($data, fletching_table:skill_anim, 0);
 def_synth $sound = db_getfield($data, fletching_table:skill_sound, 0);
@@ -85,4 +89,8 @@ if ($bolts_count > 1) {
 }
 
 stat_advance(fletching, multiply($bolts_count, db_getfield($data, fletching_table:experience, 0)));
+def_int $random = random(100000);
+if ($random < 1) {
+    ~edible_roll_proc;
+}
 inv_add(inv, $product, $bolts_count);

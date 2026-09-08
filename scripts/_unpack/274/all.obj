@@ -1019,7 +1019,6 @@ model=inv_trail_scroll
 2dyan=672
 2dxan=360
 tradeable=no
-dummyitem=inv_only
 
 [75_fire_wave]
 name=Spell

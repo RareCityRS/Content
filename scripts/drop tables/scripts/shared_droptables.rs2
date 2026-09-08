@@ -248,8 +248,8 @@ if ($random < 2) {
 def_int $random = 0;
 $random = random(100);
 
-if ($random < 77) {
-    $random = random(233);
+if ($random < 75) {
+    $random = random(276);
 
     if ($random < 1) {
         obj_add(npc_coord, mcannonremains, 1, ^lootdrop_duration);
@@ -444,12 +444,13 @@ if ($random < 77) {
                                             );
         if ($god_capes_obtained > 0) {
             $random = random(3);  
-            if ( $random < 1 )
+            if ($random < 1) {
                 obj_add(npc_coord, zamorak_cape, 1, 600);
             } else if ($random < 2) {
                 obj_add(npc_coord, guthix_cape, 1, 600);
             } else if ($random < 3) {
                 obj_add(npc_coord, saradomin_cape, 1, 600);
+            }
         } else {
             ~roll_food;
         }
@@ -689,92 +690,326 @@ if ($random < 77) {
         obj_add(npc_coord, thkebabinstructs, 1, ^lootdrop_duration); 
     } else if ($random < 233) {
         obj_add(npc_coord, thshantaydisc, 1, ^lootdrop_duration); 
+    } else if ($random < 234) {
+        obj_add(npc_coord, tbwt_sliced_banana_in_karamja_rum, 1, ^lootdrop_duration);
+    } else if ($random < 235) {
+        obj_add(npc_coord, tbwt_banana_in_karamja_rum, 1, ^lootdrop_duration);
+    } else if ($random < 236) {
+        obj_add(npc_coord, tbwt_monkey_corpse, 1, ^lootdrop_duration);
+    } else if ($random < 237) {
+        obj_add(npc_coord, tbwt_monkey_skin, 1, ^lootdrop_duration);
+    } else if ($random < 238) {
+        obj_add(npc_coord, tbwt_seaweed_in_monkey_skin_sandwich, 1, ^lootdrop_duration);
+    } else if ($random < 239) {
+        obj_add(npc_coord, tbwt_seaweed_in_monkey_corpse, 1, ^lootdrop_duration);
+    } else if ($random < 240) {
+        obj_add(npc_coord, hollow_bark, 1, ^lootdrop_duration);
+    } else if ($random < 241) {
+        obj_add(npc_coord, vampire_dust, 1, ^lootdrop_duration);
+    } else if ($random < 242) {
+        obj_add(npc_coord, sacred_oil4, 1, ^lootdrop_duration);
+    } else if ($random < 243) {
+        obj_add(npc_coord, mort_serum4, 1, ^lootdrop_duration);
+    } else if ($random < 244) {
+        obj_add(npc_coord, eadgar_drunk_parrot, 1, ^lootdrop_duration);
+    } else if ($random < 245) {
+        obj_add(npc_coord, eadgar_fake_man, 1, ^lootdrop_duration);
+    } else if ($random < 246) {
+        obj_add(npc_coord, eadgar_dirty_druid_robe, 1, ^lootdrop_duration);
+    } else if ($random < 247) {
+        obj_add(npc_coord, regicide_quest_kings_summons, 1, ^lootdrop_duration);
+    } else if ($random < 248) {
+        obj_add(npc_coord, regicide_iorwerth_message, 1, ^lootdrop_duration);
+    } else if ($random < 249) {
+        obj_add(npc_coord, regicide_crystal_pendant, 1, ^lootdrop_duration);
+    } else if ($random < 250) {
+        $random = random(7);
+        if ($random < 1) {
+            obj_add(npc_coord, regicide_barrel_empty, 1, ^lootdrop_duration);
+        } else if ($random < 2) {
+            obj_add(npc_coord, regicide_barrel_lid, 1, ^lootdrop_duration);
+        } else if ($random < 3) {
+            obj_add(npc_coord, regicide_barrel_lid_fused, 1, ^lootdrop_duration);
+        } else if ($random < 4) {
+            obj_add(npc_coord, regicide_barrel_tar, 1, ^lootdrop_duration);
+        } else if ($random < 5) {
+            obj_add(npc_coord, regicide_barrel_naphtha, 1, ^lootdrop_duration);
+        } else if ($random < 6) {
+            obj_add(npc_coord, regicide_barrel_naphtha_sulphar_mix, 1, ^lootdrop_duration);
+        } else if ($random < 7) {
+            obj_add(npc_coord, regicide_barrel_naphtha_quicklime_mix, 1, ^lootdrop_duration);
+        }
+    } else if ($random < 251) {
+        obj_add(npc_coord, regicide_alchemy, 1, ^lootdrop_duration);
+    } else if ($random < 252) {
+        obj_add(npc_coord, vt_useless_rock, 1, ^lootdrop_duration);
+    } else if ($random < 253) {
+        obj_add(npc_coord, viking_song, 1, ^lootdrop_duration);
+    } else if ($random < 254) {
+        obj_add(npc_coord, viking_unique_fish, 1, ^lootdrop_duration);
+    } else if ($random < 255) {
+        obj_add(npc_coord, viking_another_map, 1, ^lootdrop_duration);
+    } else if ($random < 256) {
+        obj_add(npc_coord, viking_weather_forecast, 1, ^lootdrop_duration);
+    } else if ($random < 257) {
+        obj_add(npc_coord, viking_champion_token, 1, ^lootdrop_duration);
+    } else if ($random < 258) {
+        obj_add(npc_coord, viking_legendary_cocktail, 1, ^lootdrop_duration);
+    } else if ($random < 259) {
+        obj_add(npc_coord, viking_beerkeg, 1, ^lootdrop_duration);
+    } else if ($random < 260) {
+        obj_add(npc_coord, viking_low_alcahol_beerkeg, 1, ^lootdrop_duration);
+    } else if ($random < 261) {
+        obj_add(npc_coord, viking_firecracker, 1, ^lootdrop_duration);
+    } else if ($random < 262) {
+        obj_add(npc_coord, viking_pointless_magnet, 1, ^lootdrop_duration);
+    } else if ($random < 263) {
+        obj_add(npc_coord, viking_pointless_thread, 1, ^lootdrop_duration);
+    } else if ($random < 264) {
+        obj_add(npc_coord, viking_pointless_pick, 1, ^lootdrop_duration);
+    } else if ($random < 265) {
+        obj_add(npc_coord, viking_pointless_shiptoy, 1, ^lootdrop_duration);
+    } else if ($random < 266) {
+        obj_add(npc_coord, keg_of_beer, 1, ^lootdrop_duration);
+    } else if ($random < 267) {
+        obj_add(npc_coord, viking_tankard_full, 1, ^lootdrop_duration);
+    } else if ($random < 268) {
+        obj_add(npc_coord, viking_tankard_empty, 1, ^lootdrop_duration);
+    } else if ($random < 269) {
+        $random = random(7);
+        if ($random < 1) {
+            obj_add(npc_coord, viking_bucket_5, 1, ^lootdrop_duration);
+        } else if ($random < 2) {
+            obj_add(npc_coord, viking_bucket_4, 1, ^lootdrop_duration);
+        } else if ($random < 3) {
+            obj_add(npc_coord, viking_bucket_3, 1, ^lootdrop_duration);
+        } else if ($random < 4) {
+            obj_add(npc_coord, viking_bucket_2, 1, ^lootdrop_duration);
+        } else if ($random < 5) {
+            obj_add(npc_coord, viking_bucket_1, 1, ^lootdrop_duration);
+        } else if ($random < 6) {
+            obj_add(npc_coord, viking_bucket_empty, 1, ^lootdrop_duration);
+        } else if ($random < 7) {
+            obj_add(npc_coord, viking_bucket_frozen, 1, ^lootdrop_duration);
+        }
+    } else if ($random < 270) {
+        $random = random(5);
+        if ($random < 1) {
+            obj_add(npc_coord, viking_jug_3, 1, ^lootdrop_duration);
+        } else if ($random < 2) {
+            obj_add(npc_coord, viking_jug_2, 1, ^lootdrop_duration);
+        } else if ($random < 3) {
+            obj_add(npc_coord, viking_jug_1, 1, ^lootdrop_duration);
+        } else if ($random < 4) {
+            obj_add(npc_coord, viking_jug_empty, 1, ^lootdrop_duration);
+        } else if ($random < 5) {
+            obj_add(npc_coord, viking_jug_frozen, 1, ^lootdrop_duration);
+        }
+    } else if ($random < 271) {
+        $random = random(7);
+        if ($random < 1) {
+            obj_add(npc_coord, viking_airtight_vase, 1, ^lootdrop_duration);
+        } else if ($random < 2) {
+            obj_add(npc_coord, viking_airtight_vase_water, 1, ^lootdrop_duration);
+        } else if ($random < 3) {
+            obj_add(npc_coord, viking_airtight_vase_frozen, 1, ^lootdrop_duration);
+        } else if ($random < 4) {
+            obj_add(npc_coord, viking_vase_lid, 1, ^lootdrop_duration);
+        } else if ($random < 5) {
+            obj_add(npc_coord, viking_airtight_vase_with_lid, 1, ^lootdrop_duration);
+        } else if ($random < 6) {
+            obj_add(npc_coord, viking_airtight_vase_with_lid_frozen, 1, ^lootdrop_duration);
+        } else if ($random < 7) {
+            obj_add(npc_coord, viking_airtight_vase_with_lid_water, 1, ^lootdrop_duration);
+        }
+    } else if ($random < 272) {
+        $random = random(2);
+        if ($random < 1) {
+            obj_add(npc_coord, viking_key_in_ice, 1, ^lootdrop_duration);
+        } else if ($random < 2) {
+            obj_add(npc_coord, viking_key, 1, ^lootdrop_duration);
+        }
+    } else if ($random < 273) {
+        $random = random(2);
+        if ($random < 1) {
+            obj_add(npc_coord, viking_red_wooden_coin, 1, ^lootdrop_duration);
+        } else if ($random < 2) {
+            obj_add(npc_coord, viking_uncoloured_wooden_coin, 1, ^lootdrop_duration);
+        }
+    } else if ($random < 274) {
+        obj_add(npc_coord, viking_red_herring, 1, ^lootdrop_duration);
+    } else if ($random < 275) {
+        obj_add(npc_coord, viking_red_splat, 1, ^lootdrop_duration);
+    } else if ($random < 276) {
+        obj_add(npc_coord, viking_enchanted_strung_lyre, 1, ^lootdrop_duration);
     } else {
         obj_add(npc_coord, macro_genilamp, 1, 600); 
     }
 } else if ($random < 79) {
-    $random = random(40);
+    $random = random(11);
 
-    if ($random < 1) {
-        obj_add(npc_coord, gnome_boots_blue, 1, ^lootdrop_duration);
-    } else if ($random < 2) {
-        obj_add(npc_coord, cert_gnome_boots_blue, 1, ^lootdrop_duration);
-    } else if ($random < 3) {
-        obj_add(npc_coord, gnome_boots_cream, 1, ^lootdrop_duration);
-    } else if ($random < 4) {
-        obj_add(npc_coord, cert_gnome_boots_cream, 1, ^lootdrop_duration); 
-    } else if ($random < 5) {
-        obj_add(npc_coord, gnome_boots_turquoise, 1, ^lootdrop_duration);
-    } else if ($random < 6) {
-        obj_add(npc_coord, cert_gnome_boots_turquoise, 1, ^lootdrop_duration);
-    } else if ($random < 7) {
-        obj_add(npc_coord, gnome_robetop_pink, 1, ^lootdrop_duration);
+    if ($random < 4) {
+        $random = random(21);
+        if ($random < 1) {
+            obj_add(npc_coord, viking_cloak_green, 1, ^lootdrop_duration);
+        } else if ($random < 2) {
+            obj_add(npc_coord, viking_cloak_darkbrown, 1, ^lootdrop_duration);
+        } else if ($random < 3) {
+            obj_add(npc_coord, viking_cloak_lightbrown, 1, ^lootdrop_duration);
+        } else if ($random < 4) {
+            obj_add(npc_coord, viking_cloak_brown, 1, ^lootdrop_duration);
+        } else if ($random < 5) {
+            obj_add(npc_coord, viking_top_darkbrown, 1, ^lootdrop_duration);
+        } else if ($random < 6) {
+            obj_add(npc_coord, viking_top_green, 1, ^lootdrop_duration);
+        } else if ($random < 7) {
+            obj_add(npc_coord, viking_top_beige, 1, ^lootdrop_duration);
+        } else if ($random < 8) {
+            obj_add(npc_coord, viking_top_red, 1, ^lootdrop_duration);
+        } else if ($random < 9) {
+            obj_add(npc_coord, viking_top_blue, 1, ^lootdrop_duration);
+        } else if ($random < 10) {
+            obj_add(npc_coord, viking_cloak_red, 1, ^lootdrop_duration);
+        } else if ($random < 11) {
+            obj_add(npc_coord, viking_cloak_grey, 1, ^lootdrop_duration);
+        } else if ($random < 12) {
+            obj_add(npc_coord, viking_cloak_tangerine, 1, ^lootdrop_duration);
+        } else if ($random < 13) {
+            obj_add(npc_coord, viking_cloak_ocean, 1, ^lootdrop_duration);
+        } else if ($random < 14) {
+            obj_add(npc_coord, viking_cloak_purple, 1, ^lootdrop_duration);
+        } else if ($random < 15) {
+            obj_add(npc_coord, viking_cloak_pink, 1, ^lootdrop_duration);
+        } else if ($random < 16) {
+            obj_add(npc_coord, viking_cloak_black, 1, ^lootdrop_duration);
+        } else if ($random < 17) {
+            obj_add(npc_coord, vikingboots, 1, ^lootdrop_duration);
+        } else if ($random < 18) {
+            obj_add(npc_coord, vikingrobetop, 1, ^lootdrop_duration);
+        } else if ($random < 19) {
+            obj_add(npc_coord, vikingrobebottom, 1, ^lootdrop_duration);
+        } else if ($random < 20) {
+            obj_add(npc_coord, vikinghat, 1, ^lootdrop_duration);
+        } else if ($random < 21) {
+            obj_add(npc_coord, vikinggloves, 1, ^lootdrop_duration);
+        }
     } else if ($random < 8) {
-        obj_add(npc_coord, cert_gnome_robetop_pink, 1, ^lootdrop_duration);
-    } else if ($random < 9) {
-        obj_add(npc_coord, gnome_robetop_green, 1, ^lootdrop_duration);
+        $random = random(25);
+        if ($random < 1) {
+            obj_add(npc_coord, wolfenboots_grey, 1, ^lootdrop_duration);
+        } else if ($random < 2) {
+            obj_add(npc_coord, wolfenrobetop_grey, 1, ^lootdrop_duration);
+        } else if ($random < 3) {
+            obj_add(npc_coord, wolfenrobebottom_grey, 1, ^lootdrop_duration);
+        } else if ($random < 4) {
+            obj_add(npc_coord, wolfenhat_grey, 1, ^lootdrop_duration);
+        } else if ($random < 5) {
+            obj_add(npc_coord, wolfengloves_grey, 1, ^lootdrop_duration);
+        } else if ($random < 6) {
+            obj_add(npc_coord, wolfenboots_crimson, 1, ^lootdrop_duration);
+        } else if ($random < 7) {
+            obj_add(npc_coord, wolfenrobetop_crimson, 1, ^lootdrop_duration);
+        } else if ($random < 8) {
+            obj_add(npc_coord, wolfenrobebottom_crimson, 1, ^lootdrop_duration);
+        } else if ($random < 9) {
+            obj_add(npc_coord, wolfenhat_crimson, 1, ^lootdrop_duration);
+        } else if ($random < 10) {
+            obj_add(npc_coord, wolfengloves_crimson, 1, ^lootdrop_duration);
+        } else if ($random < 11) {
+            obj_add(npc_coord, wolfenboots_tangerine, 1, ^lootdrop_duration);
+        } else if ($random < 12) {
+            obj_add(npc_coord, wolfenrobetop_tangerine, 1, ^lootdrop_duration);
+        } else if ($random < 13) {
+            obj_add(npc_coord, wolfenrobebottom_tangerine, 1, ^lootdrop_duration);
+        } else if ($random < 14) {
+            obj_add(npc_coord, wolfenhat_tangerine, 1, ^lootdrop_duration);
+        } else if ($random < 15) {
+            obj_add(npc_coord, wolfengloves_tangerine, 1, ^lootdrop_duration);
+        } else if ($random < 16) {
+            obj_add(npc_coord, wolfenboots_ocean, 1, ^lootdrop_duration);
+        } else if ($random < 17) {
+            obj_add(npc_coord, wolfenrobetop_ocean, 1, ^lootdrop_duration);
+        } else if ($random < 18) {
+            obj_add(npc_coord, wolfenrobebottom_ocean, 1, ^lootdrop_duration);
+        } else if ($random < 19) {
+            obj_add(npc_coord, wolfenhat_ocean, 1, ^lootdrop_duration);
+        } else if ($random < 20) {
+            obj_add(npc_coord, wolfengloves_ocean, 1, ^lootdrop_duration);
+        } else if ($random < 21) {
+            obj_add(npc_coord, wolfenboots_purple, 1, ^lootdrop_duration);
+        } else if ($random < 22) {
+            obj_add(npc_coord, wolfenrobetop_purple, 1, ^lootdrop_duration);
+        } else if ($random < 23) {
+            obj_add(npc_coord, wolfenrobebottom_purple, 1, ^lootdrop_duration);
+        } else if ($random < 24) {
+            obj_add(npc_coord, wolfenhat_purple, 1, ^lootdrop_duration);
+        } else if ($random < 25) {
+            obj_add(npc_coord, wolfengloves_purple, 1, ^lootdrop_duration);
+        }
     } else if ($random < 10) {
-        obj_add(npc_coord, cert_gnome_robetop_green, 1, ^lootdrop_duration);
+        $random = random(20);
+        if ($random < 1) {
+            obj_add(npc_coord, gnome_boots_pink, 1, ^lootdrop_duration);
+        } else if ($random < 2) {
+            obj_add(npc_coord, gnome_boots_green, 1, ^lootdrop_duration);
+        } else if ($random < 3) {
+            obj_add(npc_coord, gnome_boots_blue, 1, ^lootdrop_duration);
+        } else if ($random < 4) {
+            obj_add(npc_coord, gnome_boots_cream, 1, ^lootdrop_duration);
+        } else if ($random < 5) {
+            obj_add(npc_coord, gnome_boots_turquoise, 1, ^lootdrop_duration);
+        } else if ($random < 6) {
+            obj_add(npc_coord, gnome_robetop_pink, 1, ^lootdrop_duration);
+        } else if ($random < 7) {
+            obj_add(npc_coord, gnome_robetop_green, 1, ^lootdrop_duration);
+        } else if ($random < 8) {
+            obj_add(npc_coord, gnome_robetop_blue, 1, ^lootdrop_duration);
+        } else if ($random < 9) {
+            obj_add(npc_coord, gnome_robetop_cream, 1, ^lootdrop_duration);
+        } else if ($random < 10) {
+            obj_add(npc_coord, gnome_robetop_turquoise, 1, ^lootdrop_duration);
+        } else if ($random < 11) {
+            obj_add(npc_coord, gnome_robebottoms_pink, 1, ^lootdrop_duration);
+        } else if ($random < 12) {
+            obj_add(npc_coord, gnome_robebottoms_green, 1, ^lootdrop_duration);
+        } else if ($random < 13) {
+            obj_add(npc_coord, gnome_robebottoms_blue, 1, ^lootdrop_duration);
+        } else if ($random < 14) {
+            obj_add(npc_coord, gnome_robebottoms_cream, 1, ^lootdrop_duration);
+        } else if ($random < 15) {
+            obj_add(npc_coord, gnome_robebottoms_turquoise, 1, ^lootdrop_duration);
+        } else if ($random < 16) {
+            obj_add(npc_coord, gnome_hat_pink, 1, ^lootdrop_duration);
+        } else if ($random < 17) {
+            obj_add(npc_coord, gnome_hat_green, 1, ^lootdrop_duration);
+        } else if ($random < 18) {
+            obj_add(npc_coord, gnome_hat_blue, 1, ^lootdrop_duration);
+        } else if ($random < 19) {
+            obj_add(npc_coord, gnome_hat_cream, 1, ^lootdrop_duration);
+        } else if ($random < 20) {
+            obj_add(npc_coord, gnome_hat_turquoise, 1, ^lootdrop_duration);
+        }
     } else if ($random < 11) {
-        obj_add(npc_coord, gnome_robetop_blue, 1, ^lootdrop_duration);
-    } else if ($random < 12) {
-        obj_add(npc_coord, cert_gnome_robetop_blue, 1, ^lootdrop_duration);
-    } else if ($random < 13) {
-        obj_add(npc_coord, gnome_robetop_cream, 1, ^lootdrop_duration);
-    } else if ($random < 14) {
-        obj_add(npc_coord, cert_gnome_robetop_cream, 1, ^lootdrop_duration);
-    } else if ($random < 15) {
-        obj_add(npc_coord, gnome_robetop_turquoise, 1, ^lootdrop_duration);
-    } else if ($random < 16) {
-        obj_add(npc_coord, cert_gnome_robetop_turquoise, 1, ^lootdrop_duration);
-    } else if ($random < 17) {
-        obj_add(npc_coord, gnome_robebottoms_pink, 1, ^lootdrop_duration);
-    } else if ($random < 18) {
-        obj_add(npc_coord, cert_gnome_robebottoms_pink, 1, ^lootdrop_duration);
-    } else if ($random < 19) {
-        obj_add(npc_coord, gnome_robebottoms_green, 1, ^lootdrop_duration);
-    } else if ($random < 20) {
-        obj_add(npc_coord, cert_gnome_robebottoms_green, 1, ^lootdrop_duration);
-    } else if ($random < 21) {
-        obj_add(npc_coord, gnome_robebottoms_blue, 1, ^lootdrop_duration);
-    } else if ($random < 22) {
-        obj_add(npc_coord, cert_gnome_robebottoms_blue, 1, ^lootdrop_duration);
-    } else if ($random < 23) {
-        obj_add(npc_coord, gnome_robebottoms_cream, 1, ^lootdrop_duration);
-    } else if ($random < 24) {
-        obj_add(npc_coord, cert_gnome_robebottoms_cream, 1, ^lootdrop_duration);
-    } else if ($random < 25) {
-        obj_add(npc_coord, gnome_robebottoms_turquoise, 1, ^lootdrop_duration); 
-    } else if ($random < 26) {
-        obj_add(npc_coord, cert_gnome_robebottoms_turquoise, 1, ^lootdrop_duration);
-    } else if ($random < 27) {
-        obj_add(npc_coord, gnome_hat_pink, 1, ^lootdrop_duration);
-    } else if ($random < 28) {
-        obj_add(npc_coord, cert_gnome_hat_pink, 1, ^lootdrop_duration);
-    } else if ($random < 29) {
-        obj_add(npc_coord, gnome_hat_green, 1, ^lootdrop_duration);
-    } else if ($random < 30) {
-        obj_add(npc_coord, cert_gnome_hat_green, 1, ^lootdrop_duration);  
-    } else if ($random < 31) {
-        obj_add(npc_coord, gnome_hat_blue, 1, ^lootdrop_duration); 
-    } else if ($random < 32) {
-        obj_add(npc_coord, cert_gnome_hat_blue, 1, ^lootdrop_duration);
-    } else if ($random < 33) {
-        obj_add(npc_coord, gnome_hat_cream, 1, ^lootdrop_duration);
-    } else if ($random < 34) {
-        obj_add(npc_coord, cert_gnome_hat_cream, 1, ^lootdrop_duration);
-    } else if ($random < 35) {
-        obj_add(npc_coord, gnome_hat_turquoise, 1, ^lootdrop_duration);
-    } else if ($random < 36) {
-        obj_add(npc_coord, cert_gnome_hat_turquoise, 1, ^lootdrop_duration);
-    } else if ($random < 37) {
-        obj_add(npc_coord, gnome_boots_pink, 1, ^lootdrop_duration);
-    } else if ($random < 38) {
-        obj_add(npc_coord, cert_gnome_boots_pink, 1, ^lootdrop_duration);
-    } else if ($random < 39) {
-        obj_add(npc_coord, gnome_boots_green, 1, ^lootdrop_duration);
-    } else if ($random < 40) {
-        obj_add(npc_coord, cert_gnome_boots_green, 1, ^lootdrop_duration);
+        $random = random(9);
+        if ($random < 1) {
+            obj_add(npc_coord, snelm_round_swamp, 1, ^lootdrop_duration);
+        } else if ($random < 2) {
+            obj_add(npc_coord, snelm_round_red+black, 1, ^lootdrop_duration);
+        } else if ($random < 3) {
+            obj_add(npc_coord, snelm_round_yellow, 1, ^lootdrop_duration);
+        } else if ($random < 4) {
+            obj_add(npc_coord, snelm_round_blue, 1, ^lootdrop_duration);
+        } else if ($random < 5) {
+            obj_add(npc_coord, snelm_round_orange, 1, ^lootdrop_duration);
+        } else if ($random < 6) {
+            obj_add(npc_coord, snelm_point_swamp, 1, ^lootdrop_duration);
+        } else if ($random < 7) {
+            obj_add(npc_coord, snelm_point_red+black, 1, ^lootdrop_duration);
+        } else if ($random < 8) {
+            obj_add(npc_coord, snelm_point_yellow, 1, ^lootdrop_duration);
+        } else if ($random < 9) {
+            obj_add(npc_coord, snelm_point_blue, 1, ^lootdrop_duration);
+        }
     }
 } else if ($random < 80) {
     obj_add(npc_coord, macro_genilamp, 1, 600); 
@@ -1458,7 +1693,7 @@ if ($random < 4) {
 // Unobtainable item table
 [proc,unobtain_roll]()(namedobj, int)
 def_int $random = 0;
-$random = random(20);
+$random = random(29);
 
 if (inv_total(worn, bunnyears) = 0 & inv_total(inv, bunnyears) = 0 & inv_total(bank, bunnyears) = 0) {
     obj_add(npc_coord, bunnyears, 1, 600);
@@ -1473,12 +1708,13 @@ if ($random < 2) { // god capes
                                         );
     if ($god_capes_obtained > 0) {
         $random = random(3);  
-        if ( $random < 1 )
+        if ($random < 1) {
             obj_add(npc_coord, zamorak_cape, 1, 600);
         } else if ($random < 2) {
             obj_add(npc_coord, guthix_cape, 1, 600);
         } else if ($random < 3) {
             obj_add(npc_coord, saradomin_cape, 1, 600);
+        }
     } else {
         ~roll_food;
     }
@@ -1500,6 +1736,135 @@ if ($random < 2) { // god capes
     obj_add(npc_coord, felinemedal, 1, ^lootdrop_duration); 
 } else if ($random < 20) { 
     obj_add(npc_coord, ice_gloves, 1, ^lootdrop_duration); 
+} else if ($random < 21) {
+    $random = random(2);
+    if ($random < 1) {
+        obj_add(npc_coord, banana_left, 1, ^lootdrop_duration);
+    } else if ($random < 2) {
+        obj_add(npc_coord, readbook_dummy, 1, ^lootdrop_duration);
+    }
+} else if ($random < 22) {
+    $random = random(6);
+    if ($random < 1) {
+        obj_add(npc_coord, dummy_shoe1, 1, ^lootdrop_duration);
+    } else if ($random < 2) {
+        obj_add(npc_coord, dummy_shoe2, 1, ^lootdrop_duration);
+    } else if ($random < 3) {
+        obj_add(npc_coord, dummy_shoe3, 1, ^lootdrop_duration);
+    } else if ($random < 4) {
+        obj_add(npc_coord, dummy_shoe4, 1, ^lootdrop_duration);
+    } else if ($random < 5) {
+        obj_add(npc_coord, dummy_shoe5, 1, ^lootdrop_duration);
+    } else if ($random < 6) {
+        obj_add(npc_coord, dummy_shoe6, 1, ^lootdrop_duration);
+    }
+} else if ($random < 23) {
+    $random = random(11);
+    if ($random < 1) {
+        obj_add(npc_coord, pickpocket_guide_man, 1, ^lootdrop_duration);
+    } else if ($random < 2) {
+        obj_add(npc_coord, pickpocket_guide_farmer, 1, ^lootdrop_duration);
+    } else if ($random < 3) {
+        obj_add(npc_coord, pickpocket_guide_warrior, 1, ^lootdrop_duration);
+    } else if ($random < 4) {
+        obj_add(npc_coord, pickpocket_guide_rogue, 1, ^lootdrop_duration);
+    } else if ($random < 5) {
+        obj_add(npc_coord, pickpocket_guide_guard, 1, ^lootdrop_duration);
+    } else if ($random < 6) {
+        obj_add(npc_coord, pickpocket_guide_knight, 1, ^lootdrop_duration);
+    } else if ($random < 7) {
+        obj_add(npc_coord, pickpocket_guide_watchman, 1, ^lootdrop_duration);
+    } else if ($random < 8) {
+        obj_add(npc_coord, pickpocket_guide_paladin, 1, ^lootdrop_duration);
+    } else if ($random < 9) {
+        obj_add(npc_coord, pickpocket_guide_gnome, 1, ^lootdrop_duration);
+    } else if ($random < 10) {
+        obj_add(npc_coord, pickpocket_guide_hero, 1, ^lootdrop_duration);
+    } else if ($random < 11) {
+        obj_add(npc_coord, pickpocket_guide_fremennik_citizen, 1, ^lootdrop_duration);
+    }
+} else if ($random < 24) {
+    $random = random(4);
+    if ($random < 1) {
+        obj_add(npc_coord, regicide_alchemy_symbol1, 1, ^lootdrop_duration);
+    } else if ($random < 2) {
+        obj_add(npc_coord, regicide_alchemy_symbol2, 1, ^lootdrop_duration);
+    } else if ($random < 3) {
+        obj_add(npc_coord, regicide_alchemy_symbol3, 1, ^lootdrop_duration);
+    } else if ($random < 4) {
+        obj_add(npc_coord, regicide_alchemy_symbol4, 1, ^lootdrop_duration);
+    }
+} else if ($random < 25) {
+    obj_add(npc_coord, magic_strung_lyre, 1, ^lootdrop_duration);
+} else if ($random < 26) {
+    $random = random(2);
+    if ($random < 1) {
+        obj_add(npc_coord, viking_dummy_coin, 1, ^lootdrop_duration);
+    } else if ($random < 2) {
+        obj_add(npc_coord, viking_dummy_coin2, 1, ^lootdrop_duration);
+    }
+} else if ($random < 27) {
+    $random = random(2);
+    if ($random < 1) {
+        obj_add(npc_coord, viking_dummy_lid, 1, ^lootdrop_duration);
+    } else if ($random < 2) {
+        obj_add(npc_coord, eadgar_fade_to_black_inv, 1, ^lootdrop_duration);
+    }
+} else if ($random < 28) {
+    obj_add(npc_coord, viking_toyship, 1, ^lootdrop_duration);
+} else if ($random < 29) {
+    $random = random(25);
+    if ($random < 1) {
+        obj_add(npc_coord, 73_enfeeble, 1, ^lootdrop_duration);
+    } else if ($random < 2) {
+        obj_add(npc_coord, boardgames_draughts_firerune_king, 1, ^lootdrop_duration);
+    } else if ($random < 3) {
+        obj_add(npc_coord, boardgames_draughts_waterrune_king, 1, ^lootdrop_duration);
+    } else if ($random < 4) {
+        obj_add(npc_coord, boardgames_draughts_earthrune_king, 1, ^lootdrop_duration);
+    } else if ($random < 5) {
+        obj_add(npc_coord, boardgames_draughts_airrune_king, 1, ^lootdrop_duration);
+    } else if ($random < 6) {
+        obj_add(npc_coord, boardgames_draughts_mindrune_king, 1, ^lootdrop_duration);
+    } else if ($random < 7) {
+        obj_add(npc_coord, boardgames_draughts_bodyrune_king, 1, ^lootdrop_duration);
+    } else if ($random < 8) {
+        obj_add(npc_coord, boardgames_draughts_naturerune_king, 1, ^lootdrop_duration);
+    } else if ($random < 9) {
+        obj_add(npc_coord, boardgames_draughts_chaosrune_king, 1, ^lootdrop_duration);
+    } else if ($random < 10) {
+        obj_add(npc_coord, boardgames_draughts_lawrune_king, 1, ^lootdrop_duration);
+    } else if ($random < 11) {
+        obj_add(npc_coord, boardgames_draughts_cosmicrune_king, 1, ^lootdrop_duration);
+    } else if ($random < 12) {
+        obj_add(npc_coord, boardgames_draughts_bloodrune_king, 1, ^lootdrop_duration);
+    } else if ($random < 13) {
+        obj_add(npc_coord, boardgames_draughts_soulrune_king, 1, ^lootdrop_duration);
+    } else if ($random < 14) {
+        obj_add(npc_coord, boardgames_runelink_firerune, 1, ^lootdrop_duration);
+    } else if ($random < 15) {
+        obj_add(npc_coord, boardgames_runelink_waterrune, 1, ^lootdrop_duration);
+    } else if ($random < 16) {
+        obj_add(npc_coord, boardgames_runelink_earthrune, 1, ^lootdrop_duration);
+    } else if ($random < 17) {
+        obj_add(npc_coord, boardgames_runelink_airrune, 1, ^lootdrop_duration);
+    } else if ($random < 18) {
+        obj_add(npc_coord, boardgames_runelink_mindrune, 1, ^lootdrop_duration);
+    } else if ($random < 19) {
+        obj_add(npc_coord, boardgames_runelink_bodyrune, 1, ^lootdrop_duration);
+    } else if ($random < 20) {
+        obj_add(npc_coord, boardgames_runelink_naturerune, 1, ^lootdrop_duration);
+    } else if ($random < 21) {
+        obj_add(npc_coord, boardgames_runelink_chaosrune, 1, ^lootdrop_duration);
+    } else if ($random < 22) {
+        obj_add(npc_coord, boardgames_runelink_lawrune, 1, ^lootdrop_duration);
+    } else if ($random < 23) {
+        obj_add(npc_coord, boardgames_runelink_cosmicrune, 1, ^lootdrop_duration);
+    } else if ($random < 24) {
+        obj_add(npc_coord, boardgames_runelink_bloodrune, 1, ^lootdrop_duration);
+    } else if ($random < 25) {
+        obj_add(npc_coord, boardgames_runelink_soulrune, 1, ^lootdrop_duration);
+    }
 }
 
 

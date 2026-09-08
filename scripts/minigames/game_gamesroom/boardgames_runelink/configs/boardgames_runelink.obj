@@ -8,7 +8,6 @@ model=inv_firerune
 members=yes
 category=boardgames_piece
 tradeable=no
-dummyitem=inv_only
 
 [boardgames_runelink_waterrune]
 name=Board game piece
@@ -20,7 +19,6 @@ model=inv_waterrune
 members=yes
 category=boardgames_piece
 tradeable=no
-dummyitem=inv_only
 
 [boardgames_runelink_earthrune]
 name=Board game piece
@@ -32,7 +30,6 @@ model=inv_earthrune
 members=yes
 category=boardgames_piece
 tradeable=no
-dummyitem=inv_only
 
 [boardgames_runelink_airrune]
 name=Board game piece
@@ -44,7 +41,6 @@ model=inv_airrune
 members=yes
 category=boardgames_piece
 tradeable=no
-dummyitem=inv_only
 
 [boardgames_runelink_mindrune]
 name=Board game piece
@@ -56,7 +52,6 @@ model=inv_mindrune
 members=yes
 category=boardgames_piece
 tradeable=no
-dummyitem=inv_only
 
 [boardgames_runelink_bodyrune]
 name=Board game piece
@@ -68,7 +63,6 @@ model=inv_bodyrune
 members=yes
 category=boardgames_piece
 tradeable=no
-dummyitem=inv_only
 
 [boardgames_runelink_naturerune]
 name=Board game piece
@@ -80,7 +74,6 @@ model=inv_naturerune
 members=yes
 category=boardgames_piece
 tradeable=no
-dummyitem=inv_only
 
 [boardgames_runelink_chaosrune]
 name=Board game piece
@@ -92,7 +85,6 @@ model=inv_chaosrune
 members=yes
 category=boardgames_piece
 tradeable=no
-dummyitem=inv_only
 
 [boardgames_runelink_lawrune]
 name=Board game piece
@@ -104,7 +96,6 @@ model=inv_lawrune
 members=yes
 category=boardgames_piece
 tradeable=no
-dummyitem=inv_only
 
 [boardgames_runelink_cosmicrune]
 name=Board game piece
@@ -116,7 +107,6 @@ model=inv_cosmicrune
 members=yes
 category=boardgames_piece
 tradeable=no
-dummyitem=inv_only
 
 [boardgames_runelink_bloodrune]
 name=Board game piece
@@ -128,7 +118,6 @@ model=inv_bloodrune
 members=yes
 category=boardgames_piece
 tradeable=no
-dummyitem=inv_only
 
 [boardgames_runelink_soulrune]
 name=Board game piece
@@ -140,4 +129,3 @@ model=inv_soulrune
 members=yes
 category=boardgames_piece
 tradeable=no
-dummyitem=inv_only

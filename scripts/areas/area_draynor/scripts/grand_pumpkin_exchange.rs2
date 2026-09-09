@@ -28,21 +28,24 @@ if($random < 1){
     inv_add(inv, $drop, 1);
     ~objbox($drop, "Inside the pumpkin you find a  <oc_name($drop)>.", 250, 0, 0);
 } else{
-    $random = random(20);
+    $random = random(30);
     mes("The pumpkin is empty, but as Aggie turns away you notice she drops something.");
     mes("You pick it up.");
     
-    if ($random < 6) {
+    if ($random < 5) {
+        $drop = coins;
+        inv_add(inv, coins, 49999);
+    }else if ($random < 10) {
         $drop = rune_claws;
-    } else if ($random < 10) {
+    } else if ($random < 15) {
         $drop = rune_halberd;
-    } else if ($random < 14) {
+    } else if ($random < 23) {
         $drop = rune_spear;
-    } else if ($random < 17) {
+    } else if ($random < 27) {
         $drop = dragon_spear;
-    } else if ($random < 19) {
+    } else if ($random < 29) {
         $drop = dragon_med_helm;
-    } else if ($random < 20) {
+    } else if ($random < 30) {
         $drop = dragon_chainbody;
     }
     session_log(^log_adventure, "Exchanged a pumpkin and received a <oc_name($drop)>!");

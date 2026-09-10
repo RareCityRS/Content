@@ -51,3 +51,4 @@
 // Pet behaviour
 // =====================================================
 ^cat_offline_lifetime = 100
+^cat_karambwanji_heal_percent = 25

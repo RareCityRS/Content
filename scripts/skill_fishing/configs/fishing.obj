@@ -223,6 +223,7 @@ name=Raw karambwanji
 desc=Small brightly coloured tropical fish.
 cost=10
 members=yes
+stackable=yes
 model=quest_tbwt_inv_fish_tropical
 2dxof=6
 2dyof=6

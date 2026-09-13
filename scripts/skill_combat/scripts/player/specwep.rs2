@@ -49,6 +49,7 @@ if (%sa_attack = ^false) {
 }
 
 [if_button,combat_blunt:specbar] @toggle_sa;
+[if_button,combat_giga:specbar] @toggle_sa;
 [if_button,combat_axe:specbar]
 // order is guessed (based off OSRS)
 if (~duel_arena_spec_check = false) {

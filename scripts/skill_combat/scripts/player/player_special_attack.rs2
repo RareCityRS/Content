@@ -6,7 +6,8 @@ if (~npc_is_attackable() = false) {
 if (~sa_enough_energy = false) {
     return;
 }
-if (%action_delay > map_clock) {
+def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+if ($weapon ! poisoned_dagger_p & %action_delay > map_clock) {
     p_opnpc(2);
     return;
 }
@@ -14,11 +15,13 @@ if (npc_stat(hitpoints) = 0) {
     p_stopaction;
     return;
 }
-def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
-%action_delay = add(map_clock, oc_param($weapon, attackrate));
+if ($weapon ! poisoned_dagger_p) {
+    %action_delay = add(map_clock, oc_param($weapon, attackrate));
+}
 p_opnpc(2);
 switch_obj($weapon) {
     case dragon_dagger, dragon_dagger_p : @pvm_dragon_dagger_sa;
+    case poisoned_dagger_p : @pvm_giga_sa;
     case dragon_longsword : @pvm_dragon_longsword_sa;
     case dragon_mace : @pvm_dragon_mace_sa;
     case magic_shortbow : @pvm_magic_shortbow_sa;

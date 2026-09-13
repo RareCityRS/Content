@@ -1,0 +1,86 @@
+[label,pvm_giga_sa]
+p_delay(0);
+if (%sa_attack = ^false | stat(hitpoints) = 0 | npc_stat(hitpoints) = 0) {
+    return;
+}
+if (~sa_enough_energy = false) {
+    return;
+}
+def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
+def_int $damagestyle = %damagestyle;
+def_int $maxhit = %com_maxhit;
+def_int $attackroll = scale(115, 100, ~player_attack_roll_specific(%damagetype));
+def_int $xp_multiplier = %npc_combat_xp_multiplier;
+~set_sa_vars(oc_param($weapon, sa_energy));
+def_int $first_damage = ~pvm_giga_spec_hit($weapon, $damagestyle, $maxhit, $attackroll, $xp_multiplier, false);
+if ($first_damage > 0 & $first_damage >= scale(50, 100, $maxhit)) {
+    ~pvm_giga_entangle($first_damage, $xp_multiplier);
+}
+def_boolean $force_max = false;
+if ($first_damage > 0) {
+    $force_max = true;
+}
+p_delay(0);
+%action_delay = add(map_clock, 7);
+$first_damage = ~pvm_giga_spec_hit($weapon, $damagestyle, $maxhit, $attackroll, $xp_multiplier, $force_max);
+
+[proc,pvm_giga_spec_hit](obj $weapon, int $damagestyle, int $maxhit, int $attackroll, int $xp_multiplier, boolean $force_max)(int)
+if (npc_stat(hitpoints) = 0) {
+    return(0);
+}
+anim(oc_param($weapon, slashattack_anim), 0);
+sound_synth(oc_param($weapon, slash_sound), 1, 0);
+npc_anim(npc_param(defend_anim), 20);
+def_int $damage = 0;
+def_int $damage_capped = 0;
+def_boolean $hit = false;
+def_int $defenceroll = ~npc_defence_roll_specific(^slash_style);
+if (npc_type = tbwt_beast) {
+    $attackroll = 0;
+    $force_max = false;
+}
+if ($force_max = true) {
+    $hit = true;
+    $damage = ~npc_max_dealt($maxhit, 0);
+} else if (randominc($attackroll) > randominc($defenceroll)) {
+    $hit = true;
+    $damage = randominc(~npc_max_dealt($maxhit, 0));
+}
+$damage_capped = min($damage, npc_stat(hitpoints));
+if ($hit = true) {
+    ~give_combat_experience($damagestyle, $damage_capped, $xp_multiplier);
+    npc_heropoints($damage_capped);
+}
+def_int $poison_severity = oc_param($weapon, poison_severity);
+if ($damage > 0 & $poison_severity > 0 & random(4) = 0) {
+    ~npc_poison_start($poison_severity);
+}
+~npc_retaliate(0);
+npc_queue(2, $damage, 0);
+return($damage_capped);
+
+[proc,pvm_giga_entangle](int $reserved_damage, int $xp_multiplier)
+def_dbrow $spell_data = magic_spell_entangle;
+if (~pvm_freeze_allowed($spell_data) = false) {
+    return;
+}
+def_int $duration = ~npc_projectile(coord, npc_uid, db_getfield($spell_data, magic_spell_table:spotanim_proj, 0));
+sound_synth(db_getfield($spell_data, magic_spell_table:sound_success, 0), 1, 0);
+def_int $maxhit = ~npc_max_dealt(db_getfield($spell_data, magic_spell_table:maxhit, 0), db_getfield($spell_data, magic_spell_table:spell, 0));
+def_int $damage = min(randominc($maxhit), max(0, sub(npc_stat(hitpoints), $reserved_damage)));
+~npc_retaliate(calc($duration / 30 + 1));
+npc_queue(2, $damage, calc($duration / 30 + 1));
+if (npc_param(defend_sound) ! null) {
+    sound_synth(npc_param(defend_sound), 1, $duration);
+}
+def_int $xp = scale(133, 100, multiply($damage, 10));
+if (npc_type = black_knight_titan) {
+    stat_advance(hitpoints, $xp);
+} else if (%tutorial < ^tutorial_complete) {
+    ~tutorial_give_xp(hitpoints, scale($xp_multiplier, 1000, $xp));
+} else {
+    stat_advance(hitpoints, scale($xp_multiplier, 1000, $xp));
+}
+npc_heropoints($damage);
+spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), $duration);
+~pvm_freeze_effect($spell_data);

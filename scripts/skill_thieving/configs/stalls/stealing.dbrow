@@ -3,6 +3,7 @@ table=stealing
 data=loc,bakers_stall_stealing
 data=owner,baker_merchant
 data=guard,ardougne_guard
+data=guard,catcity_guard
 data=level,5
 data=experience,160
 // late osrs is 3t https://youtu.be/ZsyY5R9Gvqw?t=24
@@ -100,6 +101,7 @@ data=guard,knight_of_ardougne
 data=guard,knight_of_ardougne2
 data=guard,paladin
 data=guard,ardougne_paladin2
+data=guard,catcity_guard
 data=level,75
 // https://oldschool.runescape.wiki/w/Update:Salamanders_and_Special_Attack
 // gives 16 xp instead of 160 xp

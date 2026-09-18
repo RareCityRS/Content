@@ -280,7 +280,8 @@ cost=81
 members=yes
 category=category_112
 tradeable=no
-weight=10g
+weight=1g
+stackable=yes
 
 [shadekey_bronze_brown]
 name=Bronze key brown
@@ -303,8 +304,9 @@ model=quest_shades_inv_key_recol
 cost=82
 members=yes
 category=category_112
-tradeable=no
-weight=10g
+tradeable=yes
+weight=1g
+stackable=yes
 
 [shadekey_bronze_crimson]
 name=Bronze key crimson
@@ -327,8 +329,9 @@ model=quest_shades_inv_key_recol
 cost=83
 members=yes
 category=category_112
-tradeable=no
-weight=10g
+tradeable=yes
+weight=1g
+stackable=yes
 
 [shadekey_bronze_black]
 name=Bronze key black
@@ -351,8 +354,9 @@ model=quest_shades_inv_key_recol
 cost=84
 members=yes
 category=category_112
-tradeable=no
-weight=10g
+tradeable=yes
+weight=1g
+stackable=yes
 
 [shadekey_bronze_purple]
 name=Bronze key purple
@@ -375,8 +379,9 @@ model=quest_shades_inv_key_recol
 cost=85
 members=yes
 category=category_112
-tradeable=no
-weight=10g
+tradeable=yes
+weight=1g
+stackable=yes
 
 [shadekey_steel_bloodred]
 name=Steel key red

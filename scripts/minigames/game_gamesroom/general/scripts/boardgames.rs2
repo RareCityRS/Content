@@ -31,6 +31,10 @@ if (.finduid(%duel2accept) = false) {
     if_close;
     return;    
 }
+if (%boardgames_online = 1) {
+    mes("Games started from the friends list are always unranked.");
+    return;
+}
 if(.%duel2accept = uid) {
     mes("You can not change the ranked option when accepting a challenge.");
 } else {
@@ -44,6 +48,7 @@ if(.%duel2accept = uid) {
 [proc,reset_boardgames_varp]
 %boardgames_varbit = 0;
 %boardgames_varbit2 = 0;
+%boardgames_online_opponent = null;
 
 [proc,boardgames_hide_tabs]
 if_settab(null, 0);
@@ -81,7 +86,9 @@ set_player_op("Challenge", 1, ^false);
 @music_playbyregion(coord);
 
 [mapzoneexit,0_34_77]
-~reset_boardgames_varp;
+if (%boardgames_online = 0) {
+    ~reset_boardgames_varp;
+}
 set_player_op(null, 1, ^false);
 
 [proc,in_games_room](coord $coord)(boolean)
@@ -126,6 +133,9 @@ return(false);
 %boardgames_closinginterface = 1;
 %boardgames_timepermove = 1;
 %boardgames_rankedgame = 1;
+if (%boardgames_online = 1) {
+    %boardgames_rankedgame = 0;
+}
 %boardgames_piece = 1;
 ~open_boardgames_options;
 %boardgames_closinginterface = 0;
@@ -212,6 +222,12 @@ switch_int (%boardgames_game) {
 }
 
 [proc,send_boardgames_challenge_request]
+if (%boardgames_online = 1) {
+    def_string $game = ~get_boardgames_game;
+    .mes("<displayname> has challenged you to a game of <$game>.");
+    .mes("Right-click their name in your friends list to accept.");
+    return;
+}
 //chalreq is not in client yet - 274
 // def_string $time = ~get_boardgames_timepermove();
 // def_string $game = ~get_boardgames_game();
@@ -242,6 +258,9 @@ if (%boardgames_closinginterface = 0) {
 }
 
 [softtimer,boardgames_sitting_anim]
+if (%boardgames_online = 1) {
+    return;
+}
 if (%boardgames_myturn = 0) {
     return;
 } else {
@@ -262,6 +281,11 @@ def_int $current_table;
 $current_table_coord, $current_table = ~find_next_boardgames_table;
 
 if($current_table_coord = null) {
+    if(~boardgames_in_catcity_bar(coord) = true) {
+        mes("All three tables upstairs are taken.");
+        mes("Wait for a game to finish, or watch one with View-game.");
+        return;
+    }
     //There's probably a mes for this? Guess
     mes("All tables are currently full!");
     return;
@@ -327,6 +351,9 @@ anim(human_sittingdown_ready, 0);
 
 //Todo: Figure out the exact seating order
 [proc,get_boardgames_table_coord](int $tablenum)(coord)
+if($tablenum > 95) {
+    return (~get_boardgames_table_coord_catcity($tablenum));
+}
 if($tablenum > 47) {
     return (~get_boardgames_table_coord_upstairs($tablenum));
 } else {
@@ -427,6 +454,10 @@ if(%boardgames_challengeroom = 1) {
 }
 
 def_int $max = add($i, 48);
+if(~boardgames_in_catcity_bar(coord) = true) {
+    $i = 96;
+    $max = 99;
+}
 while ($i < $max) {
     def_coord $check_coord = ~get_boardgames_table_coord($i);
     if (loc_find($check_coord, boardgames_table) = true) {
@@ -459,3 +490,21 @@ mes("This door is locked.");
 // https://x.com/SnackFoodOSRS/status/1292539567661342726
 [oploc1,boardgames_noticeboard]
 ~mesbox("Board Games News:|The empty rooms will be used for future expansion. If the games rooms prove to be popular then these rooms will be opened up for other board games such as Slime Wars and Chess.");
+
+[proc,get_boardgames_table_coord_catcity](int $tablenum)(coord)
+if ($tablenum = 96) {
+    return (1_49_46_24_40);
+}
+if ($tablenum = 97) {
+    return (1_49_46_24_42);
+}
+return (1_49_46_24_44);
+
+[proc,boardgames_in_catcity_bar](coord $coord)(boolean)
+if(inzone(0_49_46_19_31, 0_49_46_28_46, $coord) = true) {
+    return (true);
+}
+if(inzone(1_49_46_19_31, 1_49_46_28_46, $coord) = true) {
+    return (true);
+}
+return (false);

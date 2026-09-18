@@ -1,0 +1,8 @@
+[catcity_felion_attacks]
+type=int
+
+[catcity_felion_summoned]
+type=int
+
+[catcity_disciple_position]
+type=int

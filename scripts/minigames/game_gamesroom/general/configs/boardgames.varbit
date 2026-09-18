@@ -97,3 +97,8 @@ endbit=14
 basevar=boardgames_varbit2
 startbit=15
 endbit=15
+
+[boardgames_online]
+basevar=boardgames_varbit2
+startbit=16
+endbit=16

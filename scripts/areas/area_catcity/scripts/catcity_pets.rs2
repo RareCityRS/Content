@@ -1,0 +1,175 @@
+[opheld5,kittenobject_chocolate] ~cat_drop;
+[opheld5,growncatobject_chocolate] ~cat_drop;
+[opheld5,overgrowncatobject_chocolate] ~cat_drop;
+[opheld5,kittenobject_lilac] ~cat_drop;
+[opheld5,growncatobject_lilac] ~cat_drop;
+[opheld5,overgrowncatobject_lilac] ~cat_drop;
+[opheld5,kittenobject_cream] ~cat_drop;
+[opheld5,growncatobject_cream] ~cat_drop;
+[opheld5,overgrowncatobject_cream] ~cat_drop;
+[opheld5,kittenobject_ginger] ~cat_drop;
+[opheld5,growncatobject_ginger] ~cat_drop;
+[opheld5,overgrowncatobject_ginger] ~cat_drop;
+[opheld5,kittenobject_calico] ~cat_drop;
+[opheld5,growncatobject_calico] ~cat_drop;
+[opheld5,overgrowncatobject_calico] ~cat_drop;
+[opheld5,kittenobject_tuxedo] ~cat_drop;
+[opheld5,growncatobject_tuxedo] ~cat_drop;
+[opheld5,overgrowncatobject_tuxedo] ~cat_drop;
+[opheld5,kittenobject_burmese] ~cat_drop;
+[opheld5,growncatobject_burmese] ~cat_drop;
+[opheld5,overgrowncatobject_burmese] ~cat_drop;
+[opheld5,kittenobject_sealpoint] ~cat_drop;
+[opheld5,growncatobject_sealpoint] ~cat_drop;
+[opheld5,overgrowncatobject_sealpoint] ~cat_drop;
+[opheld5,kittenobject_bluepoint] ~cat_drop;
+[opheld5,growncatobject_bluepoint] ~cat_drop;
+[opheld5,overgrowncatobject_bluepoint] ~cat_drop;
+[opheld5,kittenobject_chocolatepoint] ~cat_drop;
+[opheld5,growncatobject_chocolatepoint] ~cat_drop;
+[opheld5,overgrowncatobject_chocolatepoint] ~cat_drop;
+
+[label,catcity_cat_colour]
+~chatplayer("<p,quiz>Can you change my cat's colour?");
+~chatnpc("<p,happy>I can, dearie. <tostring(^catcity_cat_colour_price)> red disks from the rooftops and your cat walks out a new colour. Which colour?");
+def_int $colour = 0;
+while ($colour = 0) {
+    $colour = ~p_choice5("Colourpoint", 1, "Chocolate", 2, "Lilac", 4, "Cream", 6, "More colours...", 5);
+    if ($colour = 5) {
+        $colour = ~p_choice5("Ginger", 7, "Calico", 8, "Tuxedo", 11, "Burmese", 12, "Back", 0);
+    }
+}
+def_int $choice = $colour;
+if ($colour = 1) {
+    $colour = add(21, random(3));
+}
+if (inv_total(inv, viking_dummy_coin) < ^catcity_cat_colour_price) {
+    ~chatnpc("<p,neutral>That's <tostring(^catcity_cat_colour_price)> red disks, dearie. Come back when you have them.");
+    return;
+}
+if (%follower_uid = null) {
+    ~chatnpc("<p,neutral>Your cat needs to be here with you, dearie.");
+    return;
+}
+if (npc_finduid(%follower_uid) = false) {
+    mes("Your cat needs to be here with you.");
+    return;
+}
+if (%npc_attacking_uid ! uid | nc_category(npc_type) ! petcat) {
+    mes("Your cat needs to be here with you.");
+    return;
+}
+def_int $stage = 3;
+def_category $current = oc_category(nc_param(npc_type, pet_item_id));
+if ($current = kitten) {
+    $stage = 1;
+}
+if ($current = cat) {
+    $stage = 2;
+}
+def_npc $new_type = ~catcity_cat_colour_type($stage, $colour);
+if ($new_type = null) {
+    mes("Nothing happens.");
+    return;
+}
+if ($choice ! 1 & $new_type = npc_type) {
+    mes("Your cat is already that colour.");
+    return;
+}
+def_namedobj $old_item = nc_param(npc_type, pet_item_id);
+inv_del(inv, viking_dummy_coin, ^catcity_cat_colour_price);
+npc_changetype_keepall($new_type, ^max_32bit_int);
+def_namedobj $new_item = nc_param(npc_type, pet_item_id);
+if (inv_total(pets, $old_item) > 0) {
+    inv_del(pets, $old_item, 1);
+    inv_add(pets, $new_item, 1);
+}
+%follower_uid = npc_uid;
+%follower_obj = $new_item;
+npc_say("Mrrow?");
+mes("Meowendoloena mutters something under her breath. Your cat's fur shifts colour.");
+
+[proc,catcity_cat_colour_type](int $stage, int $colour)(npc)
+switch_int ($colour) {
+    case 2 :
+        if ($stage = 1) {
+            return(kittenpet_chocolate);
+        }
+        if ($stage = 2) {
+            return(growncat_chocolate);
+        }
+        return(overgrowncat_chocolate);
+    case 4 :
+        if ($stage = 1) {
+            return(kittenpet_lilac);
+        }
+        if ($stage = 2) {
+            return(growncat_lilac);
+        }
+        return(overgrowncat_lilac);
+    case 6 :
+        if ($stage = 1) {
+            return(kittenpet_cream);
+        }
+        if ($stage = 2) {
+            return(growncat_cream);
+        }
+        return(overgrowncat_cream);
+    case 7 :
+        if ($stage = 1) {
+            return(kittenpet_ginger);
+        }
+        if ($stage = 2) {
+            return(growncat_ginger);
+        }
+        return(overgrowncat_ginger);
+    case 8 :
+        if ($stage = 1) {
+            return(kittenpet_calico);
+        }
+        if ($stage = 2) {
+            return(growncat_calico);
+        }
+        return(overgrowncat_calico);
+    case 11 :
+        if ($stage = 1) {
+            return(kittenpet_tuxedo);
+        }
+        if ($stage = 2) {
+            return(growncat_tuxedo);
+        }
+        return(overgrowncat_tuxedo);
+    case 12 :
+        if ($stage = 1) {
+            return(kittenpet_burmese);
+        }
+        if ($stage = 2) {
+            return(growncat_burmese);
+        }
+        return(overgrowncat_burmese);
+    case 21 :
+        if ($stage = 1) {
+            return(kittenpet_sealpoint);
+        }
+        if ($stage = 2) {
+            return(growncat_sealpoint);
+        }
+        return(overgrowncat_sealpoint);
+    case 22 :
+        if ($stage = 1) {
+            return(kittenpet_bluepoint);
+        }
+        if ($stage = 2) {
+            return(growncat_bluepoint);
+        }
+        return(overgrowncat_bluepoint);
+    case 23 :
+        if ($stage = 1) {
+            return(kittenpet_chocolatepoint);
+        }
+        if ($stage = 2) {
+            return(growncat_chocolatepoint);
+        }
+        return(overgrowncat_chocolatepoint);
+}
+return(null);

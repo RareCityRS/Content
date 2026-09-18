@@ -1,0 +1,123 @@
+[catcity_cactus]
+name=Cactus
+desc=This looks scratchable.
+model=plants_cactus
+mapscene=4
+blockrange=no
+op1=Scratch
+
+[catcity_rope_piece]
+name=Tightrope
+desc=A rope stretched between the rooftops.
+model=ship_rope
+hillskew=yes
+sharelight=yes
+active=yes
+
+[catcity_stones]
+name=Stones
+desc=Stones jut out of the wall. Maybe I could climb them?
+model=walldecor_climbing_rocks
+op1=Climb-up
+
+[catcity_northwall_climb]
+name=Stones
+desc=Climbing stones jut out of the wall.
+model=catcity_roofwall_invis_8
+shadow=no
+sharelight=yes
+op1=Climb-up
+blockwalk=no
+blockrange=no
+
+[catcity_gap_jump]
+name=Gap
+desc=The next roof is just a short jump away.
+model=catcity_roofwall_invis_8
+shadow=no
+sharelight=yes
+op1=Jump
+blockwalk=no
+blockrange=no
+
+[catcity_bob_shrine]
+name=Altar
+desc=A shrine to Bob.
+model=furniture_altar
+width=2
+active=yes
+op1=Pray-at
+category=prayer_altar
+
+[catcity_anvil]
+name=Anvil
+desc=I wouldn't even dream of sleeping under that.
+model=furniture_loc_2672
+category=anvil
+
+[catcity_pad_walk]
+name=Tightrope
+desc=A rope stretched between the rooftops.
+model=catcity_pad
+op1=Walk-on
+blockwalk=no
+
+[catcity_pad_jump]
+name=Gap
+desc=The next roof is just a short jump away.
+model=catcity_pad
+op1=Jump
+blockwalk=no
+
+[catcity_pad_jumpdown]
+name=Roof edge
+desc=It's a long way down, but the sand looks soft.
+model=catcity_pad
+op1=Jump-down
+blockwalk=no
+
+[catcity_roofwall_jumpdown]
+name=Roof edge
+desc=It's a long way down, but the sand looks soft.
+model=catcity_roofwall_invis
+resizey=342
+shadow=no
+sharelight=yes
+op1=Jump-down
+
+[catcity_fish_stall]
+name=Fish stall
+desc=Fresh from the sea.
+model=quest_viking_market_fishmongers
+model2=outdoorfurniture_market
+width=2
+length=2
+op2=Steal-from
+
+[catcity_pad_climb]
+name=Stones
+desc=Stones jut out of the wall. Maybe I could climb them?
+model=catcity_pad
+op1=Climb-up
+blockwalk=no
+
+[catcity_bankbooth_closed]
+name=Bank booth
+desc=This booth is closed.
+model=furniture_bankbooth_closed
+blockrange=no
+
+[catcity_spinningwheel]
+name=Spinning wheel
+desc=Used for spinning thread.
+model=furniture_spinningwheel
+op2=Spin
+category=spinning_wheel
+
+[catcity_noticeboard]
+name=City notice board
+desc=The latest news from Cat City.
+model=walldecor_banknoticeboard
+ambient=50
+active=yes
+op1=Read

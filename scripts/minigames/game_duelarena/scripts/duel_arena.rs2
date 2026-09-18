@@ -21,8 +21,18 @@ if (map_members = ^false) { // theres an area f2p worlds have access to that let
     return;
 }
 
+if (%boardgames_ingame = 1) {
+    mes("You are already playing a game.");
+    return;
+}
+if (.%boardgames_ingame = 1) {
+    mes("That player is already playing a game.");
+    return;
+}
+
 if (~in_games_room(coord) = true & ~in_games_room(.coord) = true) {
     // guessing it uses some varp as duel arena challenges
+    %boardgames_online = 0;
 
     if (.%duel2accept ! uid) {
         %duel2accept = .uid;

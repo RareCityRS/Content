@@ -134,3 +134,6 @@
 =Fremennik/Province,2679,3632,1
 =Crafting/Guild,2921,3282,0
 =Haunted/Woods,3567,3488,0
+=Cat/City,3168,2985,0
+=Felion/Desert,3232,2976,2
+=West/Beach,3150,2980,0

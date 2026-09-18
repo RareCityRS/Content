@@ -1,0 +1,91 @@
+[opnpc1,catcity_bob_sinclair]
+~chatnpc("<p,quiz>Are they still downstairs?");
+~chatplayer("<p,quiz>Who?");
+~chatnpc("<p,quiz>My... uh, I mean Bob's disciples. Are they still down there?");
+~chatplayer("<p,neutral>I think so.");
+~chatnpc("<p,quiz>I think there's been some kind of administration error. They seem to think I'm a cat named Bob, can you believe that?");
+def_int $option = ~p_choice2("Somehow I do.", 1, "How did you end up here?", 2);
+if ($option = 1) {
+    ~chatplayer("<p,happy>Somehow I do.");
+    ~chatnpc("<p,angry>Very funny.");
+    return;
+}
+~chatplayer("<p,quiz>How did you end up here?");
+~chatnpc("<p,angry>No idea. Last I remember some nosy adventurer was poking his head around my home, touching my things.");
+~chatnpc("<p,confused>Then I wake up here, hot cup of tea beside me and a congregation downstairs.");
+~chatnpc("<p,sad>I'm too scared to take a peek, they don't sound human at all! One day I'll have the courage to make a break for it.");
+~chatnpc("<p,neutral>Until then, this tea is the only thing sustaining me.");
+~chatnpc("<p,happy>It's actually quite nice, if I'm honest.");
+
+[opnpc1,catcity_disciple_believer]
+if (inv_totalcat(worn, feline_medal) = 0) {
+    ~chatnpc("<p,neutral>Meow.");
+    return;
+}
+~chatnpc("<p,shock>It's him! I can't believe it's really him upstairs!");
+~chatplayer("<p,quiz>Who's upstairs?");
+~chatnpc("<p,happy>Bob, but human! I knew he was a cat of many talents, but this really takes the karambwanji.");
+
+[opnpc1,catcity_disciple_tea]
+~catcity_cat_chat("Wow! REAL life Bob is upstairs, and he drank the tea I made for him! Can this day get ANY better?");
+
+[opnpc1,catcity_bob_rooftop]
+~catcity_cat_chat("Don't tell anyone that I'm up here.");
+
+[opnpc1,catcity_leprechaun]
+~chatnpc("<p,angry>What's that AWFUL smell?");
+def_int $option = ~p_choice3("That's the town litter tray.", 1, "What are you doing here?", 2, "Can I give you some of my gold nuggets?", 3);
+if ($option = 1) {
+    ~chatplayer("<p,neutral>Erm, that's the town litter tray.");
+    ~chatnpc("<p,shock>Litter tray? My boss told me to go stand where the rainbow ends and see if there's a pot of gold!");
+    ~chatplayer("<p,neutral>Perhaps he meant the other end.");
+    ~chatnpc("<p,angry>Dang it. I found a few nuggets, but no gold. What a rip off!");
+    @catcity_leprechaun_options;
+}
+if ($option = 2) {
+    ~chatplayer("<p,quiz>What are you doing here?");
+    ~chatnpc("<p,neutral>My boss told me to go stand where the rainbow ends and see if there's a pot of gold. All I found was this sandbox.");
+    ~chatnpc("<p,angry>I found a few nuggets, but no gold. What a rip off!");
+    @catcity_leprechaun_options;
+}
+@catcity_leprechaun_exchange;
+
+[label,catcity_leprechaun_options]
+def_int $option = ~p_choice2("Can I give you some of my gold nuggets?", 1, "Good luck with the digging.", 2);
+if ($option = 1) {
+    @catcity_leprechaun_exchange;
+}
+~chatplayer("<p,neutral>Good luck with the digging.");
+~chatnpc("<p,neutral>I've rather gone off the idea.");
+
+[label,catcity_leprechaun_exchange]
+~chatplayer("<p,quiz>Can I give you some of my gold nuggets?");
+~chatnpc("<p,happy>Yep! I'll give you 5 red coins each.");
+def_int $quantity = inv_total(inv, nuggets);
+if ($quantity = 0) {
+    ~chatplayer("<p,confused>I don't seem to have any with me.");
+    return;
+}
+inv_del(inv, nuggets, $quantity);
+inv_add(inv, viking_dummy_coin, multiply($quantity, 5));
+~catcity_red_disk_box("The leprechaun takes your nuggets in exchange for red disks.");
+~chatnpc("<p,happy>Thanks!");
+
+[opnpcu,catcity_leprechaun]
+if (last_useitem = nuggets) {
+    @catcity_leprechaun_exchange;
+}
+~chatnpc("<p,neutral>It's gold nuggets I'm after.");
+
+[opnpc1,catcity_witches_cat]
+mes("This one doesn't want to talk right meow.");
+
+[opnpcu,catcity_bob_sinclair]
+if (last_useitem ! cup_of_tea) {
+    ~displaymessage(^dm_default);
+    return;
+}
+inv_del(inv, cup_of_tea, 1);
+inv_add(inv, viking_dummy_coin, 1);
+~chatnpc("<p,happy>Thanks!");
+~catcity_red_disk_box("Bob takes your cup of tea and gives you a red disk.");

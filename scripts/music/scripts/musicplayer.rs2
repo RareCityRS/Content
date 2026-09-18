@@ -23,7 +23,7 @@ if (%musicloop = 0) {
 [softtimer,musicloop]
 // mes("musicstart=<tostring(%musicstart)> musiclength=<tostring(%musiclength)> map_clock=<tostring(map_clock)> loop=<tostring(sub(add(%musicstart, %musiclength), map_clock))>");
 
-if (%musicloop = 0) {
+if (%musicloop = 0 & (%catcity_music_area = 0 | %musicplay = 0)) {
     clearsofttimer(musicloop);
     return;
 }
@@ -35,6 +35,9 @@ if (%currentsong = null) {
 if (map_clock > add(%musicstart, %musiclength)) {
     // osrs has a 2t delay between silence and looping
     midi_song(silence);
+    if (%catcity_music_area ! 0 & %musicplay ! 0) {
+        @catcity_music_next;
+    }
     @music_play(%currentsong);
 }
 

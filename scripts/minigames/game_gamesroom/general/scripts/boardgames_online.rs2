@@ -1,0 +1,189 @@
+[proc,friend_challenge](player_uid $target)
+if (busy = true) {
+    mes("Please finish what you are doing first.");
+    return;
+}
+if (%duelstatus ! ^duelstatus_reset | ~in_duel_arena(coord) = true) {
+    mes("You can't do that during a duel.");
+    return;
+}
+if (%boardgames_ingame = 1 & %boardgames_online = 1) {
+    if (%boardgames_viewing = 0 & %duel2accept = $target) {
+        ~boardgames_online_resume;
+        return;
+    }
+    if (%boardgames_viewing = 1 | .finduid(%duel2accept) = false) {
+        %duel2accept = null;
+        ~reset_boardgames_varp;
+    }
+}
+if (%boardgames_ingame = 1) {
+    mes("You are already playing a game.");
+    return;
+}
+if (.finduid($target) = false) {
+    mes("That player is not online.");
+    return;
+}
+if (.uid = uid) {
+    mes("You can't challenge yourself.");
+    return;
+}
+if (map_members = ^false) {
+    mes(^mes_members_do_that);
+    return;
+}
+if (.busy = true) {
+    mes("Other player is busy at the moment.");
+    return;
+}
+if (.%boardgames_ingame = 1) {
+    mes("That player is already playing a game.");
+    return;
+}
+if (.%duelstatus ! ^duelstatus_reset) {
+    mes("That player is busy with a duel.");
+    return;
+}
+if (.%duel2accept = uid) {
+    %duel2accept = .uid;
+    %boardgames_online = 1;
+    %boardgames_game = .%boardgames_game;
+    %boardgames_rankedgame = 0;
+    %boardgames_timepermove = .%boardgames_timepermove;
+    if (.%boardgames_piece = 1) {
+        %boardgames_piece = 2;
+    } else {
+        %boardgames_piece = 1;
+    }
+    %boardgames_closinginterface = 1;
+    ~open_boardgames_options;
+    %boardgames_closinginterface = 0;
+    return;
+}
+%duel2accept = .uid;
+%boardgames_online = 1;
+%boardgames_game = 0;
+%boardgames_rankedgame = 0;
+%boardgames_timepermove = 1;
+%boardgames_piece = 1;
+if_settext(boardgames_challenge:draughts_rank, "<tostring(%boardgames_draughts_rank)> vs <tostring(.%boardgames_draughts_rank)>");
+if_settext(boardgames_challenge:runelink_rank, "<tostring(%boardgames_runelink_rank)> vs <tostring(.%boardgames_runelink_rank)>");
+%if1 = 0;
+%boardgames_closinginterface = 1;
+if_openmain(boardgames_challenge);
+%boardgames_closinginterface = 0;
+
+[proc,boardgames_online_start]
+%boardgames_online_opponent = .uid;
+.%boardgames_online_opponent = uid;
+.%boardgames_online = 1;
+.%boardgames_rankedgame = 0;
+.%boardgames_game = %boardgames_game;
+.%boardgames_timepermove = %boardgames_timepermove;
+if (.%boardgames_piece = %boardgames_piece) {
+    if (%boardgames_piece = 1) {
+        .%boardgames_piece = 2;
+    } else {
+        .%boardgames_piece = 1;
+    }
+}
+
+[queue,boardgames_online_minimise]
+clearsofttimer(boardgames_sitting_anim);
+minimap_toggle(0);
+~initalltabs;
+mes("Your game carries on while the board is closed.");
+mes("Right-click your opponent in your friends list to resume it.");
+
+[proc,boardgames_online_resume]
+if (.finduid(%duel2accept) = false) {
+    mes("Your opponent is no longer available.");
+    %duel2accept = null;
+    ~reset_boardgames_varp;
+    return;
+}
+minimap_toggle(1);
+~boardgames_hide_tabs;
+%boardgames_closinginterface = 1;
+switch_int (%boardgames_game) {
+    case 0 : ~draughts_online_reopen;
+    case 1 : ~runelink_online_reopen;
+}
+%boardgames_closinginterface = 0;
+
+[proc,draughts_online_reopen]
+if_setanim(boardgames_draughts:runeflash, null);
+if_setanim(boardgames_draughts:runeflash, runeflash_off);
+if_openmain(boardgames_draughts);
+if (%boardgames_control = 1) {
+    if_setobject(boardgames_draughts:p1_rune, ~get_boardgames_rune_obj(.%boardgames_piece), 72);
+    if_setobject(boardgames_draughts:p2_rune, ~get_boardgames_rune_obj(%boardgames_piece), 72);
+    if_settext(boardgames_draughts:p1_name, "<.displayname>");
+    if_settext(boardgames_draughts:p2_name, "<displayname>");
+} else {
+    if_setobject(boardgames_draughts:p1_rune, ~get_boardgames_rune_obj(%boardgames_piece), 72);
+    if_setobject(boardgames_draughts:p2_rune, ~get_boardgames_rune_obj(.%boardgames_piece), 72);
+    if_settext(boardgames_draughts:p1_name, "<displayname>");
+    if_settext(boardgames_draughts:p2_name, "<.displayname>");
+}
+if (%boardgames_myturn = 1) {
+    if_settext(boardgames_draughts:turn_name, "<displayname>");
+} else {
+    if_settext(boardgames_draughts:turn_name, "<.displayname>");
+}
+if_settext(boardgames_draughts:status1, "The turn timer is still running.");
+if (%boardgames_drawrequested = 1) {
+    if_settext(boardgames_draughts:status2, "Your opponent asked for a draw.");
+} else {
+    if_settext(boardgames_draughts:status2, "");
+}
+if_settext(boardgames_draughts:winner, "");
+if_setposition(boardgames_draughts:sandtimer, -1000, -1000);
+inv_transmit(boardgames_boardinv, boardgames_draughts:boardinv);
+
+[proc,runelink_online_reopen]
+if_setanim(boardgames_runelink:runeflash, null);
+if_setanim(boardgames_runelink:runeflash, runeflash_off);
+if_openmain(boardgames_runelink);
+if (%boardgames_control = 1) {
+    if_setobject(boardgames_runelink:p1_rune, ~get_boardgames_rune_obj(.%boardgames_piece), 72);
+    if_setobject(boardgames_runelink:p2_rune, ~get_boardgames_rune_obj(%boardgames_piece), 72);
+    if_settext(boardgames_runelink:p1_name, "<.displayname>");
+    if_settext(boardgames_runelink:p2_name, "<displayname>");
+} else {
+    if_setobject(boardgames_runelink:p1_rune, ~get_boardgames_rune_obj(%boardgames_piece), 72);
+    if_setobject(boardgames_runelink:p2_rune, ~get_boardgames_rune_obj(.%boardgames_piece), 72);
+    if_settext(boardgames_runelink:p1_name, "<displayname>");
+    if_settext(boardgames_runelink:p2_name, "<.displayname>");
+}
+if (%boardgames_myturn = 1) {
+    if_settext(boardgames_runelink:turn_name, "<displayname>");
+} else {
+    if_settext(boardgames_runelink:turn_name, "<.displayname>");
+}
+if_settext(boardgames_runelink:status1, "The turn timer is still running.");
+if (%boardgames_drawrequested = 1) {
+    if_settext(boardgames_runelink:status2, "Your opponent asked for a draw.");
+} else {
+    if_settext(boardgames_runelink:status2, "");
+}
+if_settext(boardgames_runelink:winner, "");
+if_setposition(boardgames_runelink:sandtimer, -1000, -1000);
+inv_transmit(boardgames_boardinv, boardgames_runelink:boardinv);
+
+[proc,boardgames_online_logout]
+if (%boardgames_online = 0 | %boardgames_ingame = 0 | %boardgames_viewing = 1) {
+    return;
+}
+if (.finduid(%duel2accept) = false) {
+    return;
+}
+if (.%boardgames_ingame = 0 | .%boardgames_online = 0 | .%duel2accept ! uid) {
+    return;
+}
+.%boardgames_closemode = ^boardgames_win;
+switch_int (%boardgames_game) {
+    case 0 : ~.draughts_game_end(0, .%boardgames_draughts_rank, %boardgames_draughts_rank, true);
+    case 1 : ~.runelink_game_end(0, .%boardgames_runelink_rank, %boardgames_runelink_rank, true);
+}

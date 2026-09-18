@@ -939,6 +939,7 @@ members=yes
 [casket]
 name=Casket
 desc=I hope there's treasure in it.
+stackable=yes
 model=inv_casket
 2dxof=3
 2dyof=-6

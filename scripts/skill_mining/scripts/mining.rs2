@@ -119,6 +119,9 @@ def_obj $neck = inv_getobj(worn, ^wearpos_front);
 if ($neck ! null & oc_category($neck) = category_557 & map_members = ^true) {
     $chance = 86;
 }
+def_int $low = 0;
+def_int $high = 0;
+$low, $high = db_getfield($data, mining_table:rock_successchance, 0);
 if (random($chance) = ^true) {
     def_namedobj $gem = ~mining_gem_table;
     if ($gem ! null) {
@@ -127,7 +130,7 @@ if (random($chance) = ^true) {
         $data = db_findnext;
         mes("You just found <~add_article(oc_name(db_getfield($data, gem_cutting_table:cut_gem, 0)))>!");
     }
-} else if (stat_random(mining, db_getfield($data, mining_table:rock_successchance, 0)) = true) {
+} else if (~catcity_mine_random($low, $high) = true) {
     // They added a 1t p_delay in this update: https://oldschool.runescape.wiki/w/Update:Special_Attacks
     p_delay(0);
     // deplete
@@ -168,6 +171,9 @@ def_obj $neck = inv_getobj(worn, ^wearpos_front);
 if ($neck ! null & oc_category($neck) = category_557 & map_members = ^true) {
     $chance = 86;
 }
+def_int $low = 0;
+def_int $high = 0;
+$low, $high = db_getfield($data, mining_table:rock_successchance, 0);
 if (random($chance) = ^true) {
     def_namedobj $gem = ~mining_gem_table;
     if ($gem ! null) {
@@ -176,7 +182,7 @@ if (random($chance) = ^true) {
         $data = db_findnext;
         mes("You just found <~add_article(oc_name(db_getfield($data, gem_cutting_table:cut_gem, 0)))>!");
     }
-} else if (stat_random(mining, db_getfield($data, mining_table:rock_successchance, 0)) = true) {
+} else if (~catcity_mine_random($low, $high) = true) {
     // deplete
     def_int $respawn = ~scale_by_playercount(db_getfield($data, mining_table:rock_respawnrate, 0));
     // Temp note: dur does not need updated

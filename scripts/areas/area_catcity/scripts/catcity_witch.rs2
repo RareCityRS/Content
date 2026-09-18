@@ -1,0 +1,95 @@
+[opnpc1,catcity_witch]
+~chatnpc("<p,happy>Welcome to the shelter, dearie. We take in strays.");
+def_int $option = ~p_choice3("What do you sell?", 1, "Can you change my cat's colour?", 2, "I'm not a stray.", 3);
+if ($option = 1) {
+    ~chatplayer("<p,quiz>What do you sell?");
+    ~chatnpc("<p,happy>Runes and battlestaves, dearie. The elemental runes by the sackful, and a few of the rarer sort.");
+    ~openshop_activenpc;
+    return;
+}
+if ($option = 2) {
+    @catcity_cat_colour;
+}
+~chatplayer("<p,confused>I'm not a stray.");
+if (~catcity_exchange_faces(null, 0) = 0) {
+    ~chatnpc("<p,neutral>Everyone who walks in here is a stray. Come back when you've stolen something with a face on it.");
+    return;
+}
+~chatnpc("<p,quiz>Everyone who walks in here is a stray. Now, what's that in your pack?");
+~chatnpc("<p,happy>Stolen faces! How delightfully wicked. I collect those.");
+~chatnpc("<p,neutral>Give them to me and I'll pay you in red disks. <tostring(^catcity_face_coins)> a face, no haggling.");
+~chatplayer("<p,happy>Yes, please.");
+def_int $caskets = ~catcity_exchange_faces(null, 1);
+~objbox(viking_dummy_coin, "Meowendoloena tucks the faces into her sleeve and counts <tostring($caskets)> red disks into your hands.", 250, 0, 0);
+
+[opnpcu,catcity_witch]
+if (~catcity_face_level(last_useitem) = 0) {
+    ~displaymessage(^dm_default);
+    return;
+}
+def_int $caskets = ~catcity_exchange_faces(last_useitem, 1);
+~objbox(viking_dummy_coin, "Meowendoloena tucks the faces into her sleeve and counts <tostring($caskets)> red disks into your hands.", 250, 0, 0);
+
+[proc,catcity_exchange_faces](obj $only, int $take)(int)
+def_int $caskets = 0;
+def_int $i = 0;
+while ($i < 11) {
+    def_obj $face = ~catcity_face_by_index($i);
+    if ($only = null | $only = $face) {
+        def_int $count = inv_total(inv, $face);
+        if ($count > 0) {
+            $caskets = add($caskets, multiply($count, ^catcity_face_coins));
+            if ($take = 1) {
+                inv_del(inv, $face, $count);
+            }
+        }
+    }
+    $i = add($i, 1);
+}
+if ($take = 1 & $caskets > 0) {
+    inv_add(inv, viking_dummy_coin, $caskets);
+}
+return($caskets);
+
+[proc,catcity_face_by_index](int $i)(obj)
+switch_int ($i) {
+    case 0 : return(pickpocket_guide_man);
+    case 1 : return(pickpocket_guide_farmer);
+    case 2 : return(pickpocket_guide_warrior);
+    case 3 : return(pickpocket_guide_rogue);
+    case 4 : return(pickpocket_guide_guard);
+    case 5 : return(pickpocket_guide_fremennik_citizen);
+    case 6 : return(pickpocket_guide_watchman);
+    case 7 : return(pickpocket_guide_paladin);
+    case 8 : return(pickpocket_guide_gnome);
+    case 9 : return(pickpocket_guide_knight);
+    case 10 : return(pickpocket_guide_hero);
+}
+return(null);
+
+[proc,catcity_face_level](obj $face)(int)
+switch_obj ($face) {
+    case pickpocket_guide_man : return(1);
+    case pickpocket_guide_farmer : return(10);
+    case pickpocket_guide_warrior : return(25);
+    case pickpocket_guide_rogue : return(32);
+    case pickpocket_guide_guard : return(40);
+    case pickpocket_guide_fremennik_citizen : return(45);
+    case pickpocket_guide_knight : return(55);
+    case pickpocket_guide_watchman : return(65);
+    case pickpocket_guide_paladin : return(70);
+    case pickpocket_guide_gnome : return(75);
+    case pickpocket_guide_hero : return(80);
+}
+return(0);
+
+[apnpc2,catcity_witch]
+if (npc_range(coord) > 2) {
+    p_aprange(2);
+    return;
+}
+~openshop_activenpc;
+
+[opnpc2,catcity_witch] ~openshop_activenpc;
+
+[opnpc3,catcity_witch] ~player_teleport_normal(0_48_50_15_59);

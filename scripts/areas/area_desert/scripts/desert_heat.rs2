@@ -118,10 +118,18 @@ mes("You start dying of thirst while you're in the desert.");
 queue(damage_player, 0, ~random_range(1, 10));
 ~calculate_desertheat_timer;
 
-[mapzoneexit,0_49_46] ~clear_desertheat_timer;
+[mapzoneexit,0_49_46]
+~clear_desertheat_timer;
+%catcity_music_area = 0;
+if (%boardgames_online = 0) {
+    ~reset_boardgames_varp;
+}
+set_player_op(null, 1, ^false);
 [mapzoneexit,0_49_47] ~clear_desertheat_timer;
 
-[mapzoneexit,0_50_46] ~clear_desertheat_timer;
+[mapzoneexit,0_50_46]
+~clear_desertheat_timer;
+%catcity_music_area = 0;
 [mapzoneexit,0_50_47] ~clear_desertheat_timer;
 [mapzoneexit,0_50_48] ~clear_desertheat_timer;
 

@@ -1,0 +1,23 @@
+[ai_timer,catcity_rat] @rat_moo;
+
+[ai_queue2,catcity_rat]
+if (random(1000) = 0 & sub(npc_stat(hitpoints), last_int) > 0) {
+    @rat_moo;
+    ~npc_rat_teleport;
+}
+
+[ai_timer,catcity_rat_desert] @rat_moo;
+
+[ai_queue2,catcity_rat_desert]
+if (random(1000) = 0 & sub(npc_stat(hitpoints), last_int) > 0) {
+    @rat_moo;
+    ~npc_rat_teleport;
+}
+
+[ai_timer,catcity_rat_temp] @rat_moo;
+
+[ai_queue2,catcity_rat_temp]
+if (random(1000) = 0 & sub(npc_stat(hitpoints), last_int) > 0) {
+    @rat_moo;
+    ~npc_rat_teleport;
+}

@@ -430,6 +430,7 @@ tradeable=no
 
 [viking_dummy_coin]
 name=Red disk
+stackable=yes
 recol1s=31393
 recol1d=25859
 recol2s=31393

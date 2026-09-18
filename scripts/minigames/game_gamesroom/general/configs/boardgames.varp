@@ -17,3 +17,9 @@ transmit=yes
 [boardgames_varbit2]
 protect=no
 transmit=yes
+
+[boardgames_online_opponent]
+type=player_uid
+protect=no
+transmit=yes
+clientcode=20

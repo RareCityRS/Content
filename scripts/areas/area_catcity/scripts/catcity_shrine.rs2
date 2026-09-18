@@ -1,0 +1,24 @@
+[oplocu,catcity_bob_shrine]
+if (last_useitem = viking_dummy_coin) {
+    inv_del(inv, viking_dummy_coin, 1);
+    anim(human_pickupfloor, 0);
+    stat_advance(prayer, ^catcity_disk_prayer_xp);
+    return;
+}
+if (last_useitem ! tbwt_raw_karambwanji) {
+    mes("Good Bob is not interested in that.");
+    return;
+}
+inv_del(inv, tbwt_raw_karambwanji, 1);
+mes("For a moment you think you hear someone say 'Thanks for all the fish'.");
+
+[opnpc1,catcity_disciple]
+if (inv_totalcat(worn, feline_medal) = 0) {
+    ~chatnpc("<p,neutral>Meow.");
+    return;
+}
+~chatnpc("<p,happy>Welcome to the Shrine of Bob, friend.");
+~chatplayer("<p,quiz>Bob? As in Evil Bob?");
+~chatnpc("<p,confused>Evil Bob? Do you mean old mate Bob?");
+~chatnpc("<p,happy>Yeah, me and him go way back.");
+~chatnpc("<p,laugh>He's actually quite nice once you get to know him!");

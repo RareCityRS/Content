@@ -43,10 +43,18 @@ members=yes
 2dyan=120
 2dxan=296
 iop2=Wear
+iop3=Teleport
 wearpos=front
 manwear=man_necklaces_fishamulet,0
 womanwear=woman_necklaces_fishamulet,0
 weight=10g
+category=feline_medal
+param=stabattack,10
+param=slashattack,0
+param=rangeattack,10
+param=rangedefence,3
+param=strengthbonus,6
+param=prayerbonus,3
 
 [gertrudekittens]
 name=Fluffs' kitten

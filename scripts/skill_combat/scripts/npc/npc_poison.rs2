@@ -35,6 +35,11 @@ if (map_members = ^false) {
     return;
 }
 
+if (npc_type = catcity_felion | npc_type = catcity_felion_cub) {
+    ~catcity_venom_start;
+    return;
+}
+
 if ($severity > %npc_poison) {
     npc_settimer(30);
     %npc_poison = $severity;

@@ -1,0 +1,30 @@
+[proc,catcity_fish_random](int $low, int $high)(boolean)
+if (inzone(^catcity_area_sw, ^catcity_area_ne, coord) = false) {
+    if (stat_random(fishing, $low, $high) = true) {
+        return(true);
+    }
+    return(false);
+}
+if (~catcity_skill_roll(add(stat(fishing), ^catcity_guild_boost), $low, $high) = true) {
+    return(true);
+}
+return(false);
+
+[proc,catcity_mine_random](int $low, int $high)(boolean)
+if (inzone(^catcity_area_sw, ^catcity_area_ne, coord) = false) {
+    if (stat_random(mining, $low, $high) = true) {
+        return(true);
+    }
+    return(false);
+}
+if (~catcity_skill_roll(add(stat(mining), ^catcity_guild_boost), $low, $high) = true) {
+    return(true);
+}
+return(false);
+
+[proc,catcity_skill_roll](int $level, int $low, int $high)(boolean)
+def_int $value = calc((($low * (99 - $level)) / 98) + (($high * ($level - 1)) / 98) + 1);
+if ($value > random(256)) {
+    return(true);
+}
+return(false);

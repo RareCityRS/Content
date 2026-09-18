@@ -24,7 +24,7 @@ if (finduid(%npc_attacking_uid) = true) {
 
     // Mirror owner's worn-medal status into a varn so scan procs can
     // read it without doing a cross-player-context worn-inv lookup.
-    if (inv_total(worn, felinemedal) > 0) {
+    if (inv_totalcat(worn, feline_medal) > 0) {
         %cvc_medal_worn = 1;
     } else {
         %cvc_medal_worn = 0;
@@ -308,6 +308,20 @@ switch_obj(last_useitem) {
     case default : ~displaymessage(^dm_default);
 }
 
+[opnpc2,_petcat]
+if (%npc_attacking_uid ! uid) {
+    ~chatnpc("<p,neutral>Meow.");
+    return;
+}
+def_string $line = "Meow!";
+if (npc_param(cat_vocal) = 1) {
+    $line = enum(int, string, blackcat_phrases, random(^blackcat_phrase_count));
+} else if (inv_totalcat(worn, feline_medal) > 0) {
+    $line = enum(int, string, catcity_pet_phrases, random(^catcity_pet_phrase_count));
+}
+~chatnpc("<p,neutral><$line>");
+npc_setmode(playerfollow);
+
 [opnpc1,_petcat]
 if (%npc_attacking_uid ! uid) {
     mes("That isn't yours to take.");
@@ -388,38 +402,44 @@ if (oc_category(nc_param(npc_type, pet_item_id)) = overgrown) {
     mes("The cat is just too big to catch vermin.");
     return;
 }
-if (.npc_find(coord, rat, 10, 1) = true) {  
-    def_int $chance = random(2);
-    def_int $vermin = getbit_range(%cat_growth, 20, 26);
-    say("Go on kitty...kill that rat!");
-    p_delay(0);
-    npc_say("Meeeeeoooowww!");
-    p_delay(0);
-    .npc_say("Eek!");
-    sound_synth(rat_hit, 0, 0);
-    if(lineofwalk(coord, .npc_coord) = false) {
-        mes("Your cat cannot get to its prey.");
-        return;
+if (.npc_find(coord, rat, 10, 1) = false) {
+    if (.npc_find(coord, catcity_rat, 10, 1) = false) {
+        if (.npc_find(coord, catcity_rat_desert, 10, 1) = false) {
+            if (.npc_find(coord, catcity_rat_temp, 10, 1) = false) {
+                mes("There aren't any rats or mice around.");
+                return;
+            }
+        }
     }
-    npc_setmode(none);
-    npc_walk(.npc_coord);
-    p_delay(1);
-    npc_anim(cat_pounce, 0);
-    p_delay(1);
-    if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
-        $chance = random(10);
-    }
-    if($chance ! 0) {
-        mes("The rat manages to get away!");
-        return;
-    }
-    .npc_del;
-    npc_say("MeeeoooooW!");
-    say("Hey well done kitty, you got it!");
-    %cat_growth = setbit_range_toint(%cat_growth, min(100,max(calc($vermin + 1),-1)), 20, 26);
-} else {
-    mes("There aren't any rats or mice around.");
 }
+def_int $chance = random(2);
+def_int $vermin = getbit_range(%cat_growth, 20, 26);
+say("Go on kitty...kill that rat!");
+p_delay(0);
+npc_say("Meeeeeoooowww!");
+p_delay(0);
+.npc_say("Eek!");
+sound_synth(rat_hit, 0, 0);
+if(lineofwalk(coord, .npc_coord) = false) {
+    mes("Your cat cannot get to its prey.");
+    return;
+}
+npc_setmode(none);
+npc_walk(.npc_coord);
+p_delay(1);
+npc_anim(cat_pounce, 0);
+p_delay(1);
+if(oc_category(nc_param(npc_type, pet_item_id)) = kitten) {
+    $chance = random(10);
+}
+if($chance ! 0) {
+    mes("The rat manages to get away!");
+    return;
+}
+.npc_del;
+npc_say("MeeeoooooW!");
+say("Hey well done kitty, you got it!");
+%cat_growth = setbit_range_toint(%cat_growth, min(100,max(calc($vermin + 1),-1)), 20, 26);
 
 [proc,cat_drop]
 if (map_members = ^false) {
@@ -429,7 +449,7 @@ if (map_members = ^false) {
 // Follower cap: 5 by default, 28 if wearing a feline medal.
 def_int $cap = 5;
 def_string $cap_msg = "You can't have any more followers without a feline medal.";
-if (inv_total(worn, felinemedal) > 0) {
+if (inv_totalcat(worn, feline_medal) > 0) {
     $cap = 28;
     $cap_msg = "You can't have any more followers.";
 }

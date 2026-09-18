@@ -1,0 +1,278 @@
+[apnpc1,catcity_banker1] @catcity_bank;
+[apnpc1,catcity_banker2] @catcity_bank;
+[apnpc3,catcity_banker1] @catcity_banker_talk("Your gold is safe with me.");
+[apnpc3,catcity_banker2] @catcity_banker_talk("Meow.");
+
+[label,catcity_bank]
+if (npc_range(coord) > 2) {
+    p_aprange(2);
+    return;
+}
+@openbank;
+
+[label,catcity_banker_talk](string $line)
+if (npc_range(coord) > 2) {
+    p_aprange(2);
+    return;
+}
+~catcity_cat_chat($line);
+
+[proc,catcity_cat_chat](string $line)
+if (inv_totalcat(worn, feline_medal) > 0) {
+    ~chatnpc("<p,happy><$line>");
+    return;
+}
+~chatnpc("<p,neutral>Meow.");
+
+[opnpc1,catcity_bartender] @catcity_bartender_talk;
+
+[apnpc1,catcity_bartender]
+if (npc_range(coord) > 2) {
+    p_aprange(2);
+    return;
+}
+@catcity_bartender_talk;
+
+[apnpc3,catcity_bartender]
+if (npc_range(coord) > 2) {
+    p_aprange(2);
+    return;
+}
+~openshop_activenpc;
+
+[label,catcity_bartender_talk]
+if (inv_totalcat(worn, feline_medal) = 0) {
+    ~chatnpc("<p,neutral>Meow?");
+    ~chatplayer("<p,confused>I have no idea what she just said.");
+    return;
+}
+~chatnpc("<p,happy>Meow.Welcome to the Scratch.");
+def_int $option = ~p_choice2("What have you got?", 1, "Just looking, thanks.", 2);
+if ($option = 1) {
+    ~chatplayer("<p,quiz>What have you got?");
+    ~openshop_activenpc;
+} else {
+    ~chatplayer("<p,neutral>Just looking, thanks.");
+    ~chatnpc("<p,neutral>Looking is free.");
+}
+
+[opnpc1,catcity_storekeeper]
+if (inv_totalcat(worn, feline_medal) = 0) {
+    ~chatnpc("<p,neutral>Mrrow.");
+    ~chatplayer("<p,confused>He wants to trade... I think?");
+    ~openshop_activenpc;
+    return;
+}
+~chatnpc("<p,happy>Meow. Cat City General Store, sell me your stuff.");
+def_int $option = ~p_choice3("Show me your wares.", 1, "Maybe later.", 2, "Can I trade karambwanji for red disks?", 3);
+if ($option = 3) {
+    ~catcity_fish_offer(3);
+    return;
+}
+if ($option = 1) {
+    ~chatplayer("<p,quiz>Show me your wares.");
+    ~openshop_activenpc;
+} else {
+    ~chatplayer("<p,neutral>Maybe later.");
+}
+
+[opnpc1,catcity_puss]
+~chatnpc("<p,happy>Ah, you there. Adventurer. Have you heard the tale of Felion?");
+def_int $option = ~p_choice3("Felion?", 1, "Not now, puss.", 2, "Can I trade karambwanji for red disks?", 3);
+if ($option = 3) {
+    ~catcity_fish_offer(2);
+    return;
+}
+if ($option = 2) {
+    ~chatplayer("<p,neutral>Not now, puss.");
+    return;
+}
+~chatplayer("<p,quiz>Feline? Like feline lion?");
+~chatnpc("<p,neutral>He's the size of a house! Likes to throw sand! Lives way out in the desert, or so stories tell.");
+~chatnpc("<p,sad>If you ever go into the desert, be careful. My cousin went to see if the legends were true. It's been two meals and she still hasn't come back! I miss her.");
+~chatnpc("<p,angry>Or, I would, if she hadn't taken my last karambwanji!");
+~chatnpc("<p,neutral>...");
+~chatnpc("<p,quiz>Do you have any karambwanji, adventurer?");
+$option = ~p_choice2("Stories? What stories?", 1, "I'll be on my way.", 2);
+if ($option = 2) {
+    ~chatplayer("<p,neutral>Thanks, Puss. I'll be on my way.");
+    return;
+}
+~chatplayer("<p,quiz>Stories? What stories?");
+~chatnpc("<p,happy>The legend of Felion! He used to be an adventurer like you...");
+~chatnpc("<p,quiz>Well, maybe not quite like you. A little bit, perhaps?");
+~chatnpc("<p,neutral>Maybe he was an adventurer, and perhaps a little like you, but then again he had fleas.");
+~chatnpc("<p,neutral>...");
+~chatnpc("<p,quiz>Do you have fleas??");
+~chatplayer("<p,confused>Fleas?");
+~chatnpc("<p,neutral>Please.");
+~chatplayer("<p,shock>Please?!");
+~chatnpc("<p,neutral>Please, I'm trying to tell a story.");
+~chatplayer("<p,neutral>Oh. All right, then.");
+~chatnpc("<p,neutral>Anyway, we meowsfolk told him to take a bath. 'Go West, to the beach', but he went East.");
+~chatnpc("<p,angry>The buffoon! Anyway, what was I saying?");
+~chatplayer("<p,quiz>Err, something about fleas?");
+~chatnpc("<p,neutral>...");
+~chatnpc("<p,happy>That's right, I hope you don't have fleas. If you do, you'll end up like him! Going over East!");
+~chatnpc("<p,angry>That fool!");
+~chatnpc("<p,neutral>Anyway, apparently he got lost in the desert. He ran out of waterskins, then he ate a strange plant and his eyes turned red.");
+~chatnpc("<p,shock>Did I mention he's the size of a house?");
+~chatplayer("<p,neutral>Yep, I got that.");
+@catcity_puss_options;
+
+[label,catcity_puss_options]
+def_int $option = ~p_choice2("Where can I find him?", 1, "What do I take with me?", 2);
+if ($option = 1) {
+    ~chatplayer("<p,quiz>Where can I find him?");
+    ~chatnpc("<p,neutral>Head East. Out of town, past the mines, go deep in the desert.");
+    ~chatnpc("<p,neutral>Take the long way around to avoid Felion's cubs - they're straight up thugs!");
+    @catcity_puss_options;
+}
+~chatplayer("<p,quiz>What do I take with me?");
+~chatnpc("<p,neutral>Bring your best, strongest potions. Something stabby and poisoned, or poisoned and small that you can throw quickly. Oh, and plenty of food.");
+~chatplayer("<p,happy>Thanks old puss!");
+~chatnpc("<p,neutral>Don't call me that, good luck!");
+
+[opnpc1,catcity_cat1] ~catcity_cat_chat("This stool was here before the sand. So was I.");
+[opnpc1,catcity_cat2] @catcity_fish_cat_talk(0, "Is that karambwanji in your pack? It is, isn't it.");
+[opnpc1,catcity_cat3] ~catcity_cat_chat("The cactus is the only thing in town I haven't scratched yet. It scratches back.");
+[opnpc1,catcity_cat4] ~catcity_cat_chat("Upstairs is quieter. Fewer humans. No offence.");
+[opnpc1,catcity_cat5] @catcity_fish_cat_talk(1, "...zzz... karambwanji... zzz...");
+
+[opnpc3,catcity_wizard] @catcity_essence_teleport;
+[opnpc2,catcity_wizard] ~openshop_activenpc;
+[opnpc1,catcity_wizard]
+switch_int(random(6)) {
+    case 0 : ~chatnpc("<p,neutral>There is a land shining with goodness where everyone protects eachothers' dignity as their own.");
+    case 1 : ~chatnpc("<p,happy>Truth in the heart, strength in the arm, and honesty in the tongue.");
+    case 2 : ~chatnpc("<p,happy>Great Light, be my Journey and my far Destination, be my Want and my Fulfilling, be my glad Song and my stark Silence.");
+             ~chatnpc("<p,happy>Be my Sword and my strong Shield, be my Lantern and my dark Night, be my everlasting Strength and my piteous Weakness.");
+             ~chatnpc("<p,happy>Be my Greeting and my parting Prayer, be my bright Vision and my Blindness, be my Joy and my sharp Grief, be my sad Death and my sure Resurrection!");
+    case 3 : ~chatnpc("<p,shifty>Shh, the runes can hear us.");
+    case 4 : ~chatnpc("<p,confused>Teleport? Yes. No. Which one is it?");
+    case 5 : ~chatnpc("<p,happy>I put my dessert in the desert. I'm sure it won't melt.");
+}
+
+[ai_spawn,catcity_banker1] @catcity_banker_spawn;
+[ai_spawn,catcity_banker2] @catcity_banker_spawn;
+
+[label,catcity_banker_spawn]
+%npc_combat_xp_multiplier = npc_param(combat_xp_multiplier);
+%npc_start_coord = npc_coord;
+npc_facesquare(movecoord(npc_coord, -1, 0, 0));
+
+[opnpc3,catcity_guard] @attempt_pick_pocket(npc_type);
+[opnpc1,catcity_adventurer] @attempt_pick_pocket(npc_type);
+[opnpc3,catcity_knight] @attempt_pick_pocket(npc_type);
+
+[opnpc4,catcity_guard]
+%catcity_guard_talks = add(%catcity_guard_talks, 1);
+switch_int (%catcity_guard_talks) {
+    case 1 :
+        ~chatnpc("<p,confused>I don't know what I'm doing here.");
+    case 2 :
+        ~chatplayer("<p,quiz>First day on the job?");
+        ~chatnpc("<p,shock>Yes, how'd you know?");
+    case 3 :
+        ~chatnpc("<p,scared>Are you the captain? Please say you're the captain.");
+        ~chatplayer("<p,neutral>No.");
+        ~chatnpc("<p,sad>Oh.");
+    case default :
+        switch_int (random(4)) {
+            case 0 : ~chatnpc("<p,shock>Help!");
+            case 1 : ~chatnpc("<p,confused>Which end of the sword do I hold?");
+            case 2 : ~chatnpc("<p,scared>The cats keep looking at me, all at once. I'm worried.");
+            case 3 : ~chatnpc("<p,quiz>Is stealing from the stalls... bad? Nobody said.");
+        }
+}
+
+[opnpcu,catcity_adventurer] ~catcity_cat_lure;
+[opnpcu,catcity_knight] ~catcity_cat_lure;
+
+[proc,catcity_cat_lure]
+if (last_useitem ! tbwt_raw_karambwanji) {
+    ~displaymessage(^dm_default);
+    return;
+}
+inv_del(inv, tbwt_raw_karambwanji, 1);
+anim(human_pickupfloor, 0);
+npc_say("Mrrow!");
+mes("The cat notices your karambwanji.");
+npc_setmode(playerfollow);
+npc_queue(4, 0, 30);
+
+[ai_queue4,catcity_adventurer] ~catcity_cat_lure_end;
+[ai_queue4,catcity_knight] ~catcity_cat_lure_end;
+
+[proc,catcity_cat_lure_end]
+if (npc_getmode = playerfollow) {
+    npc_setmode(null);
+}
+
+[label,catcity_essence_teleport]
+if (%runemysteries < ^runemysteries_complete) {
+    mes("You need to have completed the Rune Mysteries Quest to use this feature.");
+    return;
+}
+if_close;
+%exit_essence_mine_coord = ^catcity_essence_return;
+npc_say("Senventior disthine molenko!");
+npc_anim(human_castcurse, 0);
+spotanim_npc(curse_casting, 92, 0);
+sound_synth(curse_all, 1, 0);
+~player_projectile(npc_coord, coord, uid, curse_travel, 31, 31, 61, 16, 0, 128, 5);
+spotanim_pl(curse_impact, 124, 70);
+p_delay(4);
+def_coord $coord = enum(int, coord, essence_mine_teleports, random(enum_getoutputcount(essence_mine_teleports)));
+$coord = map_findsquare($coord, 0, 1, ^map_findsquare_lineofsight);
+p_telejump($coord);
+if (random(^catcity_meowlin_cabbage_chance) = 0) {
+    inv_add(inv, cabbage, 1);
+}
+if (random(^catcity_meowlin_rat_chance) = 0) {
+    ~catcity_meowlin_rat_clear;
+    npc_add(coord, catcity_rat_temp, ^catcity_meowlin_rat_lifetime);
+    %catcity_meowlin_rat = npc_uid;
+}
+
+[proc,catcity_meowlin_rat_clear]
+if (%catcity_meowlin_rat ! null) {
+    if (npc_finduid(%catcity_meowlin_rat) = true) {
+        npc_del;
+    }
+    %catcity_meowlin_rat = null;
+}
+
+[mapzoneexit,0_45_75] ~catcity_meowlin_rat_clear;
+
+[opnpc2,catcity_adventurer] ~catcity_adventurer_retort;
+
+[apnpc2,catcity_adventurer]
+if (npc_range(coord) > 1) {
+    p_aprange(1);
+    return;
+}
+~catcity_adventurer_retort;
+
+[proc,catcity_adventurer_retort]
+switch_int (random(3)) {
+    case 0 : ~chatnpc("<p,happy>You needn't do that, human.");
+    case 1 : ~chatnpc("<p,laugh>What is it, human? Nobody your size to spar with?");
+    case 2 : ~chatnpc("<p,bored>That's quite alright, human. I've spilled enough blood for one afternoon.");
+}
+
+[apnpc2,catcity_wizard]
+if (npc_range(coord) > 2) {
+    p_aprange(2);
+    return;
+}
+~openshop_activenpc;
+
+[apnpc2,_petcat]
+if (npc_range(coord) > 1) {
+    p_aprange(1);
+    return;
+}
+p_opnpc(2);
+
+[opnpc3,catcity_adventurer] @attempt_pick_pocket(npc_type);

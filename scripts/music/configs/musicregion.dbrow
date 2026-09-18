@@ -1280,11 +1280,6 @@ table=musicregion
 data=mapsquare,0_48_156_0_0
 data=musicdata,music_Forever
 
-[musicregion_49_46]
-table=musicregion
-data=mapsquare,0_49_46_0_0
-data=musicdata,music_Bandit_Camp
-
 [musicregion_49_47]
 table=musicregion
 data=mapsquare,0_49_47_0_0

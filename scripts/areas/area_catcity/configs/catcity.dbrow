@@ -1,0 +1,13 @@
+[stealing_catcity_fish_stall]
+table=stealing
+data=loc,catcity_fish_stall
+data=owner,catcity_storekeeper
+data=guard,catcity_guard
+data=level,42
+data=experience,420
+data=respawn_ticks,32
+data=loot,raw_sardine,1,1,5,a sardine
+data=loot,raw_salmon,1,1,10,a salmon
+data=loot,tbwt_raw_karambwanji,1,1,14,a karambwanji
+data=loot_total,29
+data=stall,fish stall

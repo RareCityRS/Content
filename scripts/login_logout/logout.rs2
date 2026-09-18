@@ -4,6 +4,8 @@
 ~follower_logout;
 ~duel_arena_logout;
 ~macro_event_logout;
+~boardgames_online_logout;
+~catcity_meowlin_rat_clear;
 
 [if_button,logout:try_logout]
 if_close;

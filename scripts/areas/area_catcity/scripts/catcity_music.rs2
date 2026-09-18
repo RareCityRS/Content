@@ -1,0 +1,170 @@
+[zone,0_49_46_0_0] @catcity_music_enter(^catcity_music_beach);
+[zone,0_49_46_8_0] @catcity_music_enter(^catcity_music_beach);
+[zone,0_49_46_16_0] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_24_0] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_32_0] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_40_0] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_48_0] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_56_0] @catcity_music_enter(^catcity_music_east);
+[zone,0_49_46_0_8] @catcity_music_enter(^catcity_music_beach);
+[zone,0_49_46_8_8] @catcity_music_enter(^catcity_music_beach);
+[zone,0_49_46_16_8] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_24_8] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_32_8] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_40_8] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_48_8] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_56_8] @catcity_music_enter(^catcity_music_east);
+[zone,0_49_46_0_16] @catcity_music_enter(^catcity_music_beach);
+[zone,0_49_46_8_16] @catcity_music_enter(^catcity_music_beach);
+[zone,0_49_46_16_16] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_24_16] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_32_16] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_40_16] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_48_16] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_56_16] @catcity_music_enter(^catcity_music_east);
+[zone,0_49_46_0_24] @catcity_music_enter(^catcity_music_beach);
+[zone,0_49_46_8_24] @catcity_music_enter(^catcity_music_beach);
+[zone,0_49_46_16_24] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_24_24] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_32_24] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_40_24] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_48_24] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_56_24] @catcity_music_enter(^catcity_music_east);
+[zone,0_49_46_0_32] @catcity_music_enter(^catcity_music_beach);
+[zone,0_49_46_8_32] @catcity_music_enter(^catcity_music_beach);
+[zone,0_49_46_16_32] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_24_32] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_32_32] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_40_32] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_48_32] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_56_32] @catcity_music_enter(^catcity_music_east);
+[zone,0_49_46_0_40] @catcity_music_enter(^catcity_music_beach);
+[zone,0_49_46_8_40] @catcity_music_enter(^catcity_music_beach);
+[zone,0_49_46_16_40] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_24_40] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_32_40] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_40_40] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_48_40] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_56_40] @catcity_music_enter(^catcity_music_east);
+[zone,0_49_46_0_48] @catcity_music_enter(^catcity_music_beach);
+[zone,0_49_46_8_48] @catcity_music_enter(^catcity_music_beach);
+[zone,0_49_46_16_48] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_24_48] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_32_48] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_40_48] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_48_48] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_56_48] @catcity_music_enter(^catcity_music_east);
+[zone,0_49_46_0_56] @catcity_music_enter(^catcity_music_beach);
+[zone,0_49_46_8_56] @catcity_music_enter(^catcity_music_beach);
+[zone,0_49_46_16_56] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_24_56] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_32_56] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_40_56] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_48_56] @catcity_music_enter(^catcity_music_town);
+[zone,0_49_46_56_56] @catcity_music_enter(^catcity_music_east);
+
+[zone,1_49_46_16_32] @catcity_music_enter(^catcity_music_town);
+[zone,1_49_46_16_40] @catcity_music_enter(^catcity_music_town);
+[zone,1_49_46_24_32] @catcity_music_enter(^catcity_music_town);
+[zone,1_49_46_24_40] @catcity_music_enter(^catcity_music_town);
+[zone,1_49_46_32_24] @catcity_music_enter(^catcity_music_town);
+[zone,1_49_46_32_32] @catcity_music_enter(^catcity_music_town);
+[zone,1_49_46_40_24] @catcity_music_enter(^catcity_music_town);
+[zone,1_49_46_40_32] @catcity_music_enter(^catcity_music_town);
+[zone,1_49_46_40_40] @catcity_music_enter(^catcity_music_town);
+[zone,1_49_46_48_32] @catcity_music_enter(^catcity_music_town);
+[zone,1_49_46_48_40] @catcity_music_enter(^catcity_music_town);
+[zone,2_49_46_16_32] @catcity_music_enter(^catcity_music_town);
+[zone,2_49_46_16_40] @catcity_music_enter(^catcity_music_town);
+[zone,2_49_46_24_32] @catcity_music_enter(^catcity_music_town);
+[zone,2_49_46_24_40] @catcity_music_enter(^catcity_music_town);
+[zone,2_49_46_48_40] @catcity_music_enter(^catcity_music_town);
+[zone,0_50_46_0_8] @catcity_music_enter(^catcity_music_east);
+[zone,0_50_46_0_16] @catcity_music_enter(^catcity_music_east);
+[zone,0_50_46_8_8] @catcity_music_enter(^catcity_music_east);
+[zone,0_50_46_16_8] @catcity_music_enter(^catcity_music_east);
+[zone,0_50_46_16_16] @catcity_music_enter(^catcity_music_east);
+[zone,0_50_46_24_8] @catcity_music_enter(^catcity_music_east);
+[zone,0_50_46_24_16] @catcity_music_enter(^catcity_music_east);
+[zone,0_50_46_24_24] @catcity_music_enter(^catcity_music_east);
+[zone,0_50_46_32_8] @catcity_music_enter(^catcity_music_east);
+[zone,0_50_46_32_16] @catcity_music_enter(^catcity_music_east);
+[zone,0_50_46_32_24] @catcity_music_enter(^catcity_music_east);
+[zone,0_50_46_40_8] @catcity_music_enter(^catcity_music_east);
+[zone,0_50_46_40_16] @catcity_music_enter(^catcity_music_east);
+[zone,0_50_46_40_24] @catcity_music_enter(^catcity_music_east);
+
+[label,catcity_music_enter](int $area)
+if (%catcity_music_area = $area) {
+    return;
+}
+%catcity_music_area = $area;
+if (%musicloop = 0) {
+    softtimer(musicloop, 1);
+}
+@catcity_music_next;
+
+[label,catcity_music_next]
+if (%catcity_music_area = ^catcity_music_town) {
+    @catcity_music_town;
+}
+if (%catcity_music_area = ^catcity_music_beach) {
+    @catcity_music_beach;
+}
+@catcity_music_east;
+
+[label,catcity_music_town]
+switch_int(random(9)) {
+    case 0 : @catcity_music_song("Adventure");
+    case 1 : @catcity_music_song("Spirit");
+    case 2 : @catcity_music_song("Expanse");
+    case 3 : @catcity_music_song("Medieval");
+    case 4 : @catcity_music_song("Garden");
+    case 5 : @catcity_music_song("Forever");
+    case 6 : @catcity_music_song("Parade");
+    case 7 : @catcity_music_song("Book Of Spells");
+    case 8 : @catcity_music_song("Doorways");
+}
+
+[label,catcity_music_beach]
+switch_int(random(8)) {
+    case 0 : @catcity_music_song("Voyage");
+    case 1 : @catcity_music_song("Wander");
+    case 2 : @catcity_music_song("Dream");
+    case 3 : @catcity_music_song("Big Chords");
+    case 4 : @catcity_music_song("Fishing");
+    case 5 : @catcity_music_song("Forever");
+    case 6 : @catcity_music_song("Riverside");
+    case 7 : @catcity_music_song("Serene");
+}
+
+[label,catcity_music_east]
+switch_int(random(8)) {
+    case 0 : @catcity_music_song("Deep Wildy");
+    case 1 : @catcity_music_song("Al Kharid");
+    case 2 : @catcity_music_song("Duel Arena");
+    case 3 : @catcity_music_song("Forbidden");
+    case 4 : @catcity_music_song("Dangerous");
+    case 5 : @catcity_music_song("Overture");
+    case 6 : @catcity_music_song("Shine");
+    case 7 : @catcity_music_song("Greatness");
+}
+
+[label,catcity_music_song](string $name)
+db_find(music:name, $name);
+def_dbrow $song = db_findnext;
+if ($song = null) {
+    return;
+}
+def_int $unlock;
+def_int $bit;
+$unlock, $bit = db_getfield($song, music:unlock, 0);
+if ($unlock ! null) {
+    if (testbit(~music_getvar($unlock), $bit) = ^false) {
+        ~music_setvar($unlock, $bit);
+    }
+}
+if (%musicplay ! 0) {
+    if_settext(music:com_177, db_getfield($song, music:name, 0));
+    @music_play(db_getfield($song, music:track, 0));
+}

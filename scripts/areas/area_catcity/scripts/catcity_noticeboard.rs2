@@ -1,0 +1,15 @@
+[oploc1,catcity_noticeboard]
+def_npc $trader = catcity_cat2;
+def_int $best = ~catcity_fish_best_trader;
+switch_int ($best) {
+    case 1 : $trader = catcity_cat5;
+    case 2 : $trader = catcity_puss;
+    case 3 : $trader = catcity_storekeeper;
+}
+~mesbox("Rumour has it that <nc_name($trader)> is trading Karambwanji to Red disks for under a 100 per disk.");
+~mesbox("... The Eastern litter tray has been overrun by Felion and her thuggish cubs. Negotiations are underway, please use the town sandbox until further notice.");
+~mesbox("... Leprechaun seen occupying the town sandbox. Stay tuned for further updates.");
+~mesbox("... All flea-ridden residents are encouraged to bathe in the sea.");
+~mesbox("... Felion negotiations have stalled, but the Leprechaun has agreed to refill the box with new sand. He thought our nuggets were gold, the fool!");
+~mesbox("... The town sandbox needs emptying again.");
+~mesbox("... In unrelated news, Cat City council is hiring one bipedal creature to replace the town sandbox daily.");

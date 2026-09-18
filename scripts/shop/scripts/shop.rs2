@@ -46,6 +46,10 @@ def_int $item_value = ~adjusted_item_cost_selling($item, inv_total(%shop, $item)
 if(~can_sell_obj($item) = false) {
     return;
 }
+if (%shop = catcity_cabbages) {
+    mes("<$item_name>: Meowlin will buy for -1gp.");
+    return;
+}
 mes("<$item_name>: shop will buy for <tostring($item_value)>gp.");
 
 // Buy value
@@ -120,6 +124,14 @@ while($i < $sell_amount) {
     def_int $added_amt = ~adjusted_item_cost_selling(oc_uncert($obj), calc($shop_total + $i));
     $total_value = calc($total_value + $added_amt);
     $i = calc($i + 1);
+}
+if (%shop = catcity_cabbages) {
+    if (inv_total(inv, coins) < $sell_amount) {
+        mes("Meowlin charges a coin per cabbage. You can't afford to sell him that many.");
+        return;
+    }
+    inv_del(inv, coins, $sell_amount);
+    $total_value = 0;
 }
 // now perform the transaction 
 inv_moveitem_uncert(inv, %shop, $obj, $sell_amount);

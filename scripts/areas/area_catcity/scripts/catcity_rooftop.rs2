@@ -1,0 +1,120 @@
+[oploc1,catcity_pad_walk]
+switch_coord (loc_coord) {
+    case 1_49_46_39_30, 1_49_46_40_30 : ~catcity_first_rope;
+    case 1_49_46_47_31, 1_49_46_47_32 :
+        ~catcity_stand_at(1_49_46_47_31);
+        ~catcity_rope_walk(5, 0, 5);
+    case 2_49_46_49_43, 2_49_46_48_43 :
+        ~catcity_stand_at(2_49_46_49_43);
+        ~catcity_rope_walk(16, -16, 0);
+}
+
+[proc,catcity_first_rope]
+p_arrivedelay;
+if (stat(agility) < ^catcity_course_level) {
+    mes("You need an Agility level of <tostring(^catcity_course_level)> to cross this tightrope.");
+    return;
+}
+~catcity_stand_at(1_49_46_39_30);
+~catcity_rope_walk(4, 4, 0);
+
+[proc,catcity_stand_at](coord $dest)
+p_arrivedelay;
+if (coord ! $dest) {
+    p_teleport($dest);
+    p_delay(1);
+}
+
+[proc,catcity_rope_walk](int $span, int $dx, int $dz)
+mes("You carefully cross the tightrope.");
+sound_synth(tightrope, 5, 0);
+~agility_force_move(calc($span * 5), human_walk_logbalance, movecoord(coord, $dx, 0, $dz));
+
+[oploc1,catcity_pad_jump]
+switch_coord (loc_coord) {
+    case 2_49_46_30_43, 2_49_46_29_43 :
+        ~catcity_stand_at(2_49_46_30_43);
+        ~catcity_alley_jump;
+}
+
+[oploc1,catcity_gap_jump]
+~catcity_stand_at(2_49_46_30_43);
+~catcity_alley_jump;
+
+[proc,catcity_alley_jump]
+mes("You take a running jump across the alley.");
+sound_synth(jump_no_land, 1, 0);
+~agility_exactmove(human_longjump, 20, 2, coord, 2_49_46_27_43, 38, 67, ^exact_west, false);
+stat_advance(agility, 21);
+
+[oploc1,catcity_stones]
+p_arrivedelay;
+if (stat(agility) < ^catcity_course_level) {
+    mes("You need an Agility level of <tostring(^catcity_course_level)> to climb these rocks.");
+    return;
+}
+switch_coord (loc_coord) {
+    case 1_49_46_49_39 : ~agility_climb_up(15, 2_49_46_49_40);
+}
+
+[oploc1,catcity_northwall_climb]
+p_arrivedelay;
+if (stat(agility) < ^catcity_course_level) {
+    mes("You need an Agility level of <tostring(^catcity_course_level)> to climb these rocks.");
+    return;
+}
+switch_coord (loc_coord) {
+    case 1_49_46_49_39 : ~agility_climb_up(15, 2_49_46_49_40);
+}
+
+[oploc1,catcity_pad_climb]
+~catcity_stand_on;
+if (stat(agility) < ^catcity_course_level) {
+    mes("You need an Agility level of <tostring(^catcity_course_level)> to climb these rocks.");
+    return;
+}
+~agility_climb_up(15, 2_49_46_49_40);
+
+[proc,catcity_stand_on]
+p_arrivedelay;
+if (coord ! loc_coord) {
+    p_teleport(loc_coord);
+    p_delay(1);
+}
+
+[oploc1,catcity_pad_jumpdown]
+~catcity_stand_on;
+switch_coord (loc_coord) {
+    case 2_49_46_22_32 : ~catcity_roof_jump;
+}
+
+[oploc1,catcity_roofwall_jumpdown]
+p_arrivedelay;
+if (coord ! 2_49_46_22_32) {
+    mes("You cannot jump down from this side.");
+    return;
+}
+~catcity_roof_jump;
+
+[proc,catcity_roof_jump]
+facesquare(movecoord(coord, 0, 0, -1));
+mes("You leap from the roof and land in the soft sand.");
+anim(human_pickupfloor, 0);
+p_delay(0);
+p_telejump(0_49_46_22_29);
+stat_advance(agility, ^catcity_course_bonus_xp);
+%catcity_rooftop_laps = add(%catcity_rooftop_laps, 1);
+mes("You have completed <tostring(%catcity_rooftop_laps)> laps of the Cat City rooftop course.");
+if (inv_itemspace(inv, viking_dummy_coin, 1, inv_size(inv)) = true) {
+    mes("A red disk lies in the sand where you landed. You pocket it.");
+} else {
+    mes("A red disk lies in the sand where you landed.");
+}
+inv_add(inv, viking_dummy_coin, 1);
+
+[proc,catcity_climb_down](coord $dest, int $facex, int $facez)
+facesquare(movecoord(coord, $facex, 0, $facez));
+mes("You climb back down the rocks.");
+anim(human_pickupfloor, 0);
+p_delay(0);
+p_telejump($dest);

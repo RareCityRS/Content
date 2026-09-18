@@ -1,0 +1,64 @@
+[opheld3,felinemedal_4] @catcity_medal_teleport("The amulet has three charges left.");
+[opheld3,felinemedal_3] @catcity_medal_teleport("The amulet has two charges left.");
+[opheld3,felinemedal_2] @catcity_medal_teleport("The amulet has one charge left.");
+[opheld3,felinemedal_1] @catcity_medal_teleport("You use the amulet's last charge.");
+[opheld3,felinemedal]
+mes("The amulet has no charges left.");
+
+[label,catcity_medal_teleport](string $message)
+def_obj $item = last_item;
+def_int $slot = last_slot;
+if (~wilderness_level(coord) > ^catcity_medal_wilderness_limit) {
+    mes("A mysterious force blocks your teleport.");
+    return;
+}
+if (~pre_tele_checks(coord) = false) {
+    return;
+}
+mes($message);
+~player_teleport_normal(map_findsquare(^catcity_cactus_coord, 1, 1, ^map_findsquare_none));
+inv_setslot(inv, $slot, oc_param($item, next_obj_stage), 1);
+
+[oploc1,catcity_cactus]
+if (inv_total(inv, farmers_fork) = 0 & inv_total(worn, farmers_fork) = 0) {
+    anim(human_pickupfloor, 0);
+    mes("You scratch yourself on the cactus.");
+    queue(damage_player, 0, ~random_range(^catcity_cactus_scratch_min, ^catcity_cactus_scratch_max));
+    return;
+}
+anim(human_pickupfloor, 0);
+mes("You scratch the cactus with your scratching post.");
+def_obj $worn_medal = inv_getobj(worn, ^wearpos_front);
+if ($worn_medal ! null) {
+    if (oc_category($worn_medal) = feline_medal & $worn_medal ! felinemedal_4) {
+        inv_setslot(worn, ^wearpos_front, felinemedal_4, 1);
+        mes("The amulet hums with feline energy. It now has four charges.");
+        return;
+    }
+}
+def_int $slot = 0;
+while ($slot < inv_size(inv)) {
+    def_obj $item = inv_getobj(inv, $slot);
+    if ($item ! null) {
+        if (oc_category($item) = feline_medal & $item ! felinemedal_4) {
+            inv_setslot(inv, $slot, felinemedal_4, 1);
+            mes("The amulet hums with feline energy. It now has four charges.");
+            return;
+        }
+    }
+    $slot = calc($slot + 1);
+}
+mes("You have no amulet that needs charging.");
+
+[opheldu,felinemedal]
+if (last_useitem ! viking_dummy_coin) {
+    ~displaymessage(^dm_default);
+    return;
+}
+if (inv_total(inv, viking_dummy_coin) < 400) {
+    mes("You need 400 red disks to charge the amulet.");
+    return;
+}
+inv_del(inv, viking_dummy_coin, 400);
+inv_setslot(inv, last_slot, felinemedal_4, 1);
+mes("The amulet hums with feline energy. It now has four charges.");

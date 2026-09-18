@@ -1,0 +1,36 @@
+[fishing_movement_catcity_enum]
+inputtype=int
+outputtype=coord
+val=0,0_49_46_10_38
+val=1,0_49_46_9_39
+val=2,0_49_46_8_40
+val=3,0_49_46_7_42
+val=4,0_49_46_7_43
+
+[catcity_pet_phrases]
+inputtype=int
+outputtype=string
+val=0,Meow!
+val=1,I'd like some fish, please.
+val=2,Have you seen any rats around here?
+val=3,I'm a cat. Yep, that's me. That's my whole job.
+val=4,Purrrr.
+val=5,It's nice being carried, but I'd rather walk.
+val=6,Where are we going today?
+val=7,That was a good nap.
+val=8,Do you have any milk?
+val=9,I could chase rats all day.
+val=10,Got any treats?
+val=11,Meow.
+val=12,I saw a bird!
+val=13,Sometimes I wonder if you sleep at all.
+val=14,Why must you keep walking?
+val=15,Karambwanji. Please?
+val=16,I hear the pub has excellent stools.
+val=17,Are we there yet?
+val=18,I knocked something off a table earlier. It wasn't valuable, was it?
+val=19,Humans are strange. You're all right though.
+val=20,The desert is too hot for a cat.
+val=21,Let's find something small and chase it.
+val=22,I think I need a nap.
+val=23,Meow?

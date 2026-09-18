@@ -59,7 +59,7 @@ switch_int (%fluffs) {
         p_delay(3);
         queue(fluffs_complete, 0, 0);
     case ^fluffs_complete :
-        if (getbit_range(%cat_growth, 20, 26) = 100 & inv_total(inv, felinemedal) = 0) {
+        if (getbit_range(%cat_growth, 20, 26) = 100 & inv_totalcat(inv, feline_medal) = 0) {
             ~chatplayer("<p,happy>Hello again Gertrude!");
             ~chatnpc("<p,neutral>Well, hello adventurer! How are you?");
             ~chatplayer("<p,happy>My cat has caught 100 rats!");

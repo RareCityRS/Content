@@ -1,0 +1,26 @@
+[ai_timer,catcity_felion] ~catcity_venom_timer;
+[ai_timer,catcity_felion_cub] ~catcity_venom_timer;
+
+[proc,catcity_venom_start]
+if (%npc_poison = 0) {
+    %npc_poison = 6;
+}
+npc_settimer(30);
+
+[proc,catcity_venom_timer]
+if (%npc_poison = 0) {
+    ~npc_poison_clear;
+    return;
+}
+if (npc_stat(hitpoints) = 0) {
+    return;
+}
+npc_damage(^hitmark_poison, %npc_poison);
+if (npc_stat(hitpoints) = 0) {
+    npc_queue(3, 0, 0);
+    return;
+}
+%npc_poison = min(add(%npc_poison, 2), 20);
+if (npc_type = catcity_felion) {
+    ~catcity_felion_phase;
+}

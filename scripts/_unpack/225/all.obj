@@ -302,6 +302,7 @@ weight=10g
 
 [muddy_key]
 name=Muddy key
+stackable=yes
 desc=It looks like a key to a chest.
 model=inv_key
 recol1s=31393
@@ -315,6 +316,7 @@ weight=10g
 
 [sinister_key]
 name=Sinister key
+stackable=yes
 desc=You get a sense of dread from this key.
 members=yes
 model=inv_key
@@ -659,6 +661,8 @@ model=inv_farmersfork
 2dyan=904
 2dxan=812
 weight=5lb
+iop2=Wear
+wearpos=quiver
 
 [halberd]
 name=Halberd

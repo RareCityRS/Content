@@ -1,0 +1,53 @@
+[label,catcity_fish_cat_talk](int $trader, string $line)
+~catcity_cat_chat($line);
+if (inv_totalcat(worn, feline_medal) = 0) {
+    return;
+}
+def_int $option = ~p_choice2("Can I trade karambwanji for red disks?", 1, "I'll leave you to it.", 2);
+if ($option = 1) {
+    ~catcity_fish_offer($trader);
+}
+
+[proc,catcity_fish_offer](int $trader)
+~chatplayer("<p,quiz>Can I trade karambwanji for red disks?");
+def_int $best = ~catcity_fish_best_trader;
+def_int $rank = calc(($trader - $best + 4) % 4);
+def_int $price = 500;
+switch_int ($rank) {
+    case 0 : $price = add(90, random(21));
+    case 1 : $price = 200;
+    case 2 : $price = 350;
+}
+~chatnpc("<p,happy>I'll give you one red disk for every <tostring($price)> karambwanji.");
+if ($price = 500) {
+    ~chatplayer("<p,angry>Five hundred? I'm not trading with such a con-kitten!");
+    return;
+}
+def_int $option = ~p_choice2("Let's trade.", 1, "No, thanks.", 2);
+if ($option = 2) {
+    return;
+}
+~chatnpc("<p,quiz>How many red disks would you like? Enter the number of disks, at <tostring($price)> karambwanji each.");
+if_close;
+p_delay(0);
+p_countdialog;
+def_int $quantity = last_int;
+p_delay(0);
+if ($quantity <= 0) {
+    return;
+}
+$quantity = min($quantity, divide(inv_total(inv, tbwt_raw_karambwanji), $price));
+if ($quantity = 0) {
+    mes("You don't have enough karambwanji for one red disk.");
+    return;
+}
+def_int $fish = multiply($quantity, $price);
+inv_del(inv, tbwt_raw_karambwanji, $fish);
+inv_add(inv, viking_dummy_coin, $quantity);
+~catcity_red_disk_box("The cat takes <tostring($fish)> karambwanji in exchange for <tostring($quantity)> red disks.");
+
+[proc,catcity_red_disk_box](string $message)
+~objbox(viking_dummy_coin, $message, 250, 0, 0);
+
+[proc,catcity_fish_best_trader]()(int)
+return(calc(((date_runeday + 2) % 7) % 4));

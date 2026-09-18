@@ -1,6 +1,6 @@
 [oploc1,shadelairentrancel]
 p_arrivedelay;
-if(testbit(%morttonmulti, ^mortton_unlocked_shade_lair) = ^false | ~get_shadekeys_total = 0) {
+if(~get_shadekeys_total = 0) {
     mes("The door seems locked. Perhaps you need a key.");
     sound_synth(locked, 1, 0);
     return;
@@ -605,6 +605,16 @@ def_int $treasure_amount = 1;
 def_int $treasure_value = 0;
 def_int $coin_amount = 0;
 def_int $paste_amount = 0;
+def_namedobj $roll_gold_drop;
+def_int $roll_gold_type = 0;
+
+switch_int($key_tier) {
+    case ^red_shadekey : $roll_gold_type = 1;
+    case ^brown_shadekey : $roll_gold_type = 2;
+    case ^crimson_shadekey : $roll_gold_type = 3;
+    case ^black_shadekey : $roll_gold_type = 4;
+    case ^purple_shadekey : $roll_gold_type = 5;              
+}
 
 // wearing ROW adds 2 to key tier based on osrs drop tables https://oldschool.runescape.wiki/w/Silver_Chest_(red)
 if (inv_total(worn, ring_of_wealth) > 0) {
@@ -615,16 +625,26 @@ switch_int($chest_tier) {
     case ^bronze_shadechest : $paste_amount = ~random_range(5, 10);
                          $treasure_value = ~random_range(400,600);
                          $treasure, $treasure_amount = ~ShadebronzeDrop($key_tier);
+                         $roll_gold_drop = ~roll_gold($roll_gold_type);
     case ^steel_shadechest : $paste_amount = ~random_range(15, 30);
                          $treasure_value = ~random_range(900,1100);
                          $treasure, $treasure_amount = ~ShadesteelDrop($key_tier);
+                         $roll_gold_type = 0;
     case ^black_shadechest : $paste_amount = ~random_range(25, 40);
                          $treasure_value = ~random_range(1500,2000);
                          $treasure, $treasure_amount = ~ShadeblackDrop($key_tier);
+                         $roll_gold_type = 0;
     case ^silver_shadechest : $paste_amount = ~random_range(25, 40);
                          $treasure_value = ~random_range(3600,7000);
                          $treasure, $treasure_amount = ~ShadesilverDrop($key_tier);
+                         $roll_gold_type = 0;
+}
 
+if($roll_gold_type > 0){
+    if ($roll_gold_drop ! null) {
+    inv_add(inv, $roll_gold_drop, 1);
+    session_log(^log_adventure, "Received a <oc_name($roll_gold_drop)>!");
+    }
 }
 
 // https://oldschool.runescape.wiki/w/Shades_of_Mort%27ton_(minigame)#Coin_amounts
@@ -645,6 +665,7 @@ inv_add(inv, swamppaste, $paste_amount);
 // https://youtu.be/-DIv3WwUHW0?si=L4eIKIk1jf6lFhUH&t=129 2 spaces
 ~objbox(swamppaste, "You find <tostring($paste_amount)> doses of swamp paste  at the bottom of the chest.", 250, 0, 0);
 
+
 [proc,ShadebronzeDrop](int $key_tier)(namedobj, int)
 // https://runescape.salmoneus.net/activities/shades-of-mortton.html
 // https://www.youtube.com/watch?v=QMrg9I5lVsc
@@ -656,7 +677,7 @@ def_int $temp = add(1,sub(random(102),$key_tier));
 if($temp < 102){$namedobj=steel_axe;$count=1;}
 if($temp < 96) {$namedobj=magic_staff;$count=1;}
 if($temp < 90) {$namedobj=steel_mace;$count=1;}
-if($temp < 87) {$namedobj=silver_bar;$count=3;}
+if($temp < 87) {$namedobj=cert_silver_bar;$count=3;}
 if($temp < 81) {$namedobj=amulet_of_defence;$count=1;}
 if($temp < 74) {
     if($temp > 71) {
@@ -679,8 +700,8 @@ if($temp < 34) {$namedobj=steel_longsword;$count=1;}
 if($temp < 33) {$namedobj=steel_spear;$count=1;} // this is black spear in 2005
 if($temp < 32) {$namedobj=chaosrune;$count=~random_range(10,29);}
 if($temp < 17) {$namedobj=steel_med_helm;$count=1;}
-if($temp < 12) {$namedobj=gold_bar;$count=3;}
-if($temp < 7) {$namedobj=mithril_bar;$count=3;}
+if($temp < 12) {$namedobj=cert_gold_bar;$count=3;}
+if($temp < 7) {$namedobj=cert_mithril_bar;$count=3;}
 if($temp < 2) {$namedobj=sapphire_ring;$count=1;}
 return ($namedobj,$count);
 
@@ -724,7 +745,7 @@ if($temp < 30) {$namedobj=black_med_helm;$count=1;}
 if($temp < 23) {$namedobj=studded_chaps;$count=1;}
 if($temp < 18) {$namedobj=steel_chainbody;$count=1;}
 if($temp < 13) {$namedobj=mithril_med_helm;$count=1;}
-if($temp < 10) {$namedobj=adamantite_bar;$count=3;}
+if($temp < 10) {$namedobj=cert_adamantite_bar;$count=3;}
 if($temp < 4) {$namedobj=emerald_ring;$count=1;}
 if($temp < 2) {$namedobj=fine_cloth;$count=1;}
 return ($namedobj,$count);
@@ -830,7 +851,7 @@ if($temp < 61) {$namedobj=Adamant_KiteShield;$count=1;}
 if($temp < 58) {$namedobj=Adamant_2h_Sword;$count=1;}
 if($temp < 55) {$namedobj=Adamant_PlateLegs;$count=1;}
 if($temp < 52) {$namedobj=Adamant_PlateSkirt;$count=1;}
-if($temp < 49) {$namedobj=Battlestaff;$count=1;}
+if($temp < 49) {$namedobj=cert_battlestaff;$count=10;}
 if($temp < 40) {$namedobj=Adamant_Full_Helm;$count=1;} // This is damned_amulet in the leak but they don't have full helm in the table so.. guess?
 if($temp < 30) {$namedobj=Adamant_PlateBody;$count=1;}
 if($temp < 28) {$namedobj=Rune_Med_Helm;$count=1;}

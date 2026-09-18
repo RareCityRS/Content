@@ -119,7 +119,7 @@ if (.busy = true) {
     mes("Other player is busy at the moment.");
     return;
 }
-if (~in_games_room(.coord) = false) {
+if (%boardgames_online = 0 & ~in_games_room(.coord) = false) {
     ~reset_boardgames_varp;
     %duel2accept = null;
     mes("Other player has left the area.");
@@ -127,20 +127,25 @@ if (~in_games_room(.coord) = false) {
 }
 
 if(.%duel2accept = uid) {
-    if(inzone(1_34_77_16_8, 1_34_77_23_15, coord) = true) {
-        %boardgames_challengeroom = 1;
-        .%boardgames_challengeroom = 1;
+    if (%boardgames_online = 1) {
+        ~boardgames_online_start;
     } else {
-        %boardgames_challengeroom = 0;
-        .%boardgames_challengeroom = 0;
-    }
+        .%boardgames_online = 0;
+        if(inzone(1_34_77_16_8, 1_34_77_23_15, coord) = true) {
+            %boardgames_challengeroom = 1;
+            .%boardgames_challengeroom = 1;
+        } else {
+            %boardgames_challengeroom = 0;
+            .%boardgames_challengeroom = 0;
+        }
 
-    ~boardgames_table_setup;
-    
-    if(%boardgames_tablenum = -1) {
-        ~reset_boardgames_varp;
-        %duel2accept = null;
-        return;
+        ~boardgames_table_setup;
+
+        if(%boardgames_tablenum = -1) {
+            ~reset_boardgames_varp;
+            %duel2accept = null;
+            return;
+        }
     }
 
     if_openoverlay(null);
@@ -157,6 +162,11 @@ if(.%duel2accept = uid) {
     mes("Sending challenge...");
     ~send_boardgames_challenge_request;
 }
+
+[if_button,boardgames_draughts:resign]
+%boardgames_closinginterface = 1;
+if_close;
+%boardgames_closinginterface = 0;
 
 [if_button,boardgames_draughts:offer_draw]
 if (.finduid(%duel2accept) = false) {
@@ -283,9 +293,11 @@ def_namedobj $p2_rune =  ~get_boardgames_player_rune(.%boardgames_piece);
 .inv_transmit(boardgames_boardinv, boardgames_draughts:boardinv);
 
 [proc,first_draughts_turn]
+if_setposition(boardgames_draughts:sandtimer, 0, 0);
 if_setanim(boardgames_draughts:sandtimer, null);
 if_setanim(boardgames_draughts:sandtimer, ~get_sandtimer_seq);
 
+.if_setposition(boardgames_draughts:sandtimer, 0, 0);
 .if_setanim(boardgames_draughts:sandtimer, null);
 .if_setanim(boardgames_draughts:sandtimer, ~get_sandtimer_seq);
 
@@ -313,6 +325,10 @@ if_settext(boardgames_draughts:winner, "");
 .if_settext(boardgames_draughts:winner, "");
 
 [softtimer,draughts_force_move]
+if (%boardgames_myturn = 0) {
+    clearsofttimer(draughts_force_move);
+    return;
+}
 ~draughts_find_and_force_move;
 
 [proc,draughts_find_and_force_move]
@@ -503,7 +519,9 @@ if (%boardgames_myturn = 1) {
     .if_settext(boardgames_draughts:turn_name, "<.displayname>");
     .softtimer(draughts_force_move, ~get_sandtimer_interval);
     .softtimer(boardgames_sitting_anim, ~random_range(5,9));
-    .anim(human_sittingdown_ready, 0);
+    if (.%boardgames_online = 0) {
+        .anim(human_sittingdown_ready, 0);
+    }
 } else {
     %boardgames_myturn = 1;
     .%boardgames_myturn = 0;
@@ -511,16 +529,20 @@ if (%boardgames_myturn = 1) {
     .if_settext(boardgames_draughts:turn_name, "<displayname>");
     softtimer(draughts_force_move, ~get_sandtimer_interval);
     softtimer(boardgames_sitting_anim, ~random_range(5,9));
-    anim(human_sittingdown_ready, 0);
+    if (%boardgames_online = 0) {
+        anim(human_sittingdown_ready, 0);
+    }
 }
 if_settext(boardgames_draughts:status1, "");
 if_settext(boardgames_draughts:winner, "");
+if_setposition(boardgames_draughts:sandtimer, 0, 0);
 if_setanim(boardgames_draughts:sandtimer, null);
 if_setanim(boardgames_draughts:sandtimer, ~get_sandtimer_seq);
 if_settext(boardgames_draughts:status2, "");
 
 .if_settext(boardgames_draughts:status1, "");
 .if_settext(boardgames_draughts:winner, "");
+.if_setposition(boardgames_draughts:sandtimer, 0, 0);
 .if_setanim(boardgames_draughts:sandtimer, null);
 .if_setanim(boardgames_draughts:sandtimer, ~get_sandtimer_seq);
 .if_settext(boardgames_draughts:status2, "");
@@ -774,7 +796,9 @@ def_int $x = multiply($col, ^draughts_tile_size);
 def_int $y = multiply($row, ^draughts_tile_size);
 
 sound_synth(chesspiece_move, 1, 0);
-anim(human_sittingdown_move, 0);
+if (%boardgames_online = 0) {
+    anim(human_sittingdown_move, 0);
+}
 if_setanim(boardgames_draughts:runeflash, null);
 if_setposition(boardgames_draughts:runeflash, $x, $y);
 if_setanim(boardgames_draughts:runeflash, runeflash);
@@ -902,10 +926,16 @@ if (.finduid(%duel2accept) = false) {
 .if_setanim(boardgames_draughts:runeflash, null);
 .if_setanim(boardgames_draughts:runeflash, runeflash_off);
 .if_close;
-if (.p_finduid(%duel2accept) = false) {
+.clearsofttimer(draughts_force_move);
+.clearsofttimer(boardgames_sitting_anim);
+.%boardgames_online_opponent = null;
+if (.p_finduid(%duel2accept) = true) {
+    if(.%boardgames_online = 0 & ~boardgames_in_catcity_bar(.coord) = false) {
+        .p_teleport(movecoord(^draughts_room_tele_coord, ~random_range(-3, 3), .%boardgames_challengeroom, ~random_range(-3, 3)));
+    }
+} else if (.%boardgames_online = 0) {
     return;
 }
-.p_teleport(movecoord(^draughts_room_tele_coord, ~random_range(-3, 3), .%boardgames_challengeroom, ~random_range(-3, 3)));
 .anim(null, 0);
 ~.setup_draughts_view($p1_rank, $p2_rank);
 if (.%boardgames_closemode = ^boardgames_draw) {
@@ -952,10 +982,16 @@ if (.%boardgames_closemode = ^boardgames_draw) {
 if_setanim(boardgames_draughts:runeflash, null);
 if_setanim(boardgames_draughts:runeflash, runeflash_off);
 if_close;
-if(p_finduid(uid) = false) {
+clearsofttimer(draughts_force_move);
+clearsofttimer(boardgames_sitting_anim);
+%boardgames_online_opponent = null;
+if (p_finduid(uid) = true) {
+    if(%boardgames_online = 0 & ~boardgames_in_catcity_bar(coord) = false) {
+        p_teleport(movecoord(^draughts_room_tele_coord, ~random_range(-3, 3), %boardgames_challengeroom, ~random_range(-3, 3)));
+    }
+} else if (%boardgames_online = 0) {
     return;
 }
-p_teleport(movecoord(^draughts_room_tele_coord, ~random_range(-3, 3), %boardgames_challengeroom, ~random_range(-3, 3)));
 anim(null, 0);
 ~setup_draughts_view($p1_rank, $p2_rank);
 
@@ -1074,18 +1110,20 @@ if (%boardgames_rankedgame = 1) {
 
 .inv_transmit(boardgames_boardinv, boardgames_draughts_view:boardinv);
 
-[queue,boardgames_draughts_game_end]
+[queue,boardgames_draughts_game_end](int $online)
 clearsofttimer(draughts_force_move);
 clearsofttimer(boardgames_sitting_anim);
 minimap_toggle(0);
 ~initalltabs;
 
-if(loc_find(~get_boardgames_table_coord(%boardgames_tablenum), boardgames_table_draughts) = true) {
-    loc_change(boardgames_table_draughts, 1);
-}
+if ($online = 0) {
+    if(loc_find(~get_boardgames_table_coord(%boardgames_tablenum), boardgames_table_draughts) = true) {
+        loc_change(boardgames_table_draughts, 1);
+    }
 
-if(loc_find(coord, boardgames_barstool_invis) = true) {
-    loc_change(boardgames_barstool_invis, 1);
+    if(loc_find(coord, boardgames_barstool_invis) = true) {
+        loc_change(boardgames_barstool_invis, 1);
+    }
 }
 
 if (%boardgames_viewing = 0) {
@@ -1095,7 +1133,7 @@ if (%boardgames_viewing = 0) {
         return;
     }
 
-    if(loc_find(.coord, boardgames_barstool_invis) = true) {
+    if ($online = 0 & loc_find(.coord, boardgames_barstool_invis) = true) {
         loc_change(boardgames_barstool_invis, 1);
     }
 
@@ -1122,7 +1160,9 @@ if (%boardgames_viewing = 0) {
     }
 
     ~.draughts_game_end($rank_change, $winner_rank, $loser_rank, true);
-    p_teleport(movecoord(^draughts_room_tele_coord, ~random_range(-3, 3), %boardgames_challengeroom, ~random_range(-3, 3)));
+    if($online = 0 & ~boardgames_in_catcity_bar(coord) = false) {
+        p_teleport(movecoord(^draughts_room_tele_coord, ~random_range(-3, 3), %boardgames_challengeroom, ~random_range(-3, 3)));
+    }
     anim(null, 0);
     ~setup_draughts_view_resign($winner_rank, $loser_rank);
     ~music_jingle("boardgames defeat");
@@ -1139,7 +1179,11 @@ if (%boardgames_viewing = 0) {
 }
 
 [if_close,boardgames_draughts]
-queue(boardgames_draughts_game_end, 0, 0);
+if (%boardgames_online = 1 & %boardgames_ingame = 1 & %boardgames_viewing = 0 & %boardgames_closinginterface = 0) {
+    queue(boardgames_online_minimise, 0, 0);
+    return;
+}
+queue(boardgames_draughts_game_end, 0, %boardgames_online);
 
 [if_close,boardgames_draughts_view]
 %duel2accept = null;
@@ -1154,6 +1198,10 @@ if (%boardgames_closinginterface = 0) {
 }
 
 [oploc1,boardgames_table_draughts]
+if (%boardgames_ingame = 1) {
+    mes("You are already playing a game.");
+    return;
+}
 %boardgames_viewing = 1;
 minimap_toggle(1);
 huntall(loc_coord, 1, 0);
@@ -1188,6 +1236,9 @@ if_settext(boardgames_draughts_view:winner, "");
 if_openmain(boardgames_draughts_view);
 
 [proc,update_draughts_spectators](string $winner_msg, string $status_msg)
+if (%boardgames_online = 1) {
+    return;
+}
 huntall(~get_boardgames_table_coord(%boardgames_tablenum), 1, 0); 
 while (.huntnext = true) {
     if (.%boardgames_viewing = 1 & .%boardgames_ingame = 0) {

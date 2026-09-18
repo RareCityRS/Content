@@ -1,0 +1,12 @@
+[catcity_music_area]
+scope=temp
+
+[catcity_guard_talks]
+scope=temp
+
+[catcity_meowlin_rat]
+type=npc_uid
+scope=temp
+
+[catcity_rooftop_laps]
+scope=perm

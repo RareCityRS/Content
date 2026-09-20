@@ -233,6 +233,11 @@ if (~test_runelink_move(7) = true) {
 %boardgames_closemode = ^boardgames_loss;
 %boardgames_minimised = 0;
 %boardgames_timerpending = 0;
+if (%boardgames_online = 1) {
+    if_sethide(boardgames_runelink:close_layer, false);
+} else {
+    if_sethide(boardgames_runelink:close_layer, true);
+}
 minimap_toggle(1);
 
 %boardgames_closinginterface = 1;
@@ -263,6 +268,11 @@ inv_transmit(boardgames_boardinv, boardgames_runelink:boardinv);
 .%boardgames_closemode = ^boardgames_loss;
 .%boardgames_minimised = 0;
 .%boardgames_timerpending = 0;
+if (.%boardgames_online = 1) {
+    .if_sethide(boardgames_runelink:close_layer, false);
+} else {
+    .if_sethide(boardgames_runelink:close_layer, true);
+}
 .minimap_toggle(1);
 
 .%boardgames_closinginterface = 1;

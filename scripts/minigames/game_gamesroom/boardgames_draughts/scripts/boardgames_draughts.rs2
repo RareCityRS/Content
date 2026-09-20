@@ -187,6 +187,11 @@ if (%boardgames_drawrequested = 1) {
 %boardgames_closemode = ^boardgames_loss;
 %boardgames_minimised = 0;
 %boardgames_timerpending = 0;
+if (%boardgames_online = 1) {
+    if_sethide(boardgames_draughts:close_layer, false);
+} else {
+    if_sethide(boardgames_draughts:close_layer, true);
+}
 minimap_toggle(1);
 
 %boardgames_closinginterface = 1;
@@ -244,6 +249,11 @@ inv_transmit(boardgames_boardinv, boardgames_draughts:boardinv);
 .%boardgames_closemode = ^boardgames_loss;
 .%boardgames_minimised = 0;
 .%boardgames_timerpending = 0;
+if (.%boardgames_online = 1) {
+    .if_sethide(boardgames_draughts:close_layer, false);
+} else {
+    .if_sethide(boardgames_draughts:close_layer, true);
+}
 .minimap_toggle(1);
 
 .%boardgames_closinginterface = 1;

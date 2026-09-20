@@ -119,6 +119,7 @@ switch_int (%boardgames_game) {
 
 [proc,draughts_online_reopen]
 %boardgames_minimised = 0;
+if_sethide(boardgames_draughts:close_layer, false);
 if_setanim(boardgames_draughts:runeflash, null);
 if_setanim(boardgames_draughts:runeflash, runeflash_off);
 if_openmain(boardgames_draughts);
@@ -160,6 +161,7 @@ inv_transmit(boardgames_boardinv, boardgames_draughts:boardinv);
 
 [proc,runelink_online_reopen]
 %boardgames_minimised = 0;
+if_sethide(boardgames_runelink:close_layer, false);
 if_setanim(boardgames_runelink:runeflash, null);
 if_setanim(boardgames_runelink:runeflash, runeflash_off);
 if_openmain(boardgames_runelink);

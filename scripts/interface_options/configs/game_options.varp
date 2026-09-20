@@ -36,3 +36,10 @@ clientcode=8
 transmit=yes
 scope=perm
 protect=no
+
+// 0 = unlocked, otherwise value-1 = locked zoom amount
+[option_zoom_lock]
+clientcode=21
+transmit=yes
+scope=perm
+protect=no

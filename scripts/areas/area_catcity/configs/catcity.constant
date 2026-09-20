@@ -9,7 +9,7 @@
 ^catcity_felion_ranged_range = 8
 ^catcity_felion_sand_rear_padding = 0
 ^catcity_felion_melee_per_volley = 3
-^catcity_course_bonus_xp = 200
+^catcity_course_bonus_xp = 4375
 ^catcity_course_level = 75
 ^catcity_disciple_count = 3
 ^catcity_disciple_lifetime = 1000

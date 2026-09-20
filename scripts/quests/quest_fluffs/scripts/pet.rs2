@@ -1,88 +1,54 @@
-// =====================================================================
-// Cat AI dispatch
-//
-// Per-tick dispatch logic owns all player-context work (coord, uid,
-// medal mirror). State-specific tick procs in pet_cvc.rs2 are pure
-// NPC-context.
-//
-// State machine: NORMAL / PLAYFIGHT / GIVEUP / RETREAT.
-//
-// Critical structural rule: state branches are mutually exclusive
-// (if/else if chain). A cat in PLAYFIGHT must not also fall into the
-// scan branch on the same tick — that's what caused the previous
-// "playfight ends after one tick" bug.
-// =====================================================================
-
 [ai_timer,_petcat] @petcat_ai_tick;
 
 [label,petcat_ai_tick]
 if (finduid(%npc_attacking_uid) = true) {
-    // Reset offline counter (used by playfight scan filter to skip ghosts).
+    // Reset offline counter (used by playfight scan filter to skip ghosts)
     if (%cvc_offline_ticks ! 0) {
         %cvc_offline_ticks = 0;
     }
-
-    // Mirror owner's worn-medal status into a varn so scan procs can
-    // read it without doing a cross-player-context worn-inv lookup.
+    // worn-medal status 
     if (inv_totalcat(worn, feline_medal) > 0) {
         %cvc_medal_worn = 1;
     } else {
         %cvc_medal_worn = 0;
     }
-
+    // Playfight state dispatch
     def_int $wildy_level = ~wilderness_level(coord);
-
-    // ===========================================================
-    // State dispatch (mutually exclusive).
-    //
-    // NORMAL cats fall into the scan branch if eligible. Cats in
-    // active states run their respective tick handlers and skip
-    // the scan branch entirely.
-    // ===========================================================
     if (%cvc_state = ^cvc_state_playfight) {
         ~cvc_playfight_tick;
     } else if (%cvc_state = ^cvc_state_giveup) {
         ~cvc_giveup_tick;
     } else if (%cvc_state = ^cvc_state_retreat) {
         ~cvc_retreat_tick;
-    } else if (%cvc_state = ^cvc_state_normal
-        & npc_param(cat_friendly) = 0
-        & %cvc_medal_worn = 1
-        & map_clock > %cvc_scan_clock) {
-        // Eligible to scan. Branch on wildy/safe.
+    } else if (%cvc_state = ^cvc_state_normal & npc_param(cat_friendly) = 0 & %cvc_medal_worn = 1 & map_clock > %cvc_scan_clock) {
         if ($wildy_level > 0) {
-            // Wildy: clock-gated only, no random gate. Cats engage
-            // reliably when a partner is in range.
+            // Wildy: cats engage reliably when a partner is in range
             %cvc_scan_clock = add(map_clock, ^cvc_wildy_scan_period);
             ~cvc_playfight_scan;
         } else {
-            // Safe areas: clock-gated period + 1-in-N inner roll.
+            // Safe areas: clock-gated period + 1-in-N inner roll
             %cvc_scan_clock = add(map_clock, ^cvc_safe_scan_period);
             if (random(^cvc_safe_scan_chance) = 0) {
                 ~cvc_playfight_scan;
             }
         }
     }
-
-    // Idle behaviour (only runs if state is NORMAL — including cats
-    // that just exited a fight cleanly during this tick's dispatch).
+    // Idle cat behaviour
     if (%cvc_state = ^cvc_state_normal) {
-        // Black cat dialogue.
+        // Salem dialogue
         if (npc_param(cat_vocal) = 1 & random(^blackcat_dialogue_chance) = 0) {
             npc_say(enum(int, string, blackcat_phrases, random(^blackcat_phrase_count)));
         }
-
-        // Far/wrong-plane: leash back to player.
+        // Leash back to player
         if (coordy(coord) ! coordy(npc_coord) | npc_range(coord) > 15) {
             npc_tele(map_findsquare(coord, 1, 1, ^map_findsquare_lineofwalk));
             npc_setmode(playerfollow);
         }
         else if (npc_range(coord) > 6) {
-            // Player has moved away: catch up.
             npc_setmode(playerfollow);
         }
+        // Normal idle behaviour
         else {
-            // Close to player: idle behaviour driven by nature params.
             def_int $wander_die = 60;
             def_int $wander_radius = 2;
             if (npc_param(cat_needy) = 1) {
@@ -92,7 +58,6 @@ if (finduid(%npc_attacking_uid) = true) {
                 $wander_die = 60;
                 $wander_radius = 2;
             }
-
             if (npc_param(cat_playful) = 1 & random(500) = 0) {
                 npc_anim(cat_rollingover, 0);
                 npc_say("Purr...");
@@ -110,8 +75,7 @@ if (finduid(%npc_attacking_uid) = true) {
             }
         }
     }
-
-    // Duplicate cleanup.
+    // Duplicate cat cleanup
     def_npc $my_type = npc_type;
     def_int $expected = inv_total(pets, nc_param(npc_type, pet_item_id));
     def_int $count = 0;
@@ -128,13 +92,12 @@ if (finduid(%npc_attacking_uid) = true) {
         }
     }
 } else {
-    // Owner offline. Force exit any non-NORMAL state.
+    // Owner offline check: forces exit of any non-normal state
     if (%cvc_state ! ^cvc_state_normal) {
         %cvc_state = ^cvc_state_normal;
         %cvc_target_uid = null;
         %cvc_clock = 0;
     }
-
     %cvc_offline_ticks = add(%cvc_offline_ticks, 1);
     if (%cvc_offline_ticks >= ^cat_offline_lifetime) {
         npc_del;
@@ -296,7 +259,9 @@ switch_obj(last_useitem) {
         p_delay(0);
         mes("The kitten gobbles up the <$fishname>.");
         npc_say("Purr!");
-    case tbwt_raw_karambwanji, tbwt_cooked_karambwanji :
+    case tbwt_raw_karambwanji :
+        ~feed_raw_karambwanji(1);
+    case tbwt_cooked_karambwanji :
         %cat_growth = setbit_range_toint(%cat_growth, 0, 0, 4);
         def_string $karambwanji = lowercase(oc_name(last_useitem));
         inv_del(inv, last_useitem, 1);
@@ -308,19 +273,87 @@ switch_obj(last_useitem) {
     case default : ~displaymessage(^dm_default);
 }
 
-[opnpc2,_petcat]
+[opnpc5,_petcat]
 if (%npc_attacking_uid ! uid) {
     ~chatnpc("<p,neutral>Meow.");
     return;
 }
-def_string $line = "Meow!";
-if (npc_param(cat_vocal) = 1) {
-    $line = enum(int, string, blackcat_phrases, random(^blackcat_phrase_count));
-} else if (inv_totalcat(worn, feline_medal) > 0) {
-    $line = enum(int, string, catcity_pet_phrases, random(^catcity_pet_phrase_count));
+def_string $line = "Purr!";
+def_int $feed = 0;
+~p_choice5("Talk to.", 1, "Feed raw karambwanji.", 2, "Stroke.", 3, "Chase Vermin.", 4, "Shoo away.", 5);
+switch_component (last_com) {
+    case multi5:com_1 :
+        ~chatplayer("<p,quiz>Hey puss! Any news?");
+        $line = ~petcat_phrase;
+        ~chatnpc("<p,neutral><$line>");
+    case multi5:com_2 :
+        if_close;
+        p_delay(0);
+        p_countdialog;
+        $feed = last_int;
+        ~feed_raw_karambwanji($feed);
+    case multi5:com_3 : p_opnpc(3);
+    case multi5:com_4 : p_opnpc(4);
+    case multi5:com_5 : @petcat_shoo;
 }
-~chatnpc("<p,neutral><$line>");
-npc_setmode(playerfollow);
+
+[proc,petcat_phrase]()(string)
+if (inv_totalcat(worn, feline_medal) = 0) {
+    return("Purr!");
+}
+if (npc_type = kittenpet_black | npc_type = growncat_black | npc_type = overgrowncat_black) {
+    return(enum(int, string, blackcat_phrases, random(^blackcat_phrase_count)));
+}
+return(enum(int, string, catcity_pet_phrases, random(^catcity_pet_phrase_count)));
+
+[proc,feed_raw_karambwanji](int $amount)
+def_int $have = inv_total(inv, tbwt_raw_karambwanji);
+if ($have = 0) {
+    mes("You don't have any raw karambwanji.");
+    return;
+}
+if ($amount > $have) {
+    $amount = $have;
+}
+if ($amount > ^cat_karambwanji_feed_limit) {
+    $amount = ^cat_karambwanji_feed_limit;
+}
+if ($amount <= 0) {
+    return;
+}
+def_int $disks = ~karambwanji_disk_rolls($amount);
+%cat_growth = setbit_range_toint(%cat_growth, 0, 0, 4);
+inv_del(inv, tbwt_raw_karambwanji, $amount);
+if ($disks > 0) {
+    inv_add(inv, viking_dummy_coin, $disks);
+}
+anim(human_pickupfloor, 0);
+p_delay(0);
+npc_statheal(hitpoints, 0, min(calc(^cat_karambwanji_heal_percent * $amount), 100));
+if ($amount = 1) {
+    mes("The kitten gobbles up the raw karambwanji.");
+} else {
+    mes("The kitten gobbles up <tostring($amount)> raw karambwanji.");
+}
+if ($disks > 0) {
+    if ($disks = 1) {
+        ~objbox(viking_dummy_coin, "You find a red disk!", 250, 0, 0);
+    } else {
+        ~objbox(viking_dummy_coin, "You find <tostring($disks)> red disks!", 250, 0, 0);
+    }
+}
+npc_say("Purr!");
+
+[proc,karambwanji_disk_rolls](int $count)(int)
+def_int $disks = 0;
+def_int $roll = 0;
+while ($roll < $count) {
+    if (random(100) = 0) {
+        $disks = add($disks, 1);
+    }
+    $roll = add($roll, 1);
+}
+return($disks);
 
 [opnpc1,_petcat]
 if (%npc_attacking_uid ! uid) {
@@ -366,7 +399,7 @@ p_delay(2);
 npc_say("Purr...purr...");
 ~chatplayer("<p,happy>That cat sure loves to be stroked.");
 
-[opnpc4,_petcat]
+[label,petcat_shoo]
 if (%npc_attacking_uid ! uid) {
     mes("This is not your cat.");
     return;
@@ -393,7 +426,7 @@ if (npc_uid = %follower_uid) {
 }
 npc_del;
 
-[opnpc5,_petcat]
+[opnpc4,_petcat]
 if (%npc_attacking_uid ! uid) {
     mes("This is not your cat.");
     return;

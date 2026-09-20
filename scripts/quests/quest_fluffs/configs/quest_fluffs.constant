@@ -52,3 +52,4 @@
 // =====================================================
 ^cat_offline_lifetime = 100
 ^cat_karambwanji_heal_percent = 25
+^cat_karambwanji_feed_limit = 10000

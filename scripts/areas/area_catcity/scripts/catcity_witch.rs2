@@ -83,13 +83,4 @@ switch_obj ($face) {
 }
 return(0);
 
-[apnpc2,catcity_witch]
-if (npc_range(coord) > 2) {
-    p_aprange(2);
-    return;
-}
-~openshop_activenpc;
-
-[opnpc2,catcity_witch] ~openshop_activenpc;
-
-[opnpc3,catcity_witch] ~player_teleport_normal(0_48_50_15_59);
+[opnpc4,catcity_witch] ~player_teleport_normal(0_48_50_15_59);

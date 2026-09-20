@@ -139,8 +139,7 @@ if ($option = 1) {
 [opnpc1,catcity_cat4] ~catcity_cat_chat("Upstairs is quieter. Fewer humans. No offence.");
 [opnpc1,catcity_cat5] @catcity_fish_cat_talk(1, "...zzz... karambwanji... zzz...");
 
-[opnpc3,catcity_wizard] @catcity_essence_teleport;
-[opnpc2,catcity_wizard] ~openshop_activenpc;
+[opnpc4,catcity_wizard] @catcity_essence_teleport;
 [opnpc1,catcity_wizard]
 switch_int(random(6)) {
     case 0 : ~chatnpc("<p,neutral>There is a land shining with goodness where everyone protects eachothers' dignity as their own.");
@@ -261,18 +260,11 @@ switch_int (random(3)) {
     case 2 : ~chatnpc("<p,bored>That's quite alright, human. I've spilled enough blood for one afternoon.");
 }
 
-[apnpc2,catcity_wizard]
-if (npc_range(coord) > 2) {
-    p_aprange(2);
-    return;
-}
-~openshop_activenpc;
-
-[apnpc2,_petcat]
+[apnpc5,_petcat]
 if (npc_range(coord) > 1) {
     p_aprange(1);
     return;
 }
-p_opnpc(2);
+p_opnpc(5);
 
 [opnpc3,catcity_adventurer] @attempt_pick_pocket(npc_type);

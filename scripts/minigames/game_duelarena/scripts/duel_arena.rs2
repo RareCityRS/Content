@@ -35,6 +35,10 @@ if (~in_games_room(coord) = true & ~in_games_room(.coord) = true) {
     %boardgames_online = 0;
 
     if (.%duel2accept ! uid) {
+        if (.%option_game_requests != 0) {
+            mes("That player is not accepting game challenges.");
+            return;
+        }
         %duel2accept = .uid;
         if ((inzone(^draughts_room_start_coord, ^draughts_room_end_coord, coord) = true) | (inzone(^draughts_challengeroom_start_coord, ^draughts_challengeroom_end_coord, coord) = true)) {
             %boardgames_game = 0;

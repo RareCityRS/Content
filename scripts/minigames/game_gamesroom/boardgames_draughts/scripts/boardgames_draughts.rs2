@@ -185,6 +185,8 @@ if (%boardgames_drawrequested = 1) {
 [proc,init_draughts_boardsetup]
 %boardgames_ingame = 1;
 %boardgames_closemode = ^boardgames_loss;
+%boardgames_minimised = 0;
+%boardgames_timerpending = 0;
 minimap_toggle(1);
 
 %boardgames_closinginterface = 1;
@@ -240,6 +242,8 @@ inv_transmit(boardgames_boardinv, boardgames_draughts:boardinv);
 .%boardgames_ingame = 1;
 .%boardgames_control = 1;
 .%boardgames_closemode = ^boardgames_loss;
+.%boardgames_minimised = 0;
+.%boardgames_timerpending = 0;
 .minimap_toggle(1);
 
 .%boardgames_closinginterface = 1;
@@ -517,7 +521,14 @@ if (%boardgames_myturn = 1) {
     .%boardgames_myturn = 1;
     if_settext(boardgames_draughts:turn_name, "<.displayname>");
     .if_settext(boardgames_draughts:turn_name, "<.displayname>");
-    .softtimer(draughts_force_move, ~get_sandtimer_interval);
+    if (.%boardgames_online = 1 & .%boardgames_timepermove = 3 & .%boardgames_minimised = 1) {
+        .%boardgames_timerpending = 1;
+    } else {
+        .softtimer(draughts_force_move, ~get_sandtimer_interval);
+    }
+    if (.%boardgames_online = 1 & .%boardgames_minimised = 1) {
+        .mes("<displayname>:It's your turn in Draughts.:resumereq:");
+    }
     .softtimer(boardgames_sitting_anim, ~random_range(5,9));
     if (.%boardgames_online = 0) {
         .anim(human_sittingdown_ready, 0);
@@ -527,7 +538,14 @@ if (%boardgames_myturn = 1) {
     .%boardgames_myturn = 0;
     if_settext(boardgames_draughts:turn_name, "<displayname>");
     .if_settext(boardgames_draughts:turn_name, "<displayname>");
-    softtimer(draughts_force_move, ~get_sandtimer_interval);
+    if (%boardgames_online = 1 & %boardgames_timepermove = 3 & %boardgames_minimised = 1) {
+        %boardgames_timerpending = 1;
+    } else {
+        softtimer(draughts_force_move, ~get_sandtimer_interval);
+    }
+    if (%boardgames_online = 1 & %boardgames_minimised = 1) {
+        mes("<.displayname>:It's your turn in Draughts.:resumereq:");
+    }
     softtimer(boardgames_sitting_anim, ~random_range(5,9));
     if (%boardgames_online = 0) {
         anim(human_sittingdown_ready, 0);
@@ -535,17 +553,27 @@ if (%boardgames_myturn = 1) {
 }
 if_settext(boardgames_draughts:status1, "");
 if_settext(boardgames_draughts:winner, "");
-if_setposition(boardgames_draughts:sandtimer, 0, 0);
-if_setanim(boardgames_draughts:sandtimer, null);
-if_setanim(boardgames_draughts:sandtimer, ~get_sandtimer_seq);
 if_settext(boardgames_draughts:status2, "");
 
 .if_settext(boardgames_draughts:status1, "");
 .if_settext(boardgames_draughts:winner, "");
-.if_setposition(boardgames_draughts:sandtimer, 0, 0);
-.if_setanim(boardgames_draughts:sandtimer, null);
-.if_setanim(boardgames_draughts:sandtimer, ~get_sandtimer_seq);
 .if_settext(boardgames_draughts:status2, "");
+
+def_boolean $sandtimer_paused = false;
+if (%boardgames_timerpending = 1 | .%boardgames_timerpending = 1) {
+    $sandtimer_paused = true;
+}
+if ($sandtimer_paused = true) {
+    if_setposition(boardgames_draughts:sandtimer, -1000, -1000);
+    .if_setposition(boardgames_draughts:sandtimer, -1000, -1000);
+} else {
+    if_setposition(boardgames_draughts:sandtimer, 0, 0);
+    if_setanim(boardgames_draughts:sandtimer, null);
+    if_setanim(boardgames_draughts:sandtimer, ~get_sandtimer_seq);
+    .if_setposition(boardgames_draughts:sandtimer, 0, 0);
+    .if_setanim(boardgames_draughts:sandtimer, null);
+    .if_setanim(boardgames_draughts:sandtimer, ~get_sandtimer_seq);
+}
 
 def_obj $p2_rune = ~get_boardgames_player_rune(.%boardgames_piece);
 def_obj $p2_king = ~get_draughts_king(.%boardgames_piece);

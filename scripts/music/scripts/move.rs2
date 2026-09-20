@@ -442,7 +442,6 @@ if(%boardgames_draughts_rank < 1) {
 if(%boardgames_runelink_rank < 1) {
     %boardgames_runelink_rank = 1000;
 }
-set_player_op("Challenge", 1, ^false);
 @music_playbyregion(coord);
 
 [mapzone,0_49_47] 

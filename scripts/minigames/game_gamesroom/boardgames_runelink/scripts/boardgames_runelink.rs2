@@ -231,6 +231,8 @@ if (~test_runelink_move(7) = true) {
 [proc,init_runelink_boardsetup]
 %boardgames_ingame = 1;
 %boardgames_closemode = ^boardgames_loss;
+%boardgames_minimised = 0;
+%boardgames_timerpending = 0;
 minimap_toggle(1);
 
 %boardgames_closinginterface = 1;
@@ -259,6 +261,8 @@ inv_transmit(boardgames_boardinv, boardgames_runelink:boardinv);
 .%boardgames_ingame = 1;
 .%boardgames_control = 1;
 .%boardgames_closemode = ^boardgames_loss;
+.%boardgames_minimised = 0;
+.%boardgames_timerpending = 0;
 .minimap_toggle(1);
 
 .%boardgames_closinginterface = 1;
@@ -437,7 +441,14 @@ if (%boardgames_myturn = 1) {
     .%boardgames_myturn = 1;
     if_settext(boardgames_runelink:turn_name, "<.displayname>");
     .if_settext(boardgames_runelink:turn_name, "<.displayname>");
-    .softtimer(runelink_force_move, ~get_sandtimer_interval);
+    if (.%boardgames_online = 1 & .%boardgames_timepermove = 3 & .%boardgames_minimised = 1) {
+        .%boardgames_timerpending = 1;
+    } else {
+        .softtimer(runelink_force_move, ~get_sandtimer_interval);
+    }
+    if (.%boardgames_online = 1 & .%boardgames_minimised = 1) {
+        .mes("<displayname>:It's your turn in Runelink.:resumereq:");
+    }
     .softtimer(boardgames_sitting_anim, ~random_range(5,9));
     if (.%boardgames_online = 0) {
         .anim(human_sittingdown_ready, 0);
@@ -447,24 +458,40 @@ if (%boardgames_myturn = 1) {
     .%boardgames_myturn = 0;
     if_settext(boardgames_runelink:turn_name, "<displayname>");
     .if_settext(boardgames_runelink:turn_name, "<displayname>");
-    softtimer(runelink_force_move, ~get_sandtimer_interval);
+    if (%boardgames_online = 1 & %boardgames_timepermove = 3 & %boardgames_minimised = 1) {
+        %boardgames_timerpending = 1;
+    } else {
+        softtimer(runelink_force_move, ~get_sandtimer_interval);
+    }
+    if (%boardgames_online = 1 & %boardgames_minimised = 1) {
+        mes("<.displayname>:It's your turn in Runelink.:resumereq:");
+    }
     softtimer(boardgames_sitting_anim, ~random_range(5,9));
     if (%boardgames_online = 0) {
         anim(human_sittingdown_ready, 0);
     }
 }
 
-if_setposition(boardgames_runelink:sandtimer, 0, 0);
-if_setanim(boardgames_runelink:sandtimer, null);
-if_setanim(boardgames_runelink:sandtimer, ~get_sandtimer_seq);
-.if_setposition(boardgames_runelink:sandtimer, 0, 0);
-.if_setanim(boardgames_runelink:sandtimer, null);
-.if_setanim(boardgames_runelink:sandtimer, ~get_sandtimer_seq);
-
 if_settext(boardgames_runelink:status1, "");
 .if_settext(boardgames_runelink:status1, "");
 if_settext(boardgames_runelink:status2, "");
 .if_settext(boardgames_runelink:status2, "");
+
+def_boolean $sandtimer_paused = false;
+if (%boardgames_timerpending = 1 | .%boardgames_timerpending = 1) {
+    $sandtimer_paused = true;
+}
+if ($sandtimer_paused = true) {
+    if_setposition(boardgames_runelink:sandtimer, -1000, -1000);
+    .if_setposition(boardgames_runelink:sandtimer, -1000, -1000);
+} else {
+    if_setposition(boardgames_runelink:sandtimer, 0, 0);
+    if_setanim(boardgames_runelink:sandtimer, null);
+    if_setanim(boardgames_runelink:sandtimer, ~get_sandtimer_seq);
+    .if_setposition(boardgames_runelink:sandtimer, 0, 0);
+    .if_setanim(boardgames_runelink:sandtimer, null);
+    .if_setanim(boardgames_runelink:sandtimer, ~get_sandtimer_seq);
+}
 
 [proc,check_runelink_draw]()(boolean)
 def_int $top_row_slot = 0;

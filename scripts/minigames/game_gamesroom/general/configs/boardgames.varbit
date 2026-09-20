@@ -102,3 +102,13 @@ endbit=15
 basevar=boardgames_varbit2
 startbit=16
 endbit=16
+
+[boardgames_minimised]
+basevar=boardgames_varbit2
+startbit=17
+endbit=17
+
+[boardgames_timerpending]
+basevar=boardgames_varbit2
+startbit=18
+endbit=18

@@ -47,9 +47,9 @@ if (.%duelstatus ! ^duelstatus_reset) {
 }
 if (.%duel2accept = uid) {
     %duel2accept = .uid;
-    %boardgames_online = 1;
+    %boardgames_online = .%boardgames_online;
     %boardgames_game = .%boardgames_game;
-    %boardgames_rankedgame = 0;
+    %boardgames_rankedgame = .%boardgames_rankedgame;
     %boardgames_timepermove = .%boardgames_timepermove;
     if (.%boardgames_piece = 1) {
         %boardgames_piece = 2;
@@ -59,6 +59,10 @@ if (.%duel2accept = uid) {
     %boardgames_closinginterface = 1;
     ~open_boardgames_options;
     %boardgames_closinginterface = 0;
+    return;
+}
+if (.%option_game_requests != 0) {
+    mes("That player is not accepting game challenges.");
     return;
 }
 %duel2accept = .uid;
@@ -91,10 +95,11 @@ if (.%boardgames_piece = %boardgames_piece) {
 
 [queue,boardgames_online_minimise]
 clearsofttimer(boardgames_sitting_anim);
+%boardgames_minimised = 1;
 minimap_toggle(0);
 ~initalltabs;
 mes("Your game carries on while the board is closed.");
-mes("Right-click your opponent in your friends list to resume it.");
+mes("Use ::game with your opponent's name to reopen it.");
 
 [proc,boardgames_online_resume]
 if (.finduid(%duel2accept) = false) {
@@ -113,6 +118,7 @@ switch_int (%boardgames_game) {
 %boardgames_closinginterface = 0;
 
 [proc,draughts_online_reopen]
+%boardgames_minimised = 0;
 if_setanim(boardgames_draughts:runeflash, null);
 if_setanim(boardgames_draughts:runeflash, runeflash_off);
 if_openmain(boardgames_draughts);
@@ -140,9 +146,20 @@ if (%boardgames_drawrequested = 1) {
 }
 if_settext(boardgames_draughts:winner, "");
 if_setposition(boardgames_draughts:sandtimer, -1000, -1000);
+if (%boardgames_myturn = 1 & %boardgames_timerpending = 1) {
+    %boardgames_timerpending = 0;
+    softtimer(draughts_force_move, ~get_sandtimer_interval);
+    if_setposition(boardgames_draughts:sandtimer, 0, 0);
+    if_setanim(boardgames_draughts:sandtimer, null);
+    if_setanim(boardgames_draughts:sandtimer, ~get_sandtimer_seq);
+    .if_setposition(boardgames_draughts:sandtimer, 0, 0);
+    .if_setanim(boardgames_draughts:sandtimer, null);
+    .if_setanim(boardgames_draughts:sandtimer, ~get_sandtimer_seq);
+}
 inv_transmit(boardgames_boardinv, boardgames_draughts:boardinv);
 
 [proc,runelink_online_reopen]
+%boardgames_minimised = 0;
 if_setanim(boardgames_runelink:runeflash, null);
 if_setanim(boardgames_runelink:runeflash, runeflash_off);
 if_openmain(boardgames_runelink);
@@ -170,6 +187,16 @@ if (%boardgames_drawrequested = 1) {
 }
 if_settext(boardgames_runelink:winner, "");
 if_setposition(boardgames_runelink:sandtimer, -1000, -1000);
+if (%boardgames_myturn = 1 & %boardgames_timerpending = 1) {
+    %boardgames_timerpending = 0;
+    softtimer(runelink_force_move, ~get_sandtimer_interval);
+    if_setposition(boardgames_runelink:sandtimer, 0, 0);
+    if_setanim(boardgames_runelink:sandtimer, null);
+    if_setanim(boardgames_runelink:sandtimer, ~get_sandtimer_seq);
+    .if_setposition(boardgames_runelink:sandtimer, 0, 0);
+    .if_setanim(boardgames_runelink:sandtimer, null);
+    .if_setanim(boardgames_runelink:sandtimer, ~get_sandtimer_seq);
+}
 inv_transmit(boardgames_boardinv, boardgames_runelink:boardinv);
 
 [proc,boardgames_online_logout]

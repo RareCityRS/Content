@@ -63,10 +63,18 @@
 [zone,0_49_46_48_56] @catcity_music_enter(^catcity_music_town);
 [zone,0_49_46_56_56] @catcity_music_enter(^catcity_music_east);
 
-[zone,1_49_46_16_32] @catcity_music_enter(^catcity_music_town);
-[zone,1_49_46_16_40] @catcity_music_enter(^catcity_music_town);
-[zone,1_49_46_24_32] @catcity_music_enter(^catcity_music_town);
-[zone,1_49_46_24_40] @catcity_music_enter(^catcity_music_town);
+[zone,1_49_46_16_32]
+~boardgames_pub_challenge;
+@catcity_music_enter(^catcity_music_town);
+[zone,1_49_46_16_40]
+~boardgames_pub_challenge;
+@catcity_music_enter(^catcity_music_town);
+[zone,1_49_46_24_32]
+~boardgames_pub_challenge;
+@catcity_music_enter(^catcity_music_town);
+[zone,1_49_46_24_40]
+~boardgames_pub_challenge;
+@catcity_music_enter(^catcity_music_town);
 [zone,1_49_46_32_24] @catcity_music_enter(^catcity_music_town);
 [zone,1_49_46_32_32] @catcity_music_enter(^catcity_music_town);
 [zone,1_49_46_40_24] @catcity_music_enter(^catcity_music_town);

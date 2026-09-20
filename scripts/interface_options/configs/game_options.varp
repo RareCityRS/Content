@@ -43,3 +43,7 @@ clientcode=21
 transmit=yes
 scope=perm
 protect=no
+
+// 0 = on, 1 = off
+[option_game_requests]
+scope=perm

@@ -32,7 +32,7 @@ if (.finduid(%duel2accept) = false) {
     return;    
 }
 if (%boardgames_online = 1) {
-    mes("Games started from the friends list are always unranked.");
+    mes("Games started with ::game are always unranked.");
     return;
 }
 if(.%duel2accept = uid) {
@@ -90,6 +90,29 @@ if (%boardgames_online = 0) {
     ~reset_boardgames_varp;
 }
 set_player_op(null, 1, ^false);
+
+[zone,1_49_46_16_24] ~boardgames_pub_challenge;
+[zone,1_49_46_24_24] ~boardgames_pub_challenge;
+
+[zoneexit,1_49_46_16_24] set_player_op(null, 1, ^false);
+[zoneexit,1_49_46_24_24] set_player_op(null, 1, ^false);
+[zoneexit,1_49_46_16_32] set_player_op(null, 1, ^false);
+[zoneexit,1_49_46_24_32] set_player_op(null, 1, ^false);
+[zoneexit,1_49_46_16_40] set_player_op(null, 1, ^false);
+[zoneexit,1_49_46_24_40] set_player_op(null, 1, ^false);
+
+[proc,boardgames_pub_challenge]
+if (~boardgames_in_catcity_bar(coord) = true) {
+    if (%boardgames_draughts_rank < 1) {
+        %boardgames_draughts_rank = 1000;
+    }
+    if (%boardgames_runelink_rank < 1) {
+        %boardgames_runelink_rank = 1000;
+    }
+    set_player_op("Challenge", 1, ^false);
+} else {
+    set_player_op(null, 1, ^false);
+}
 
 [proc,in_games_room](coord $coord)(boolean)
 if (~inzone_coord_pair_table(games_room_zones, $coord) = true) {
@@ -222,22 +245,8 @@ switch_int (%boardgames_game) {
 }
 
 [proc,send_boardgames_challenge_request]
-if (%boardgames_online = 1) {
-    def_string $game = ~get_boardgames_game;
-    .mes("<displayname> has challenged you to a game of <$game>.");
-    .mes("Right-click their name in your friends list to accept.");
-    return;
-}
-//chalreq is not in client yet - 274
-// def_string $time = ~get_boardgames_timepermove();
-// def_string $game = ~get_boardgames_game();
-// def_string $rank = ~get_boardgames_rank();
-// if(%boardgames_rankedgame = 1) {
-//     .mes("<displayname>:(<$rank>) wants a ranked game of <$game>, <$time> per move.:chalreq:");
-// } else {
-//     .mes("<displayname>:wants an unranked game of <$game>, <$time> per move.:chalreq:");
-// }
-.mes("<displayname>:duelreq:");
+def_string $game = ~get_boardgames_game;
+.mes("<displayname>:wishes to play a game of <$game>.:chalreq:");
 
 
 [proc,calculate_rank_change](int $loser, int $winner)(int)

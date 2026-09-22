@@ -1184,18 +1184,22 @@ xan=512
 
 [close_layer]
 type=layer
-x=482
-y=4
-width=16
-height=16
+x=423
+y=28
+width=68
+height=11
 hide=yes
 
 [close]
 layer=close_layer
-type=graphic
+type=text
 x=0
 y=0
-width=16
-height=16
-graphic=cross,5
 buttontype=close
+width=68
+height=11
+font=p11_full
+shadowed=yes
+text=Close Window
+colour=0x808080
+overcolour=0xFFFFFF

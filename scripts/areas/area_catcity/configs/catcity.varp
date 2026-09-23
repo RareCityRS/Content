@@ -10,3 +10,6 @@ scope=temp
 
 [catcity_rooftop_laps]
 scope=perm
+
+[catcity_medal_charges]
+scope=perm

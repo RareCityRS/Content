@@ -70,3 +70,5 @@
 69=boardgames_rankchange_win
 70=boardgames_rankchange_lose
 71=boardgames_online
+72=boardgames_minimised
+73=boardgames_timerpending

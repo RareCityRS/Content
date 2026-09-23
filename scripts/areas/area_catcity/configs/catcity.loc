@@ -5,6 +5,7 @@ model=plants_cactus
 mapscene=4
 blockrange=no
 op1=Scratch
+op2=Check
 
 [catcity_rope_piece]
 name=Tightrope

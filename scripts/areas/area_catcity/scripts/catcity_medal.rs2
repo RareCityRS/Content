@@ -20,19 +20,11 @@ mes($message);
 inv_setslot(inv, $slot, oc_param($item, next_obj_stage), 1);
 
 [oploc1,catcity_cactus]
-if (inv_total(inv, farmers_fork) = 0 & inv_total(worn, farmers_fork) = 0) {
-    anim(human_pickupfloor, 0);
-    mes("You scratch yourself on the cactus.");
-    queue(damage_player, 0, ~random_range(^catcity_cactus_scratch_min, ^catcity_cactus_scratch_max));
-    return;
-}
 anim(human_pickupfloor, 0);
-mes("You scratch the cactus with your scratching post.");
 def_obj $worn_medal = inv_getobj(worn, ^wearpos_front);
 if ($worn_medal ! null) {
     if (oc_category($worn_medal) = feline_medal & $worn_medal ! felinemedal_4) {
-        inv_setslot(worn, ^wearpos_front, felinemedal_4, 1);
-        mes("The amulet hums with feline energy. It now has four charges.");
+        ~catcity_medal_charge_one($worn_medal, ^wearpos_front, true);
         return;
     }
 }
@@ -41,8 +33,7 @@ while ($slot < inv_size(inv)) {
     def_obj $item = inv_getobj(inv, $slot);
     if ($item ! null) {
         if (oc_category($item) = feline_medal & $item ! felinemedal_4) {
-            inv_setslot(inv, $slot, felinemedal_4, 1);
-            mes("The amulet hums with feline energy. It now has four charges.");
+            ~catcity_medal_charge_one($item, $slot, false);
             return;
         }
     }
@@ -50,15 +41,84 @@ while ($slot < inv_size(inv)) {
 }
 mes("You have no amulet that needs charging.");
 
-[opheldu,felinemedal]
+[oploc2,catcity_cactus]
+if (%catcity_medal_charges >= ^catcity_medal_charge_max) {
+    mes("You can recharge your cat training medals for free.");
+    return;
+}
+def_int $remaining = sub(^catcity_medal_charge_max, %catcity_medal_charges);
+mes("You have to pay with red disks for <tostring($remaining)> more cat training medal charges before recharging them becomes free.");
+
+[opheldu,felinemedal] @catcity_medal_disk_charge;
+[opheldu,felinemedal_1] @catcity_medal_disk_charge;
+[opheldu,felinemedal_2] @catcity_medal_disk_charge;
+[opheldu,felinemedal_3] @catcity_medal_disk_charge;
+[opheldu,felinemedal_4] @catcity_medal_disk_charge;
+
+[label,catcity_medal_disk_charge]
 if (last_useitem ! viking_dummy_coin) {
     ~displaymessage(^dm_default);
     return;
 }
-if (inv_total(inv, viking_dummy_coin) < 400) {
-    mes("You need 400 red disks to charge the amulet.");
+if (distance(coord, ^catcity_cactus_coord) > 1) {
+    mes("I need to be near a special cactus to do that.");
     return;
 }
-inv_del(inv, viking_dummy_coin, 400);
-inv_setslot(inv, last_slot, felinemedal_4, 1);
-mes("The amulet hums with feline energy. It now has four charges.");
+if (last_item = felinemedal_4) {
+    mes("The amulet is already fully charged.");
+    return;
+}
+~catcity_medal_charge_one(last_item, last_slot, false);
+
+[proc,catcity_medal_charge_one](obj $item, int $slot, boolean $worn)
+def_namedobj $next = ~catcity_medal_next_charge($item);
+if ($next = null) {
+    mes("The amulet is already fully charged.");
+    return;
+}
+def_int $was_free = 0;
+if (%catcity_medal_charges >= ^catcity_medal_charge_max) {
+    $was_free = 1;
+} else {
+    if (inv_total(inv, viking_dummy_coin) < ^catcity_medal_charge_price) {
+        mes("You need <tostring(^catcity_medal_charge_price)> red disks to charge the amulet.");
+        return;
+    }
+    inv_del(inv, viking_dummy_coin, ^catcity_medal_charge_price);
+    %catcity_medal_charges = min(add(%catcity_medal_charges, 1), ^catcity_medal_charge_max);
+}
+if ($worn = true) {
+    inv_setslot(worn, $slot, $next, 1);
+} else {
+    inv_setslot(inv, $slot, $next, 1);
+}
+~catcity_medal_charge_message($next);
+if ($was_free = 0 & %catcity_medal_charges >= ^catcity_medal_charge_max) {
+    mes("Recharging your cat training medals is now free.");
+}
+
+[proc,catcity_medal_next_charge](obj $item)(namedobj)
+if ($item = felinemedal) {
+    return(felinemedal_1);
+}
+if ($item = felinemedal_1) {
+    return(felinemedal_2);
+}
+if ($item = felinemedal_2) {
+    return(felinemedal_3);
+}
+if ($item = felinemedal_3) {
+    return(felinemedal_4);
+}
+return(null);
+
+[proc,catcity_medal_charge_message](obj $item)
+if ($item = felinemedal_1) {
+    mes("The amulet hums with feline energy. It now has one charge.");
+} else if ($item = felinemedal_2) {
+    mes("The amulet hums with feline energy. It now has two charges.");
+} else if ($item = felinemedal_3) {
+    mes("The amulet hums with feline energy. It now has three charges.");
+} else {
+    mes("The amulet hums with feline energy. It now has four charges.");
+}

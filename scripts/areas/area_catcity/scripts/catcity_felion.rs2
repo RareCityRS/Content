@@ -22,11 +22,9 @@ if ($random < 1) {
 def_int $random = 0;
 $random = random(128);
     
-if ($random < 3) {
-    obj_add(npc_coord, farmers_fork, 1, 600);
-} else if ($random < 13) {
+if ($random < 12) {
     obj_add(npc_coord, dragon_chainbody, 1, 600);
-} else if ($random < 71) {
+} else if ($random < 70) {
     obj_add(npc_coord, felinemedal_4, 1, 600); 
 } else if ($random < 111) {
     def_namedobj $key_drop;

@@ -1,7 +1,5 @@
 ^catcity_cactus_coord = 0_49_46_43_37
 ^catcity_medal_wilderness_limit = 25
-^catcity_cactus_scratch_min = 1
-^catcity_cactus_scratch_max = 3
 ^catcity_music_town = 1
 ^catcity_music_beach = 2
 ^catcity_music_east = 3
@@ -29,3 +27,5 @@
 ^catcity_area_ne = 0_50_46_63_63
 ^catcity_guild_boost = 7
 ^catcity_face_coins = 80
+^catcity_medal_charge_price = 100
+^catcity_medal_charge_max = 100

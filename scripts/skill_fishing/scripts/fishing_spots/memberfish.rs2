@@ -81,12 +81,6 @@ if (stat(fishing) < 16) {
 if (~check_fish_equipment(big_net) = false) {
     return;
 }
-// check if inv is full
-if (inv_freespace(inv) < 1) {
-    anim(null, 0);
-    ~mesbox("You can't carry any more fish.");
-    return;
-}
 if (%action_delay < map_clock) {
     %action_delay = calc(map_clock + 4);
     p_opnpc(1);
@@ -117,12 +111,6 @@ if (stat(fishing) < 16) {
 if (~check_fish_equipment(big_net) = false) {
     return;
 }
-// check if inv is full again
-if (inv_freespace(inv) < 1) {
-    anim(null, 0);
-    ~mesbox("You can't carry any more fish.");
-    return;
-}
 if (%action_delay < map_clock) {
     %action_delay = calc(map_clock + 5);
 } else if (%action_delay = map_clock) {
@@ -138,6 +126,9 @@ if (npc_param(is_whirlpool) = ^true) {
 }
 def_int $random = random(36645);
 if ($random < 1) { 
+    if (inv_freespace(inv) = 0 & inv_total(inv, raw_bass) > 0) {
+        inv_del(inv, raw_bass, 1);
+    }
     ~edible_roll_proc;
 }
 def_int $level = stat(fishing);
@@ -203,8 +194,10 @@ if ($level < 46) {
     return;
 }
 if (stat_random(fishing, 3, 40) = true) {
-    inv_add(inv, raw_bass, 1);
-    mes("You catch a bass.");
+    if (inv_freespace(inv) > 0) {
+        inv_add(inv, raw_bass, 1);
+        mes("You catch a bass.");
+    }
     stat_advance(fishing, 1000);
 }
 

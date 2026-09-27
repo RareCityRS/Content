@@ -6,7 +6,7 @@ if (npc_findhero = ^false) {
 }
 obj_add(npc_coord, big_bones, 1, ^lootdrop_duration);
 obj_add(npc_coord, tbwt_raw_karambwanji, calc(50 + random(60)), ^lootdrop_duration);
-obj_add(npc_coord, coins, calc(300 + random(501)), ^lootdrop_duration);
+obj_add(npc_coord, casket, calc(2 + random(5)), ^lootdrop_duration);
 ~lucky_draw;
 def_int $random = random(128);
 
@@ -45,12 +45,12 @@ if ($random < 12) {
 def_int $random = 0;
 $random = random(128);
     
-if ($random < 12) {
+if ($random < 17) {
     def_namedobj $key_drop;
     def_int $key_stack;
     $key_drop, $key_stack = ~catcity_shadekey;
     obj_add(npc_coord, $key_drop, $key_stack, 600);
-} else if ($random < 13) {
+} else if ($random < 21) {
     $random = random(11);
     if ($random < 1) {
         obj_add(npc_coord, pickpocket_guide_man, 1, 600);
@@ -75,22 +75,22 @@ if ($random < 12) {
     } else if ($random < 11) {
         obj_add(npc_coord, pickpocket_guide_fremennik_citizen, 1, 600);
     }
-} else if ($random < 17) {
-    obj_add(npc_coord, adamantite_ore, 1, ^lootdrop_duration);
+} else if ($random < 22) {
+    obj_add(npc_coord, cert_adamantite_ore, 10, ^lootdrop_duration);
     ~roll_food;
-} else if ($random < 27) {
-    obj_add(npc_coord, mithril_ore, 1, ^lootdrop_duration);
+} else if ($random < 23) {
+    obj_add(npc_coord, cert_mithril_ore, 20, ^lootdrop_duration);
     ~roll_food;
 } else if ($random < 30) {
     obj_add(npc_coord, viking_dummy_coin, $random, 600);
 } else if ($random < 50) {
     ~randomherb;
-} else if ($random < 70) {
+} else if ($random < 65) {
     ~randomjewel;
-} else if ($random < 74) {
+} else if ($random < 70) {
     ~unobtain_roll;
 } else if ($random < 76) {
-    obj_add(npc_coord, nuggets, ~random_range(5,10), 600);
+    obj_add(npc_coord, nuggets, ~random_range(8,15), 600);
 } else if ($random < 100) {
     ~lucky_draw;
 } else {

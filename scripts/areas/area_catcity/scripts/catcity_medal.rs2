@@ -46,15 +46,22 @@ while ($medal = null & $slot < inv_size(inv)) {
 if (%catcity_medal_charges < ^catcity_medal_charge_max & inv_total(inv, viking_dummy_coin) < ^catcity_medal_charge_price) {
     mes("You scratch the cactus.");
     p_delay(1);
-    queue(damage_player, 0, ~random_range(^catcity_cactus_scratch_min, ^catcity_cactus_scratch_max));
     mes("It scratches back!");
+    def_coord $scratch_coord = coord;
+    ~damage_self(~random_range(^catcity_cactus_scratch_min, ^catcity_cactus_scratch_max));
+    if (stat(hitpoints) = 0 | coord ! $scratch_coord) {
+        return;
+    }
     p_delay(1);
-    ~chatplayer("<p,neutral>I have a strange feeling it wants my red disks.");
-    ~mesbox("You need <tostring(^catcity_medal_charge_price)> red disks to charge the amulet.");
+    ~chatplayer("<p,quiz>I have a strange feeling it wants my red disks.");
     return;
 }
 if ($medal = null) {
     mes("You scratch the cactus.");
+    if ($worn_medal ! felinemedal_4 & inv_total(inv, felinemedal_4) = 0) {
+        p_delay(1);
+        ~chatplayer("<p,quiz>I should bring back a medal I can charge.");
+    }
     return;
 }
 def_boolean $was_free = false;
@@ -115,11 +122,15 @@ def_int $empty = sub(4, $current);
 def_int $added = $empty;
 if (%catcity_medal_charges < ^catcity_medal_charge_max) {
     $added = min($empty, divide(inv_total(inv, viking_dummy_coin), ^catcity_medal_charge_price));
+    $added = min($added, sub(^catcity_medal_charge_max, %catcity_medal_charges));
     if ($added <= 0) {
         return(0);
     }
     inv_del(inv, viking_dummy_coin, multiply($added, ^catcity_medal_charge_price));
     %catcity_medal_charges = min(add(%catcity_medal_charges, $added), ^catcity_medal_charge_max);
+    if (%catcity_medal_charges >= ^catcity_medal_charge_max) {
+        $added = $empty;
+    }
 }
 def_namedobj $next = ~catcity_medal_stage_from_charges(add($current, $added));
 if ($worn = true) {

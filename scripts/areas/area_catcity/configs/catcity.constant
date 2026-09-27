@@ -17,7 +17,7 @@
 ^catcity_disciple_melee_maxhit = 10
 ^catcity_disciple_heal = 5
 ^catcity_disciple_heal_range = 15
-^catcity_cat_colour_price = 100
+^catcity_cat_colour_price = 10
 ^catcity_disciple_dismiss_range = 30
 ^catcity_disk_prayer_xp = 2500
 ^catcity_essence_return = 0_49_46_41_46

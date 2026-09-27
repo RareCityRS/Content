@@ -1,3 +1,60 @@
+[ai_opplayer2,rat] ~npc_rat_attack;
+[ai_opplayer2,catcity_rat] ~npc_rat_attack;
+[ai_opplayer2,catcity_rat_desert] ~npc_rat_attack;
+[ai_opplayer2,catcity_rat_temp] ~npc_rat_attack;
+
+[proc,is_training_rat](npc $type)(boolean)
+if ($type = rat | $type = catcity_rat | $type = catcity_rat_desert | $type = catcity_rat_temp) {
+    return(true);
+}
+return(false);
+
+[proc,npc_rat_attack]
+if (%death = ^true) {
+    npc_setmode(null);
+    return;
+}
+if (%npc_action_delay > map_clock) return;
+if (~npc_check_notcombat = false) {
+    npc_setmode(null);
+    return;
+}
+if (~npc_check_notcombat_self = false) {
+    return;
+}
+p_ratclearlevelup;
+if (busy = true | hasweakqueue = true) {
+    return;
+}
+anim(%com_defendanim, 0);
+npc_anim(npc_param(attack_anim), 0);
+if (npc_param(attack_sound) ! null) {
+    sound_synth(npc_param(attack_sound), 1, 0);
+}
+~npc_set_attack_vars;
+%npc_action_delay = add(map_clock, npc_param(attackrate));
+if (npc_stat(hitpoints) = 0) {
+    return;
+}
+queue*(rat_hit, 0)(npc_uid, map_clock);
+
+[queue,rat_hit](npc_uid $nid, int $tick)
+if (map_clock > add($tick, 1) | busy = true | hasweakqueue = true | stat(hitpoints) = 0 | %death = ^true) {
+    return;
+}
+if (npc_finduid($nid) = false) {
+    return;
+}
+if (~is_training_rat(npc_type) = false | npc_stat(hitpoints) = 0) {
+    return;
+}
+damage(uid, 0, 0);
+~combat_preventlogout;
+if (npc_getmode = opplayer2 & %npc_attacking_uid = uid & %option_nodef = ^player_auto_retaliate_on & busy2 = false) {
+    ~player_retaliate_npc;
+}
+~ring_of_life_check;
+
 [ai_queue2,rat]
 if (random(1000) = 0 & sub(npc_stat(hitpoints), last_int) > 0) {
     @rat_moo;

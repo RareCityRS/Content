@@ -389,6 +389,9 @@
 [command,busy2]()(boolean)
 // info: Returns true if the secondary player has an interaction or waypoints to walk to
 [command,.busy2]()(boolean)
+[command,hasweakqueue]()(boolean)
+[command,.hasweakqueue]()(boolean)
+[command,p_ratclearlevelup]
 // info: Get the number of queued scripts that are specifically $queue
 [command,getqueue](queue $queue)(int)
 // info: Get the number of queued scripts that are specifically $queue for the secondary player

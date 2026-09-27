@@ -3,6 +3,10 @@ protect=no
 transmit=yes
 scope=perm
 
+[gather_block_until]
+scope=temp
+protect=no
+
 [option_run]
 protect=no
 clientcode=7

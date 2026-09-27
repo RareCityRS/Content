@@ -10,7 +10,7 @@ switch_int (random(calc(~macro_event_general_count + 3))) {
             if(random(2) = 0) ~macro_event_bigfish_spawn($fishing_equipment);
             else ~macro_event_river_troll_spawn;
         } else {
-            ~macro_event_whirlpool_spawn;
+            ~macro_event_whirlpool_spawn($fishing_equipment);
         }
     case default : ~macro_event_general_spawn(~macro_event_set_random);
 }

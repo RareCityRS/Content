@@ -1,5 +1,6 @@
 [proc,combat_clearqueue]
 clearqueue(playerhit_n_retaliate);
+clearqueue(rat_hit);
 clearqueue(combat_damage_player);
 clearqueue(pvp_damage);
 clearqueue(damage_player);
@@ -11,6 +12,7 @@ clearqueue(poison_damage);
 
 [proc,.combat_clearqueue]
 .clearqueue(playerhit_n_retaliate);
+.clearqueue(rat_hit);
 .clearqueue(combat_damage_player);
 .clearqueue(pvp_damage);
 .clearqueue(damage_player);

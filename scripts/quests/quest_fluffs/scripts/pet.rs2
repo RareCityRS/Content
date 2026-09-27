@@ -312,6 +312,9 @@ if ($have = 0) {
     mes("You don't have any raw karambwanji.");
     return;
 }
+if ($amount < 0) {
+    $amount = ^max_32bit_int;
+}
 if ($amount > $have) {
     $amount = $have;
 }
@@ -337,9 +340,9 @@ if ($amount = 1) {
 }
 if ($disks > 0) {
     if ($disks = 1) {
-        ~objbox(viking_dummy_coin, "You find a red disk!", 250, 0, 0);
+        ~objbox(viking_red_wooden_coin, "The cat gobbles up <tostring($amount)> karambwanji and spits out a red disk.", 250, 0, divide(^objbox_height, 2));
     } else {
-        ~objbox(viking_dummy_coin, "You find <tostring($disks)> red disks!", 250, 0, 0);
+        ~objbox(viking_red_wooden_coin, "The cat gobbles up <tostring($amount)> karambwanji and spits out <tostring($disks)> red disks.", 250, 0, divide(^objbox_height, 2));
     }
 }
 npc_say("Purr!");
@@ -348,7 +351,7 @@ npc_say("Purr!");
 def_int $disks = 0;
 def_int $roll = 0;
 while ($roll < $count) {
-    if (random(100) = 0) {
+    if (random(^catcity_fish_price_best) = 0) {
         $disks = add($disks, 1);
     }
     $roll = add($roll, 1);

@@ -13,3 +13,9 @@ scope=perm
 
 [catcity_medal_charges]
 scope=perm
+
+[catcity_fish_offer]
+scope=perm
+
+[catcity_fish_offer_day]
+scope=perm

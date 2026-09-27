@@ -20,7 +20,7 @@ if (~catcity_exchange_faces(null, 0) = 0) {
 ~chatnpc("<p,neutral>Give them to me and I'll pay you in red disks. <tostring(^catcity_face_coins)> a face, no haggling.");
 ~chatplayer("<p,happy>Yes, please.");
 def_int $caskets = ~catcity_exchange_faces(null, 1);
-~objbox(viking_dummy_coin, "Meowendoloena tucks the faces into her sleeve and counts <tostring($caskets)> red disks into your hands.", 250, 0, 0);
+~objbox(viking_red_wooden_coin, "Meowendoloena tucks the faces into her sleeve and counts <tostring($caskets)> red disks into your hands.", 250, 0, divide(^objbox_height, 2));
 
 [opnpcu,catcity_witch]
 if (~catcity_face_level(last_useitem) = 0) {
@@ -28,7 +28,7 @@ if (~catcity_face_level(last_useitem) = 0) {
     return;
 }
 def_int $caskets = ~catcity_exchange_faces(last_useitem, 1);
-~objbox(viking_dummy_coin, "Meowendoloena tucks the faces into her sleeve and counts <tostring($caskets)> red disks into your hands.", 250, 0, 0);
+~objbox(viking_red_wooden_coin, "Meowendoloena tucks the faces into her sleeve and counts <tostring($caskets)> red disks into your hands.", 250, 0, divide(^objbox_height, 2));
 
 [proc,catcity_exchange_faces](obj $only, int $take)(int)
 def_int $caskets = 0;

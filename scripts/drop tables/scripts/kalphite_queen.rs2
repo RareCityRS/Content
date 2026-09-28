@@ -51,7 +51,7 @@ if ($random < 14) { // 14/128 guess: drop log 16/128, 4/128 osrs
     obj_add(npc_coord, deathrune, 30, ^lootdrop_duration);
 }  else if ($random < 112) { // 10/128 guess: drop log 11/128, 10/128 osrs
     obj_add(npc_coord, cert_wine_of_zamorak, 20, ^lootdrop_duration);
-    ~randomherb;
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
 }  else if ($random < 119) { // 7/128: drop log 8/128, guess based on kbd's amulet of power/str 7/128
     obj_add(npc_coord, amulet_of_power, 1, ^lootdrop_duration);
 } else if ($random < 121) { // 2/128 guess: drop log 2.55/128

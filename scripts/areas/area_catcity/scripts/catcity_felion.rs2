@@ -5,12 +5,26 @@ if (npc_findhero = ^false) {
     return;
 }
 obj_add(npc_coord, big_bones, 1, ^lootdrop_duration);
-obj_add(npc_coord, tbwt_raw_karambwanji, calc(50 + random(60)), ^lootdrop_duration);
-obj_add(npc_coord, casket, calc(2 + random(5)), ^lootdrop_duration);
+obj_add(npc_coord, tbwt_raw_karambwanji, calc(40 + random(50)), ^lootdrop_duration);
 ~lucky_draw;
-def_int $random = random(128);
 
-if ($random < 1) {
+def_int $random = random(512);
+if ($random < 128) {
+   obj_add(npc_coord, casket, calc(8 + random(10)), ^lootdrop_duration);
+} else if ($random < 152) {
+    obj_add(npc_coord, macro_genilamp, 1, 600); 
+} else if ($random < 160) {
+    obj_add(npc_coord, agilityarena_ticket, calc(4 + random(6)), 600); 
+} else if ($random < 456) {
+    ~strong_boi_roll;
+} else if ($random < 511) {
+    ~lucky_draw;
+} else {
+    ~rare_roll;
+}
+
+def_int $unc_random = random(128);
+if ($unc_random < 1) {
     ~felion_giga_roll;
 } else {
     ~felion_uncommon_roll;
@@ -22,11 +36,11 @@ if ($random < 1) {
 def_int $random = 0;
 $random = random(128);
     
-if ($random < 12) {
+if ($random < 15) {
     obj_add(npc_coord, dragon_chainbody, 1, 600);
 } else if ($random < 70) {
     obj_add(npc_coord, felinemedal_4, 1, 600); 
-} else if ($random < 111) {
+} else if ($random < 110) {
     def_namedobj $key_drop;
     def_int $key_stack;
     $key_drop, $key_stack = ~catcity_shadekey;
@@ -76,17 +90,17 @@ if ($random < 17) {
         obj_add(npc_coord, pickpocket_guide_fremennik_citizen, 1, 600);
     }
 } else if ($random < 22) {
-    obj_add(npc_coord, cert_adamantite_ore, 10, ^lootdrop_duration);
+    obj_add(npc_coord, cert_adamantite_ore, 10, 600);
     ~roll_food;
 } else if ($random < 23) {
-    obj_add(npc_coord, cert_mithril_ore, 20, ^lootdrop_duration);
+    obj_add(npc_coord, cert_mithril_ore, 20, 600);
     ~roll_food;
 } else if ($random < 30) {
     obj_add(npc_coord, viking_dummy_coin, $random, 600);
 } else if ($random < 50) {
-    ~randomherb;
+    obj_add(npc_coord, ~strong_herb, ^lootdrop_duration);
 } else if ($random < 65) {
-    ~randomjewel;
+    obj_add(npc_coord, ~strong_jewel, ^lootdrop_duration);
 } else if ($random < 70) {
     ~unobtain_roll;
 } else if ($random < 76) {
@@ -117,6 +131,73 @@ switch_int(random(5)) {
 return($key_drop, $key_stack);
 
 
+[proc,strong_herb]()(namedobj, int) 
+def_int $random = 0;
+$random = random(132);
+
+obj_add(npc_coord, cert_vial_water, calc(2 + random(3)), ^lootdrop_duration); 
+
+ if ($random < 99) {
+    $random = random(2);
+    if ($random < 1) {return (cert_unidentified_ranarr, 10);}
+    else { return (cert_snape_grass, calc(6 + random(4)) );}
+} else if ($random < 107) {
+    $random = random(2);
+    if ($random < 1) {return (cert_unidentified_irit, 9);}
+    else {return (cert_eye_of_newt, calc(5 + random(4)) );}
+} else if ($random < 113) {
+    $random = random(2);
+    if ($random < 1) {return (cert_unidentified_avantoe, 8);}
+    else {return (cert_mortmyremushroom, calc(5 + random(3)) );} 
+} else if ($random < 118) {
+    $random = random(2);
+    if ($random < 1) {return (cert_unidentified_kwuarm, 7);}
+    else {return (cert_limpwurt_root, calc(4 + random(3)) );}
+} else if ($random < 122) {
+    $random = random(2);
+    if ($random < 1) {return (cert_unidentified_cadantine, 6);}
+    else {return (cert_white_berries, calc(4 + random(2)) );}
+} else if ($random < 125) {
+    $random = random(2);
+    if ($random < 1) {return (cert_unidentified_lantadyme, 5);}
+    else {return (cert_blue_dragon_scale, calc(3 + random(2)) );}
+} else if ($random < 128) {
+    return (cert_unidentified_toadflax, 4);
+} else if ($random < 130) {
+    $random = random(2);
+    if ($random < 1) {return (cert_unidentified_dwarf_weed, 3);}
+    else {return (cert_wine_of_zamorak, calc(2 + random(2)) );}
+} else if ($random < 131) {
+    return (cert_unidentified_snapdragon, 2);
+} else if ($random < 132) {
+    return (cert_unidentified_torstol, 1);
+}
+
+
+[proc,strong_jewel]()(namedobj, int)
+def_int $random = 0;
+$random = random(65);
+
+if ($random < 15) {
+    obj_add(npc_coord, agilityarena_ticket, calc(4 + random(6)), 600); 
+} else if ($random < 41) {
+    obj_add(npc_coord, macro_genilamp, 1, 600); 
+} else if ($random < 61) {
+    obj_add(npc_coord, casket, calc(7 + random(8)), 600);
+} else if ($random < 65) {
+    if (map_members = ^true) {
+        if ($random < 62 & %legendsquest = ^legends_complete) {
+            return (~megararetable);
+        }
+        if (coordz(coord) > 6400) {
+            return (chaos_talisman, 1);
+        } else {
+            return (nature_talisman, 1);
+        }
+    }
+}
+
+
 [ai_queue3,catcity_felion_cub]
 gosub(npc_death);
 if (npc_findhero = ^false) {
@@ -130,7 +211,7 @@ def_int $random = random(128);
 
 if ($random < 20) {
     ~felion_uncommon_roll;
-} else if ($random < 40) {
+} else if ($random < 35) {
     ~lucky_draw;
 } else {
     ~strong_boi_roll;

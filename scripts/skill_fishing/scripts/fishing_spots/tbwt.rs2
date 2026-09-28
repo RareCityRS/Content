@@ -33,11 +33,11 @@ if (~check_fish_equipment(net) = false) {
     return;
 }
 if (%action_delay < map_clock) {
-    %action_delay = calc(map_clock + 4);
+    %action_delay = calc(map_clock + 2);
     p_opnpc(1);
     return;
 } 
-if (%action_delay = calc(map_clock + 3)) {
+if (%action_delay = calc(map_clock + 1)) {
     mes("You cast out your net...");
     anim(human_smallnet, 0);
     sound_synth(net, 1, 0);
@@ -53,7 +53,7 @@ if (%action_delay = calc(map_clock + 3)) {
         }
         if (inv_freespace(inv) > 0 | inv_total(inv, tbwt_raw_karambwanji) > 0) {
             inv_add(inv, tbwt_raw_karambwanji, 1);
-            mes("You catch a Karambwanji.");
+            //mes("You catch a Karambwanji.");
         }
         stat_advance(fishing, 50);
     } else if (stat_random(fishing, 48, 256) = true) {
@@ -80,7 +80,7 @@ if (~check_fish_equipment(net) = false) {
     return;
 }
 if (%action_delay < map_clock) {
-    %action_delay = calc(map_clock + 5);
+    %action_delay = calc(map_clock + 2);
 } else if (%action_delay = map_clock) {
     anim(human_smallnet, 0);
     if (stat_random(fishing, 100, 250) = true) {
@@ -93,7 +93,7 @@ if (%action_delay < map_clock) {
         }
         if (inv_freespace(inv) > 0 | inv_total(inv, tbwt_raw_karambwanji) > 0) {
             inv_add(inv, tbwt_raw_karambwanji, 1);
-            mes("You catch a Karambwanji.");
+            //mes("You catch a Karambwanji.");
         }
         stat_advance(fishing, 50);
     } else if (stat_random(fishing, 48, 256) = true) {

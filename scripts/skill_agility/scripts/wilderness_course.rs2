@@ -177,5 +177,11 @@ if(%wilderness_course_progress = 5) {
     if ($random < 1) {
         ~edible_roll_proc;
     }
+    if (random(5) = 0) {
+        inv_add(inv, agilityarena_ticket, calc(9 + random(3)));
+    }
+    if (random(32) = 0) {
+        inv_add(inv, macro_genilamp, 1);
+    }
     %wilderness_course_progress = 0;
 }

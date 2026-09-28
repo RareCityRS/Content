@@ -1067,7 +1067,7 @@ if ($random < 6) {
 } else if ($random < 50) {
     ~roll_food;
 } else if ($random < 54) {
-    ~randomherb;
+    obj_add(npc_coord, ~randomherb, ^lootdrop_duration);
 } else if ($random < 67) {
     ~useful_quest_items;
 } else if ($random < 69) {

@@ -23,7 +23,7 @@
 ^catcity_essence_return = 0_49_46_41_46
 ^catcity_meowlin_rat_chance = 5
 ^catcity_meowlin_cabbage_chance = 50
-^catcity_meowlin_rat_lifetime = 6000
+^catcity_meowlin_rat_lifetime = -1
 ^catcity_pet_phrase_count = 24
 ^catcity_area_sw = 0_49_46_0_0
 ^catcity_area_ne = 0_50_46_63_63

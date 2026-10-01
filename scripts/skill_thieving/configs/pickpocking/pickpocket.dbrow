@@ -84,7 +84,6 @@ table=pickpocket
 data=npc,knight_of_ardougne
 data=npc,knight_of_ardougne2
 data=npc,catcity_knight
-data=npc,catcity_adventurer
 data=level,55
 data=experience,843
 data=stun_ticks,8

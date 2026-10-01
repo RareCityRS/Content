@@ -89,8 +89,7 @@ op1=Jump-down
 [catcity_fish_stall]
 name=Fish stall
 desc=Fresh from the sea.
-model=quest_viking_market_fishmongers
-model2=outdoorfurniture_market
+model=catcity_market_karambwanji
 width=2
 length=2
 op2=Steal-from

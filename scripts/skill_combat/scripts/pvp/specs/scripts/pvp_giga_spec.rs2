@@ -8,11 +8,12 @@ if (~sa_enough_energy = false) {
 }
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 def_int $damagestyle = %damagestyle;
+def_int $damagetype = %damagetype;
 def_int $maxhit = %com_maxhit;
-def_int $attackroll = scale(115, 100, ~player_attack_roll_specific(%damagetype));
+def_int $attackroll = scale(115, 100, ~player_attack_roll_specific($damagetype));
 ~set_sa_vars(oc_param($weapon, sa_energy));
 ~set_pk_vars;
-def_int $first_damage = ~pvp_giga_spec_hit($weapon, $damagestyle, $maxhit, $attackroll, false);
+def_int $first_damage = ~pvp_giga_spec_hit($weapon, $damagestyle, $damagetype, $maxhit, $attackroll, false);
 if ($first_damage > 0 & $first_damage >= scale(50, 100, $maxhit)) {
     ~pvp_giga_entangle($first_damage);
 }
@@ -21,19 +22,22 @@ if ($first_damage > 0) {
     $force_max = true;
 }
 p_delay(0);
-%action_delay = add(map_clock, 7);
-$first_damage = ~pvp_giga_spec_hit($weapon, $damagestyle, $maxhit, $attackroll, $force_max);
+%action_delay = add(map_clock, 5);
+$first_damage = ~pvp_giga_spec_hit($weapon, $damagestyle, $damagetype, $maxhit, $attackroll, $force_max);
 
-[proc,pvp_giga_spec_hit](obj $weapon, int $damagestyle, int $maxhit, int $attackroll, boolean $force_max)(int)
+[proc,pvp_giga_spec_hit](obj $weapon, int $damagestyle, int $damagetype, int $maxhit, int $attackroll, boolean $force_max)(int)
 if (stat(hitpoints) = 0 | .stat(hitpoints) = 0 | .%death = ^true) {
     return(0);
 }
-anim(oc_param($weapon, slashattack_anim), 0);
-sound_synth(oc_param($weapon, slash_sound), 1, 0);
+def_seq $attack_anim;
+def_synth $attack_sound;
+$attack_anim, $attack_sound = ~combat_swing_anim_and_synth($weapon, $damagetype, $damagestyle, %com_mode);
+anim($attack_anim, 0);
+sound_synth($attack_sound, 1, 0);
 .anim(.%com_defendanim, 20);
 def_int $damage = 0;
 def_boolean $hit = false;
-def_int $defenceroll = ~.player_defence_roll_specific(^slash_style);
+def_int $defenceroll = ~.player_defence_roll_specific($damagetype);
 if (~.check_protect_prayer(^melee_style) = true) {
     $maxhit = scale(6, 10, $maxhit);
 }

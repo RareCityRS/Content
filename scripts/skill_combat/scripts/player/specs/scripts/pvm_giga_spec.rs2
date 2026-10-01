@@ -8,11 +8,12 @@ if (~sa_enough_energy = false) {
 }
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 def_int $damagestyle = %damagestyle;
+def_int $damagetype = %damagetype;
 def_int $maxhit = %com_maxhit;
-def_int $attackroll = scale(115, 100, ~player_attack_roll_specific(%damagetype));
+def_int $attackroll = scale(115, 100, ~player_attack_roll_specific($damagetype));
 def_int $xp_multiplier = %npc_combat_xp_multiplier;
 ~set_sa_vars(oc_param($weapon, sa_energy));
-def_int $first_damage = ~pvm_giga_spec_hit($weapon, $damagestyle, $maxhit, $attackroll, $xp_multiplier, false);
+def_int $first_damage = ~pvm_giga_spec_hit($weapon, $damagestyle, $damagetype, $maxhit, $attackroll, $xp_multiplier, false);
 if ($first_damage > 0 & $first_damage >= scale(50, 100, $maxhit)) {
     ~pvm_giga_entangle($first_damage, $xp_multiplier);
 }
@@ -21,20 +22,23 @@ if ($first_damage > 0) {
     $force_max = true;
 }
 p_delay(0);
-%action_delay = add(map_clock, 7);
-$first_damage = ~pvm_giga_spec_hit($weapon, $damagestyle, $maxhit, $attackroll, $xp_multiplier, $force_max);
+%action_delay = add(map_clock, 5);
+$first_damage = ~pvm_giga_spec_hit($weapon, $damagestyle, $damagetype, $maxhit, $attackroll, $xp_multiplier, $force_max);
 
-[proc,pvm_giga_spec_hit](obj $weapon, int $damagestyle, int $maxhit, int $attackroll, int $xp_multiplier, boolean $force_max)(int)
+[proc,pvm_giga_spec_hit](obj $weapon, int $damagestyle, int $damagetype, int $maxhit, int $attackroll, int $xp_multiplier, boolean $force_max)(int)
 if (npc_stat(hitpoints) = 0) {
     return(0);
 }
-anim(oc_param($weapon, slashattack_anim), 0);
-sound_synth(oc_param($weapon, slash_sound), 1, 0);
+def_seq $attack_anim;
+def_synth $attack_sound;
+$attack_anim, $attack_sound = ~combat_swing_anim_and_synth($weapon, $damagetype, $damagestyle, %com_mode);
+anim($attack_anim, 0);
+sound_synth($attack_sound, 1, 0);
 npc_anim(npc_param(defend_anim), 20);
 def_int $damage = 0;
 def_int $damage_capped = 0;
 def_boolean $hit = false;
-def_int $defenceroll = ~npc_defence_roll_specific(^slash_style);
+def_int $defenceroll = ~npc_defence_roll_specific($damagetype);
 if (npc_type = tbwt_beast) {
     $attackroll = 0;
     $force_max = false;

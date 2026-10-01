@@ -105,7 +105,7 @@ p_telejump(0_49_46_22_29);
 stat_advance(agility, ^catcity_course_bonus_xp);
 %catcity_rooftop_laps = add(%catcity_rooftop_laps, 1);
 mes("You have completed <tostring(%catcity_rooftop_laps)> laps of the Cat City rooftop course.");
-def_int $disks = calc(2 + random(3));
+def_int $disks = calc(3 + random(3));
 if (inv_itemspace(inv, viking_dummy_coin, $disks, inv_size(inv)) = true) {
     mes("<tostring($disks)> red disks lie in the sand where you landed. You pocket them.");
 } else {

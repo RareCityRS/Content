@@ -52,6 +52,7 @@ if (%pk_skull > 0) { $skulled = true; }
 def_boolean $protecting_item = false;
 if (%prayer8 = ^true) { $protecting_item = true; }
 inv_clear(deathkeep);
+def_int $cbsnelm_hats = ~cbsnelm_death_remove;
 
 def_obj $currentitem;
 
@@ -98,6 +99,7 @@ inv_dropall(inv, coord, ^lootdrop_duration);
 inv_dropall(worn, coord, ^lootdrop_duration);
 obj_addall(coord, bones, 1, ^lootdrop_duration);
 ~moveallinv(deathkeep, inv);
+if ($cbsnelm_hats > 0) { inv_add(inv, cbhat18, $cbsnelm_hats); }
 inv_clear(deathkeep);
 
 [proc,pvp_death_lose_items]
@@ -109,6 +111,7 @@ if (%pk_skull > 0) { $skulled = true; }
 def_boolean $protecting_item = false;
 if (%prayer8 = ^true) { $protecting_item = true; }
 inv_clear(deathkeep);
+def_int $cbsnelm_hats = ~cbsnelm_death_remove;
 
 if($skulled = false) {
     ~move_priciest_item_on_hero_to_death;
@@ -155,6 +158,7 @@ while ($i < $size) {
 }
 .obj_add(coord, bones, 1, ^lootdrop_duration);
 ~moveallinv(deathkeep, inv);
+if ($cbsnelm_hats > 0) { inv_add(inv, cbhat18, $cbsnelm_hats); }
 inv_clear(deathkeep);
 
 

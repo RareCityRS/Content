@@ -1,0 +1,111 @@
+[opheldu,snelm_point_orange_cut]
+if (last_useitem = cbhat18) @cbsnelm_combine(snelm_point_orange_cut, cbsnelm_1);
+~displaymessage(^dm_default);
+
+[opheldu,cbsnelm_1]
+if (last_useitem = cbhat18) @cbsnelm_combine(cbsnelm_1, cbsnelm_2);
+if (last_useitem = chisel) @cbsnelm_separate(last_item);
+~displaymessage(^dm_default);
+
+[opheldu,cbsnelm_2]
+if (last_useitem = cbhat18) @cbsnelm_combine(cbsnelm_2, cbsnelm_3);
+if (last_useitem = chisel) @cbsnelm_separate(last_item);
+~displaymessage(^dm_default);
+
+[opheldu,cbsnelm_3]
+if (last_useitem = cbhat18) @cbsnelm_combine(cbsnelm_3, cbsnelm_4);
+if (last_useitem = chisel) @cbsnelm_separate(last_item);
+~displaymessage(^dm_default);
+
+[opheldu,cbsnelm_4]
+if (last_useitem = cbhat18) @cbsnelm_combine(cbsnelm_4, cbsnelm_5);
+if (last_useitem = chisel) @cbsnelm_separate(last_item);
+~displaymessage(^dm_default);
+
+[opheldu,cbsnelm_5]
+if (last_useitem = cbhat18) @cbsnelm_combine(cbsnelm_5, cbsnelm_6);
+if (last_useitem = chisel) @cbsnelm_separate(last_item);
+~displaymessage(^dm_default);
+
+[opheldu,cbsnelm_6]
+if (last_useitem = cbhat18) @cbsnelm_combine(cbsnelm_6, cbsnelm_7);
+if (last_useitem = chisel) @cbsnelm_separate(last_item);
+~displaymessage(^dm_default);
+
+[opheldu,cbsnelm_7]
+if (last_useitem = cbhat18) @cbsnelm_combine(cbsnelm_7, cbsnelm_8);
+if (last_useitem = chisel) @cbsnelm_separate(last_item);
+~displaymessage(^dm_default);
+
+[opheldu,cbsnelm_8]
+if (last_useitem = cbhat18) @cbsnelm_combine(cbsnelm_8, cbsnelm_9);
+if (last_useitem = chisel) @cbsnelm_separate(last_item);
+~displaymessage(^dm_default);
+
+[opheldu,cbsnelm_9]
+if (last_useitem = cbhat18) @cbsnelm_combine(cbsnelm_9, cbsnelm_10);
+if (last_useitem = chisel) @cbsnelm_separate(last_item);
+~displaymessage(^dm_default);
+
+[opheldu,cbsnelm_10]
+if (last_useitem = cbhat18) @cbsnelm_combine(cbsnelm_10, cbsnelm_11);
+if (last_useitem = chisel) @cbsnelm_separate(last_item);
+~displaymessage(^dm_default);
+
+[opheldu,cbsnelm_11]
+if (last_useitem = cbhat18) {
+    mes("This Chompy snelm already contains eleven chompy hats.");
+    return;
+}
+if (last_useitem = chisel) @cbsnelm_separate(last_item);
+~displaymessage(^dm_default);
+
+[label,cbsnelm_combine](obj $base, namedobj $result)
+if (inv_total(inv, $base) < 1 | inv_total(inv, cbhat18) < 1) return;
+inv_del(inv, $base, 1);
+inv_del(inv, cbhat18, 1);
+inv_add(inv, $result, 1);
+
+[label,cbsnelm_separate](obj $item)
+def_int $hats = ~cbsnelm_hat_count($item);
+if ($hats = 0 | inv_total(inv, $item) < 1 | inv_total(inv, chisel) < 1) return;
+if (inv_freespace(inv) < $hats) {
+    if ($hats = 1) {
+        mes("You need a free inventory space to separate these items.");
+    } else {
+        mes("You need <tostring($hats)> free inventory spaces to separate these items.");
+    }
+    return;
+}
+inv_del(inv, $item, 1);
+inv_add(inv, cbhat18, $hats);
+inv_add(inv, snelm_point_orange_cut, 1);
+
+[proc,cbsnelm_hat_count](obj $item)(int)
+switch_obj ($item) {
+    case cbsnelm_1 : return(1);
+    case cbsnelm_2 : return(2);
+    case cbsnelm_3 : return(3);
+    case cbsnelm_4 : return(4);
+    case cbsnelm_5 : return(5);
+    case cbsnelm_6 : return(6);
+    case cbsnelm_7 : return(7);
+    case cbsnelm_8 : return(8);
+    case cbsnelm_9 : return(9);
+    case cbsnelm_10 : return(10);
+    case cbsnelm_11 : return(11);
+}
+return(0);
+
+[proc,chompy_hat_total]()(int)
+return(calc(~obj_gettotal(cbhat18) + ~obj_gettotal(cbsnelm_1) + 2 * ~obj_gettotal(cbsnelm_2) + 3 * ~obj_gettotal(cbsnelm_3) + 4 * ~obj_gettotal(cbsnelm_4) + 5 * ~obj_gettotal(cbsnelm_5) + 6 * ~obj_gettotal(cbsnelm_6) + 7 * ~obj_gettotal(cbsnelm_7) + 8 * ~obj_gettotal(cbsnelm_8) + 9 * ~obj_gettotal(cbsnelm_9) + 10 * ~obj_gettotal(cbsnelm_10) + 11 * ~obj_gettotal(cbsnelm_11)));
+
+[proc,cbsnelm_death_remove]()(int)
+return(calc(~cbsnelm_death_remove_item(cbsnelm_1) + ~cbsnelm_death_remove_item(cbsnelm_2) + ~cbsnelm_death_remove_item(cbsnelm_3) + ~cbsnelm_death_remove_item(cbsnelm_4) + ~cbsnelm_death_remove_item(cbsnelm_5) + ~cbsnelm_death_remove_item(cbsnelm_6) + ~cbsnelm_death_remove_item(cbsnelm_7) + ~cbsnelm_death_remove_item(cbsnelm_8) + ~cbsnelm_death_remove_item(cbsnelm_9) + ~cbsnelm_death_remove_item(cbsnelm_10) + ~cbsnelm_death_remove_item(cbsnelm_11)));
+
+[proc,cbsnelm_death_remove_item](obj $item)(int)
+def_int $inventory_hats = inv_total(inv, $item);
+def_int $worn_hats = inv_total(worn, $item);
+if ($inventory_hats > 0) { inv_del(inv, $item, $inventory_hats); }
+if ($worn_hats > 0) { inv_del(worn, $item, $worn_hats); }
+return(calc(($inventory_hats + $worn_hats) * ~cbsnelm_hat_count($item)));

@@ -1,0 +1,28 @@
+[snelm_point_orange_cut]
+name=Pointy snelm
+desc=A small and pointy orange helmet.
+cost=300
+members=yes
+model=snelm_point_orange_cut
+2dxof=7
+2dyof=-2
+2dzoom=780
+2dyan=188
+2dxan=185
+members=yes
+iop2=Wear
+manwear=snelm_point_orange_cut_manwear,0
+womanwear=snelm_point_orange_cut_womanwear,0
+manhead=snelm_point_orange_cut_manhead
+womanhead=snelm_point_orange_cut_womanhead
+wearpos=hat
+weight=2kg
+category=armour_helmet
+param=magicattack,-3
+param=rangeattack,-1
+param=stabdefence,14
+param=slashdefence,16
+param=crushdefence,12
+param=magicdefence,-1
+param=rangedefence,14
+

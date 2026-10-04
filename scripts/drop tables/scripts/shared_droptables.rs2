@@ -1082,18 +1082,15 @@ if ($random < 6) {
 // Check under your seats everyone! You (might) get a chompy bird hunting hat! You (might) get a chompy bird hunting hat! You get (might) a chompy bird hunting hat!
 [proc,chompy_hat_get]()(namedobj, int)
 def_obj $obj1 = inv_getobj(worn, ^wearpos_hat);
-def_int $cbhat18_worn = 0;
-if ($obj1 = cbhat18){
-    $cbhat18_worn = 1;
-}
+def_int $cbhat18_total = ~chompy_hat_total;
 
-if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 0 ){
+if ( $cbhat18_total > 0 ){
     def_int $random = 0;
     def_int $prestige = 0;
 
-    if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 1 ){
+    if ( $cbhat18_total = 1 ){
         $random = random(3);
-    } else if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 2 ){
+    } else if ( $cbhat18_total = 2 ){
         $random = random(7);
         $prestige = 18;
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
@@ -1104,7 +1101,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
-    } else if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 3 ){
+    } else if ( $cbhat18_total = 3 ){
         $random = random(10);
         $prestige = 36;
 
@@ -1117,7 +1114,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
-    } else if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 4 ){
+    } else if ( $cbhat18_total = 4 ){
         $random = random(12);
         $prestige = 54;
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
@@ -1129,7 +1126,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
-    } else if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 5 ){
+    } else if ( $cbhat18_total = 5 ){
         $random = random(15);
         $prestige = 72;
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
@@ -1141,7 +1138,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
-    } else if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 6 ){
+    } else if ( $cbhat18_total = 6 ){
         $random = random(20);
         $prestige = 90;
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
@@ -1153,7 +1150,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
-    } else if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 7 ){
+    } else if ( $cbhat18_total = 7 ){
         $random = random(23);
         $prestige = 108;
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
@@ -1165,7 +1162,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
-    } else if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 8 ){
+    } else if ( $cbhat18_total = 8 ){
         $random = random(27);
         $prestige = 126;
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
@@ -1177,7 +1174,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
-    } else if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 9 ){
+    } else if ( $cbhat18_total = 9 ){
         $random = random(31);
         $prestige = 144;
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
@@ -1189,7 +1186,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
-    } else if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 10 ){
+    } else if ( $cbhat18_total = 10 ){
         $random = random(40);
         $prestige = 162;
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
@@ -1202,7 +1199,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
         } else{
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
-    } else if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 11 ){
+    } else if ( $cbhat18_total >= 11 ){
         $random = random(50);
         $prestige = 180;
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
@@ -1524,7 +1521,7 @@ if ( calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) > 
     }else{
          ~roll_food;
     }
-} else if ((calc($cbhat18_worn + inv_total(inv, cbhat18) + inv_total(bank, cbhat18)) = 0) & 
+} else if (($cbhat18_total = 0) &
            (calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) = 0)) { // no hat and no tea
         if (($obj1 = cbhat17 | inv_total(inv, cbhat17) > 0 | inv_total(bank, cbhat17) > 0)) {
             obj_add(npc_coord, cbhat18, 1, 600);
@@ -1683,7 +1680,7 @@ if ($random < 4) {
     } 
 } else if ($random < 41) {
     ~chompy_hat_get;
-} else if (($obj1 = cbhat18 | inv_total(inv, cbhat18) > 0 | inv_total(bank, cbhat18) > 0)){
+} else if (~chompy_hat_total > 0){
     ~superrare_getitem;
 } else{
     ~chompy_hat_get;

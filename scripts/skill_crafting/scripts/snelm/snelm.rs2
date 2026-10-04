@@ -4,8 +4,10 @@ if(last_useitem = chisel) @craft_snelm(last_item);
 
 // weakqueued in osrs
 [label,craft_snelm](obj $shell)
-if(stat(crafting) < 15) {
-    mes("You need a Crafting level of 15 to craft the shell into a helmet."); // osrs
+def_int $level = 15;
+if ($shell = snelm_point_orange_broken) { $level = 65; }
+if(stat(crafting) < $level) {
+    mes("You need a Crafting level of <tostring($level)> to craft the shell into a helmet."); // osrs
     return;
 }
 inv_del(inv, $shell, 1);
@@ -25,11 +27,11 @@ if($head = null) {
     return ($damage);
 }
 def_int $reduction = 0;
-if($head = snelm_round_red+black | $head = snelm_point_red+black | $head = snelm_point_blue) {
+if($head = snelm_round_red+black | $head = snelm_point_red+black | $head = snelm_point_blue | $head = snelm_point_orange_broken | $head = snelm_point_orange_cut | ~cbsnelm_hat_count($head) > 0) {
     $reduction = 12;
 } else if($head = snelm_round_blue | $head = snelm_round_orange | $head = snelm_point_yellow) {
     $reduction = 8;
-} else if($head = snelm_round_swamp | $head = snelm_round_swamp | $head = snelm_round_yellow) {
+} else if($head = snelm_round_swamp | $head = snelm_point_swamp | $head = snelm_round_yellow) {
     $reduction = 4;
 }
 return (max(0, sub($damage, $reduction)));

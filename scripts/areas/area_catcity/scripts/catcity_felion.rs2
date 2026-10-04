@@ -5,12 +5,12 @@ if (npc_findhero = ^false) {
     return;
 }
 obj_add(npc_coord, big_bones, 1, ^lootdrop_duration);
-obj_add(npc_coord, tbwt_raw_karambwanji, calc(40 + random(50)), ^lootdrop_duration);
+obj_add(npc_coord, tbwt_raw_karambwanji, calc(40 + random(50)), 600);
 ~lucky_draw;
 
 def_int $random = random(512);
 if ($random < 128) {
-   obj_add(npc_coord, casket, calc(8 + random(10)), ^lootdrop_duration);
+   obj_add(npc_coord, casket, calc(8 + random(10)), 600);
 } else if ($random < 152) {
     obj_add(npc_coord, macro_genilamp, 1, 600); 
 } else if ($random < 160) {
@@ -28,6 +28,10 @@ if ($unc_random < 1) {
     ~felion_giga_roll;
 } else {
     ~felion_uncommon_roll;
+}
+
+if ($unc_random = 2) {
+    obj_add(npc_coord, snelm_point_orange_broken, 1, 600);
 }
 ~catcity_felion_dismiss;
 
@@ -59,7 +63,7 @@ if ($random < 15) {
 def_int $random = 0;
 $random = random(128);
     
-if ($random < 17) {
+if ($random < 15) {
     def_namedobj $key_drop;
     def_int $key_stack;
     $key_drop, $key_stack = ~catcity_shadekey;
@@ -98,9 +102,9 @@ if ($random < 17) {
 } else if ($random < 30) {
     obj_add(npc_coord, viking_dummy_coin, $random, 600);
 } else if ($random < 50) {
-    obj_add(npc_coord, ~strong_herb, ^lootdrop_duration);
+    obj_add(npc_coord, ~strong_herb, 600);
 } else if ($random < 65) {
-    obj_add(npc_coord, ~strong_jewel, ^lootdrop_duration);
+    obj_add(npc_coord, ~strong_jewel, 600);
 } else if ($random < 70) {
     ~unobtain_roll;
 } else if ($random < 76) {
@@ -118,15 +122,15 @@ def_int $key_stack;
 
 switch_int(random(5)) {
     case 0 : $key_drop = shadekey_bronze_bloodred;
-            $key_stack = ~random_range(21, 23);
+            $key_stack = ~random_range(20, 22);
     case 1 : $key_drop = shadekey_bronze_brown;
-            $key_stack = ~random_range(17, 19);
-    case 2 : $key_drop = shadekey_bronze_crimson;
-            $key_stack = ~random_range(17, 19);
-    case 3 : $key_drop = shadekey_bronze_black;
             $key_stack = ~random_range(16, 18);
+    case 2 : $key_drop = shadekey_bronze_crimson;
+            $key_stack = ~random_range(15, 18);
+    case 3 : $key_drop = shadekey_bronze_black;
+            $key_stack = ~random_range(14, 16);
     case 4 : $key_drop = shadekey_bronze_purple;
-            $key_stack = ~random_range(10, 12);
+            $key_stack = ~random_range(8, 10);
 }
 return($key_drop, $key_stack);
 

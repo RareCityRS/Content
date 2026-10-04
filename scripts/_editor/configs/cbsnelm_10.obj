@@ -1,0 +1,31 @@
+[cbsnelm_10]
+name=Chompy snelm
+desc=A small and pointy orange helmet, combined with ten chompy hats.
+cost=300
+members=yes
+model=cbsnelm_10
+2dxof=5
+2dyof=-10
+2dzoom=800
+2dyan=156
+2dxan=152
+members=yes
+iop2=Wear
+manwear=cbsnelm_10_manwear,0
+womanwear=cbsnelm_10_womanwear,0
+manhead=cbsnelm_10_manhead
+womanhead=cbsnelm_10_womanhead
+wearpos=hat
+weight=2kg
+category=armour_helmet
+param=magicattack,6
+param=rangeattack,6
+param=stabdefence,14
+param=slashdefence,16
+param=crushdefence,12
+param=magicdefence,-1
+param=rangedefence,14
+tradeable=no
+param=strengthbonus,3
+param=prayerbonus,3
+

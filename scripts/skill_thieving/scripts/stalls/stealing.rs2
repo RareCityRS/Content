@@ -76,7 +76,7 @@ if ($current_level < $thieving_level) {
 }
 
 def_int $free_space = inv_freespace(inv);
-if ($free_space = 0) {
+if ($free_space = 0 & ($loc ! catcity_fish_stall | inv_total(inv, tbwt_raw_karambwanji) = 0)) {
     ~mesbox("Your inventory is too full to hold any more.");
     return;
 }

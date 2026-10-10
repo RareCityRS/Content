@@ -22,7 +22,6 @@ if ($first_damage > 0) {
     $force_max = true;
 }
 p_delay(0);
-%action_delay = add(map_clock, 5);
 $first_damage = ~pvm_giga_spec_hit($weapon, $damagestyle, $damagetype, $maxhit, $attackroll, $xp_multiplier, $force_max);
 
 [proc,pvm_giga_spec_hit](obj $weapon, int $damagestyle, int $damagetype, int $maxhit, int $attackroll, int $xp_multiplier, boolean $force_max)(int)

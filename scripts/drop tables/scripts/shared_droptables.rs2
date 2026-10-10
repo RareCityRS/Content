@@ -1674,9 +1674,9 @@ if ($random < 4) {
 } else if ($random < 39) {
     $random = random(10);
     if ($random < 9) {
-        obj_add(npc_coord, cert_casket, calc(4 + random(4)), ^lootdrop_duration);
+        obj_add(npc_coord, casket, calc(4 + random(4)), ^lootdrop_duration);
     } else {
-        obj_add(npc_coord, cert_casket, calc(10 + random(9)), ^lootdrop_duration);
+        obj_add(npc_coord, casket, calc(10 + random(9)), ^lootdrop_duration);
     } 
 } else if ($random < 41) {
     ~chompy_hat_get;

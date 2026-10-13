@@ -1068,3 +1068,18 @@
 // [command,inv_totalparam](inv $inv, param param)(int)
 // [command,inv_totalparam_stack](inv $inv, param param)(int)
 // [command,obj_adddelayed]
+
+[command,p_stringdialog](string $prompt)(string)
+[command,npc_petid]()(int)
+[command,npc_petbind](inv $inv, int $slot)
+[command,npc_namepet](obj $item, int $slot, int $amount, string $name)(boolean)
+[command,inv_moveslotcount](inv $from, inv $to, int $slot, int $count)(int)
+[command,inv_slotspace](inv $from, inv $to, int $slot, int $count)(int)
+[command,inv_petid](inv $inv, int $slot)(int)
+[command,inv_petretype](inv $inv, int $slot, namedobj $obj)(boolean)
+
+[command,npc_petname](obj $item, int $amount)(string)
+[command,npc_petcoins]()(int)
+[command,pet_coin_amount](string $input)(int)
+[command,npc_pethat](obj $hat)()
+[command,npc_petlocked]()(boolean)

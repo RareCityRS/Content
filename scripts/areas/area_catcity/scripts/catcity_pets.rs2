@@ -76,14 +76,18 @@ if ($choice ! 1 & $new_type = npc_type) {
     mes("Your cat is already that colour.");
     return;
 }
-def_namedobj $old_item = nc_param(npc_type, pet_item_id);
+def_int $pet_slot = ~petcat_slot;
+if ($pet_slot < 0) {
+    mes("Your cat needs to be here with you.");
+    return;
+}
+def_namedobj $new_item = nc_param($new_type, pet_item_id);
+if (inv_petretype(pets, $pet_slot, $new_item) = false) {
+    return;
+}
 inv_del(inv, viking_dummy_coin, ^catcity_cat_colour_price);
 npc_changetype_keepall($new_type, ^max_32bit_int);
-def_namedobj $new_item = nc_param(npc_type, pet_item_id);
-if (inv_total(pets, $old_item) > 0) {
-    inv_del(pets, $old_item, 1);
-    inv_add(pets, $new_item, 1);
-}
+npc_petbind(pets, $pet_slot);
 %follower_uid = npc_uid;
 %follower_obj = $new_item;
 npc_say("Mrrow?");

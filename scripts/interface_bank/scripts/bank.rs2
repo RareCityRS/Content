@@ -51,6 +51,28 @@ if ($requested_number < $number) $number = $requested_number;
 ~bank_withdraw_request(inv, $item, $number, $slot);
 
 [proc,bank_withdraw_request](inv $inv, obj $obj, int $amount, int $slot)
+if (~bank_has_named(bank, $obj) = true) {
+    if (inv_getobj(bank, $slot) ! $obj) {
+        return;
+    }
+    if (%bankcert = ^true) {
+        mes("This item can not be withdrawn as a note.");
+    }
+    $amount = min($amount, inv_getnum(bank, $slot));
+    def_int $pet_overflow = inv_slotspace(bank, $inv, $slot, $amount);
+    if ($pet_overflow >= $amount) {
+        mes("You don't have enough inventory space.");
+        return;
+    }
+    if ($pet_overflow > 0) {
+        mes("You don't have enough inventory space to withdraw that many.");
+    }
+    def_int $pet_withdraw = inv_moveslotcount(bank, $inv, $slot, $amount);
+    if ($pet_withdraw > 0) {
+        session_log(^log_moderator, "Withdrew <oc_debugname($obj)> x<tostring($pet_withdraw)> from bank");
+    }
+    return;
+}
 def_obj $cert_or_uncert = oc_uncert($obj);
 if (%bankcert ! 0) {
     $cert_or_uncert = oc_cert($obj);
@@ -85,6 +107,50 @@ if ($withdraw > 0) {
 }
 
 [proc,bank_deposit_request](inv $inv, obj $obj, int $amount, int $slot, int $mes)(boolean)
+if (~bank_has_named($inv, $obj) = true | ~bank_has_named(bank, $obj) = true) {
+    if (inv_getobj($inv, $slot) ! $obj) {
+        return(false);
+    }
+    def_boolean $named = false;
+    if (inv_petid($inv, $slot) > 0) {
+        $named = true;
+    }
+    def_int $bank_slot = 0;
+    def_boolean $same_stack = false;
+    while ($bank_slot < inv_size(bank)) {
+        if (inv_getobj(bank, $bank_slot) = $obj) {
+            if (($named = true & inv_petid(bank, $bank_slot) > 0) | ($named = false & inv_petid(bank, $bank_slot) = 0)) {
+                $same_stack = true;
+            }
+        }
+        $bank_slot = add($bank_slot, 1);
+    }
+    if (playermember = ^false & $same_stack = false & sub(inv_size(bank), inv_freespace(bank)) >= ^bank_free_slots) {
+        if ($mes = ^true) {
+            mes("You need to subscribe for a members account if you want to");
+            mes("store any more items in the bank.");
+        }
+        return(false);
+    }
+    def_int $pet_deposit = inv_moveslotcount($inv, bank, $slot, $amount);
+    def_int $next_slot = 0;
+    while ($pet_deposit < $amount & $next_slot < inv_size($inv)) {
+        if ($next_slot ! $slot & inv_getobj($inv, $next_slot) = $obj) {
+            if (($named = true & inv_petid($inv, $next_slot) > 0) | ($named = false & inv_petid($inv, $next_slot) = 0)) {
+                $pet_deposit = add($pet_deposit, inv_moveslotcount($inv, bank, $next_slot, sub($amount, $pet_deposit)));
+            }
+        }
+        $next_slot = add($next_slot, 1);
+    }
+    if ($pet_deposit = 0) {
+        if ($mes = ^true) {
+            mes("You don't have enough space in your bank account.");
+        }
+        return(false);
+    }
+    session_log(^log_moderator, "Deposited <oc_debugname($obj)> x<tostring($pet_deposit)> into bank");
+    return(true);
+}
 def_int $overflow = inv_itemspace2(bank, oc_uncert($obj), $amount, ^max_32bit_int);
 if (sub(^max_32bit_int, $amount) < inv_total(bank, oc_uncert($obj))) {
     if($mes = ^true) mes("You already have a full stack of that item in the bank."); // 2024 osrs
@@ -138,3 +204,18 @@ while ($src ! $dst) {
         $src = add($src, 1);
     }
 }
+
+
+[proc,bank_has_named](inv $inv, obj $obj)(boolean)
+def_category $category = oc_category($obj);
+if ($category ! kitten & $category ! cat & $category ! overgrown) {
+    return(false);
+}
+def_int $slot = 0;
+while ($slot < inv_size($inv)) {
+    if (inv_getobj($inv, $slot) = $obj & inv_petid($inv, $slot) > 0) {
+        return(true);
+    }
+    $slot = add($slot, 1);
+}
+return(false);

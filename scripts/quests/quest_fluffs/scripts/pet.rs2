@@ -77,12 +77,19 @@ if (finduid(%npc_attacking_uid) = true) {
     }
     // Duplicate cat cleanup
     def_npc $my_type = npc_type;
-    def_int $expected = inv_total(pets, nc_param(npc_type, pet_item_id));
+    def_int $my_pet = npc_petid;
+    def_int $expected = ~petcat_unnamed_count(nc_param(npc_type, pet_item_id));
+    if ($my_pet > 0) {
+        $expected = 0;
+        if (~petcat_slot >= 0) {
+            $expected = 1;
+        }
+    }
     def_int $count = 0;
     def_npc_uid $my_uid = npc_uid;
     npc_findallzone(coord);
     while (npc_findnext = true) {
-        if (%npc_attacking_uid = uid & npc_type = $my_type) {
+        if (%npc_attacking_uid = uid & npc_type = $my_type & npc_petid = $my_pet) {
             $count = calc($count + 1);
         }
     }
@@ -120,6 +127,10 @@ if (%follower_uid = null) {
 }
 if (npc_finduid(%follower_uid) = true) {
     def_category $cat_cat = oc_category(nc_param(npc_type, pet_item_id));
+    if (npc_petid > 0) {
+        cleartimer(petcat_growth);
+        return;
+    }
     if ($cat_cat = overgrown) {
         cleartimer(petcat_growth);
         return;
@@ -140,14 +151,14 @@ if (npc_finduid(%follower_uid) = true) {
 }
 
 [label,cat_growth]
-if (getbit_range(%cat_growth, 11, 19) = 320) {
-    def_namedobj $old_item = nc_param(npc_type, pet_item_id);
+if (npc_petid = 0 & getbit_range(%cat_growth, 11, 19) = 320) {
+    def_int $pet_slot = ~petcat_slot;
+    if ($pet_slot < 0) {
+        return;
+    }
     npc_changetype_keepall(nc_param(npc_type, cat_next_id), ^max_32bit_int);
     def_namedobj $new_item = nc_param(npc_type, pet_item_id);
-    if (inv_total(pets, $old_item) > 0) {
-        inv_del(pets, $old_item, 1);
-        inv_add(pets, $new_item, 1);
-    }
+    inv_setslot(pets, $pet_slot, $new_item, 1);
     %follower_uid = npc_uid;
     %follower_obj = $new_item;
     %cat_growth = 0;
@@ -161,31 +172,33 @@ def_int $attent = getbit_range(%cat_growth, 5, 10);
 if ($attent = 0) { 
     $attent = 28;
 }
-if (getbit_range(%cat_growth, 11, 19) = 120) {
-    def_namedobj $old_item = nc_param(npc_type, pet_item_id);
+if (npc_petid = 0 & getbit_range(%cat_growth, 11, 19) = 120) {
+    def_int $pet_slot = ~petcat_slot;
+    if ($pet_slot < 0) {
+        return;
+    }
     npc_changetype_keepall(nc_param(npc_type, cat_next_id), ^max_32bit_int);
     def_namedobj $new_item = nc_param(npc_type, pet_item_id);
-    if (inv_total(pets, $old_item) > 0) {
-        inv_del(pets, $old_item, 1);
-        inv_add(pets, $new_item, 1);
-    }
+    inv_setslot(pets, $pet_slot, $new_item, 1);
     %follower_uid = npc_uid;
     %follower_obj = $new_item;
     npc_say("Meeeooowww!");
     ~mesbox("Your kitten has grown into a healthy cat,|that can hunt for itself.");
     return;
 }
-%cat_growth = setbit_range_toint(%cat_growth, calc($hunger + 1), 0, 4);
-switch_int (getbit_range(%cat_growth, 0, 4)) {
-    case 16 :
-        npc_say("Miaow!");
-        ~chatplayer("<p,scared>I think it's hungry!");
-    case 18 :
-        npc_say("Meeeooowww!");
-        ~chatplayer("<p,scared>I think it's really hungry!");
-    case 20 :
-        mes("Your kitten has run away to look for food.");
-        ~follower_death;
+if (npc_petid = 0) {
+    %cat_growth = setbit_range_toint(%cat_growth, calc($hunger + 1), 0, 4);
+    switch_int (getbit_range(%cat_growth, 0, 4)) {
+        case 16 :
+            npc_say("Miaow!");
+            ~chatplayer("<p,scared>I think it's hungry!");
+        case 18 :
+            npc_say("Meeeooowww!");
+            ~chatplayer("<p,scared>I think it's really hungry!");
+        case 20 :
+            mes("Your kitten has run away to look for food.");
+            ~follower_death;
+    }
 }
 
 %cat_growth = setbit_range_toint(%cat_growth, calc($attent + 1), 5, 10);
@@ -227,6 +240,9 @@ switch_int (getbit_range(%cat_growth, 5, 10)) {
 if (%npc_attacking_uid ! uid) {
     mes("This is not your cat.");
     return;
+}
+if (npc_petid > 0 & last_useitem ! ball_of_wool) {
+    @petcat_name;
 }
 switch_obj(last_useitem) {
     case ball_of_wool :
@@ -270,8 +286,126 @@ switch_obj(last_useitem) {
         npc_statheal(hitpoints, 0, ^cat_karambwanji_heal_percent);
         mes("The kitten gobbles up the <$karambwanji>.");
         npc_say("Purr!");
-    case default : ~displaymessage(^dm_default);
+    case default : @petcat_name;
 }
+
+[label,petcat_name]
+def_obj $offering = last_useitem;
+def_int $offering_slot = last_useslot;
+def_npc_uid $cat_uid = npc_uid;
+def_int $pet_id = npc_petid;
+def_string $item_name = oc_name($offering);
+def_string $stage = "Cat";
+def_category $category = oc_category(nc_param(npc_type, pet_item_id));
+if ($category = kitten) {
+    $stage = "Kitten";
+} else if ($category = overgrown) {
+    $stage = "Overgrown Cat";
+}
+if (npc_petlocked = true) {
+    if ($offering ! coins | compare(npc_name, "Coins") ! 0) {
+        mes("Your cat likes its name so much that it doesn't want a new one.");
+        return;
+    }
+    if (npc_petcoins = ^max_32bit_int) {
+        mes("I don't think the cat wants any more gold coins.");
+        return;
+    }
+}
+def_int $amount = 1;
+def_string $cat_name = npc_petname($offering, $amount);
+if ($offering = coins) {
+    ~objbox($offering, "You can donate coins to name your <$stage>, choosing how many coins to permanently destroy.", 250, 0, divide(^objbox_height, 2));
+} else {
+    ~objbox($offering, "Naming your cat will permanently destroy one <$item_name>. Its new name will be <$cat_name>, visible to other players.", 250, 0, divide(^objbox_height, 2));
+}
+if ($offering = christmas_cracker) {
+    ~mesbox("Giving your cat a Christmas cracker gives an equal chance for you or your cat to receive the partyhat inside. If your cat wins, it will wear the hat. If you win, you get to keep the partyhat.|In either case, your cat is named after the Christmas cracker.");
+}
+if (npc_petlocked = true) {
+    ~mesbox("Your cat already has the name Coins, but you can keep giving it coins if you like.");
+} else if ($offering ! coins & compare($cat_name, $item_name) = 0) {
+    ~mesbox("This will permanently name your cat <$item_name>.|It cannot be renamed again.");
+} else {
+    ~mesbox("Named cats and kittens stop growing and need no food or attention. You can replace its name by giving it another, different item.");
+}
+def_int $choice = 0;
+if ($offering = coins) {
+    $choice = ~p_choice2_header("Yes, take my coins and name my cat.", 1, "No, I want to keep my coins.", 2, "Permanently destroy coins?");
+} else {
+    $choice = ~p_choice2_header("Yes, destroy the item and name my cat after it.", 1, "No, I want to keep the item.", 2, "Permanently destroy one <$item_name>?");
+}
+if ($choice ! 1) {
+    return;
+}
+if_close;
+p_delay(0);
+def_string $confirmation = p_stringdialog("Type the item name exactly: <$item_name>");
+if (compare(lowercase($confirmation), lowercase($item_name)) ! 0) {
+    mes("Your cat refuses the name you gave it, and the items too.");
+    return;
+}
+~chatplayer("<p,neutral>Well, here goes nothing...");
+if ($offering = coins) {
+    if_close;
+    p_delay(0);
+    $confirmation = p_stringdialog("How many coins would you like to donate?");
+    $amount = pet_coin_amount($confirmation);
+    if ($amount <= 0) {
+        return;
+    }
+}
+if (npc_finduid($cat_uid) = false) {
+    mes("Your cat didn't stick around long enough to take the name, or any items for that matter.");
+    return;
+}
+if (%npc_attacking_uid ! uid | npc_petid ! $pet_id) {
+    return;
+}
+if ($offering = coins) {
+    if (inv_getobj(inv, $offering_slot) ! $offering | inv_getnum(inv, $offering_slot) <= 0) {
+        return;
+    }
+    $amount = min($amount, inv_getnum(inv, $offering_slot));
+    $cat_name = npc_petname($offering, $amount);
+    if (npc_petcoins = ^max_32bit_int & compare(npc_name, "Coins") ! 0) {
+        def_string $previous_name = npc_name;
+        ~mesbox("WARNING: you are about to change your cat's name from <$previous_name> to Coins. This cannot be undone. Do you wish to proceed?");
+        if (~p_choice2("Yes, change my <$stage>'s name from <$previous_name> to Coins.", 1, "No, keep <$previous_name>.", 2) ! 1) {
+            return;
+        }
+        ~chatplayer("<p,neutral>Take my gold, I have far too much anyway.");
+        if (npc_finduid($cat_uid) = false) {
+            mes("Your cat didn't stick around long enough to take the name, or any coins for that matter.");
+            return;
+        }
+        if (%npc_attacking_uid ! uid | npc_petid ! $pet_id) {
+            return;
+        }
+    }
+}
+if (npc_namepet($offering, $offering_slot, $amount, $cat_name) = false) {
+    mes("Your cat refuses the name you gave it, and the items too.");
+    return;
+}
+if ($offering = christmas_cracker) {
+    def_int $winner = random(2);
+    def_namedobj $partyhat = ~cracker_partyhat;
+    if ($winner = 1) {
+        npc_pethat($partyhat);
+        mes("Your cat wins the <oc_name($partyhat)>.");
+    } else {
+        inv_add(inv, $partyhat, 1);
+        mes("You win the <oc_name($partyhat)> from the cracker.");
+    }
+}
+if ($offering ! coins & npc_petlocked = true) {
+    mes("Your cat takes the name you gave it, and likes it so much that it never wants a new one.");
+}
+if (%follower_uid = $cat_uid) {
+    cleartimer(petcat_growth);
+}
+npc_say("Purrrr!");
 
 [opnpc5,_petcat]
 if (%npc_attacking_uid ! uid) {
@@ -340,9 +474,9 @@ if ($amount = 1) {
 }
 if ($disks > 0) {
     if ($disks = 1) {
-        ~objbox(viking_red_wooden_coin, "The cat gobbles up <tostring($amount)> karambwanji and spits out a red disk.", 250, 0, divide(^objbox_height, 2));
+        ~objbox(viking_red_wooden_coin, "Your cat gobbles up <tostring($amount)> karambwanji and spits out a red disk.", 250, 0, divide(^objbox_height, 2));
     } else {
-        ~objbox(viking_red_wooden_coin, "The cat gobbles up <tostring($amount)> karambwanji and spits out <tostring($disks)> red disks.", 250, 0, divide(^objbox_height, 2));
+        ~objbox(viking_red_wooden_coin, "Your cat gobbles up <tostring($amount)> karambwanji and spits out <tostring($disks)> red disks.", 250, 0, divide(^objbox_height, 2));
     }
 }
 npc_say("Purr!");
@@ -363,8 +497,8 @@ if (%npc_attacking_uid ! uid) {
     mes("That isn't yours to take.");
     return;
 }
-def_obj $item = npc_param(pet_item_id);
-if (inv_total(pets, $item) = 0) {
+def_int $pet_slot = ~petcat_slot;
+if ($pet_slot < 0) {
     if (%follower_uid = npc_uid) {
         %follower_obj = null;
         %follower_uid = null;
@@ -376,8 +510,23 @@ if (inv_freespace(inv) = 0) {
     mes("You don't have enough inventory space to pick up your cat.");
     return;
 }
+def_npc_uid $cat_uid = npc_uid;
+def_int $pet_id = npc_petid;
 p_delay(0);
-inv_moveitem_uncert(pets, inv, $item, 1);
+if (npc_finduid($cat_uid) = false) {
+    return;
+}
+if (%npc_attacking_uid ! uid | npc_petid ! $pet_id) {
+    return;
+}
+$pet_slot = ~petcat_slot;
+if ($pet_slot < 0) {
+    return;
+}
+if (inv_moveslotcount(pets, inv, $pet_slot, 1) ! 1) {
+    mes("You don't have enough inventory space to pick up your cat.");
+    return;
+}
 sound_synth(pick, 0, 0);
 if (%follower_uid = npc_uid) {
     %follower_obj = null;
@@ -407,20 +556,34 @@ if (%npc_attacking_uid ! uid) {
     mes("This is not your cat.");
     return;
 }
+def_npc_uid $cat_uid = npc_uid;
+def_int $pet_id = npc_petid;
 def_int $choice = ~p_choice2_header("Yes I am.", 1, "No I'm not.", 2, "Are you sure you want to shoo away the cat?");
 if ($choice = 2) {
     mes("You choose not to shoo away the cat.");
     return;
 }
 if_close;
+if (npc_finduid($cat_uid) = false) {
+    return;
+}
+if (%npc_attacking_uid ! uid | npc_petid ! $pet_id) {
+    return;
+}
 say("Shoo cat!");
 npc_say("Meeeooow!");
 npc_setmode(playerescape);
 p_delay(4);
+if (npc_finduid($cat_uid) = false) {
+    return;
+}
+if (%npc_attacking_uid ! uid | npc_petid ! $pet_id) {
+    return;
+}
 mes("The cat has run away.");
-def_obj $item = npc_param(pet_item_id);
-if (inv_total(pets, $item) > 0) {
-    inv_del(pets, $item, 1);
+def_int $pet_slot = ~petcat_slot;
+if ($pet_slot >= 0) {
+    inv_delslot(pets, $pet_slot);
 }
 if (npc_uid = %follower_uid) {
     %follower_uid = null;
@@ -495,23 +658,54 @@ if ($current >= $cap) {
     return;
 }
 def_npc $follower_type = oc_param(last_item, follower_id);
-inv_moveitem_uncert(inv, pets, last_item, 1);
+if (inv_getobj(inv, last_slot) ! last_item) {
+    return;
+}
+def_int $pet_slot = 0;
+while ($pet_slot < inv_size(pets) & inv_getobj(pets, $pet_slot) ! null) {
+    $pet_slot = add($pet_slot, 1);
+}
+if ($pet_slot >= inv_size(pets)) {
+    return;
+}
+if (inv_moveslotcount(inv, pets, last_slot, 1) ! 1) {
+    return;
+}
 sound_synth(put_down, 0, 0);
-~cat_spawn($follower_type);
+~cat_spawn_bound($follower_type, $pet_slot);
 
 [proc,cat_spawn](npc $type)
+def_int $pet_slot = 0;
+while ($pet_slot < inv_size(pets) & inv_getobj(pets, $pet_slot) ! null) {
+    $pet_slot = add($pet_slot, 1);
+}
+if ($pet_slot >= inv_size(pets)) {
+    mes("You can't have any more followers.");
+    return;
+}
+def_namedobj $item = nc_param($type, pet_item_id);
+inv_setslot(pets, $pet_slot, $item, 1);
+~cat_spawn_bound($type, $pet_slot);
+
+[proc,cat_spawn_bound](npc $type, int $pet_slot)
 npc_add(coord, $type, ^max_32bit_int);
 %follower_obj = nc_param(npc_type, pet_item_id);
 %follower_uid = npc_uid;
 %npc_attacking_uid = uid;
+npc_petbind(pets, $pet_slot);
 npc_setmode(playerfollow);
 npc_say("Miaow!");
-settimer(petcat_growth, 150);
+if (npc_petid > 0) {
+    cleartimer(petcat_growth);
+} else {
+    settimer(petcat_growth, 150);
+}
 
 [proc,follower_death]
 if (npc_finduid(%follower_uid) = true) {
-    if (%follower_obj ! null & inv_total(pets, %follower_obj) > 0) {
-        inv_del(pets, %follower_obj, 1);
+    def_int $pet_slot = ~petcat_slot;
+    if ($pet_slot >= 0) {
+        inv_delslot(pets, $pet_slot);
     }
     %follower_uid = null;
     %follower_obj = null;
@@ -532,14 +726,18 @@ def_int $size = inv_size(pets);
 while ($i < $size) {
     def_obj $item = inv_getobj(pets, $i);
     if ($item ! null) {
-        def_int $j = 0;
-        def_int $skip = 0;
-        while ($j < $i) {
-            if (inv_getobj(pets, $j) = $item) { $skip = 1; }
-            $j = calc($j + 1);
-        }
-        if ($skip = 0) {
-            ~reconcile_type($item);
+        if (inv_petid(pets, $i) > 0) {
+            ~petcat_reconcile_named($i);
+        } else {
+            def_int $j = 0;
+            def_int $skip = 0;
+            while ($j < $i) {
+                if (inv_getobj(pets, $j) = $item & inv_petid(pets, $j) = 0) { $skip = 1; }
+                $j = calc($j + 1);
+            }
+            if ($skip = 0) {
+                ~reconcile_type($item);
+            }
         }
     }
     $i = calc($i + 1);
@@ -548,8 +746,7 @@ while ($i < $size) {
 npc_findallzone(coord);
 while (npc_findnext = true) {
     if (%npc_attacking_uid = uid) {
-        def_namedobj $type_item = nc_param(npc_type, pet_item_id);
-        if (inv_total(pets, $type_item) = 0) {
+        if (~petcat_slot < 0) {
             npc_del;
         }
     }
@@ -584,22 +781,29 @@ if ($tracked_uid = null) {
 if ($tracked_uid = null) {
     %follower_uid = null;
     %follower_obj = null;
+    cleartimer(petcat_growth);
     return;
 }
 
 %follower_uid = $tracked_uid;
 %follower_obj = $tracked_obj;
+if (npc_finduid($tracked_uid) = true) {
+    if (npc_petid > 0) {
+        cleartimer(petcat_growth);
+        return;
+    }
+}
 settimer(petcat_growth, 150);
 
 [proc,reconcile_type](obj $item)
 def_npc $follower_type = oc_param($item, follower_id);
 if ($follower_type = null) return;
-def_int $expected = inv_total(pets, $item);
+def_int $expected = ~petcat_unnamed_count($item);
 
 def_int $existing = 0;
 npc_findallzone(coord);
 while (npc_findnext = true) {
-    if (%npc_attacking_uid = uid & npc_type = $follower_type) {
+    if (%npc_attacking_uid = uid & npc_type = $follower_type & npc_petid = 0) {
         $existing = calc($existing + 1);
     }
 }
@@ -608,7 +812,7 @@ if ($existing > $expected) {
     def_int $to_despawn = sub($existing, $expected);
     npc_findallzone(coord);
     while (npc_findnext = true) {
-        if ($to_despawn > 0 & %npc_attacking_uid = uid & npc_type = $follower_type) {
+        if ($to_despawn > 0 & %npc_attacking_uid = uid & npc_type = $follower_type & npc_petid = 0) {
             npc_del;
             $to_despawn = sub($to_despawn, 1);
         }
@@ -623,4 +827,52 @@ if ($existing < $expected) {
         npc_setmode(playerfollow);
         $to_spawn = sub($to_spawn, 1);
     }
+}
+
+
+[proc,petcat_slot]()(int)
+def_obj $item = nc_param(npc_type, pet_item_id);
+def_int $pet_id = npc_petid;
+def_int $slot = 0;
+while ($slot < inv_size(pets)) {
+    if (inv_getobj(pets, $slot) = $item & inv_petid(pets, $slot) = $pet_id) {
+        return($slot);
+    }
+    $slot = add($slot, 1);
+}
+return(-1);
+
+[proc,petcat_unnamed_count](obj $item)(int)
+def_int $count = 0;
+def_int $slot = 0;
+while ($slot < inv_size(pets)) {
+    if (inv_getobj(pets, $slot) = $item & inv_petid(pets, $slot) = 0) {
+        $count = add($count, inv_getnum(pets, $slot));
+    }
+    $slot = add($slot, 1);
+}
+return($count);
+
+[proc,petcat_reconcile_named](int $slot)
+def_obj $item = inv_getobj(pets, $slot);
+def_int $pet_id = inv_petid(pets, $slot);
+def_npc $type = oc_param($item, follower_id);
+def_int $found = 0;
+npc_findallzone(coord);
+while (npc_findnext = true) {
+    if (%npc_attacking_uid = uid & npc_petid = $pet_id) {
+        if ($found = 0 & npc_type = $type) {
+            npc_petbind(pets, $slot);
+            npc_setmode(playerfollow);
+            $found = 1;
+        } else {
+            npc_del;
+        }
+    }
+}
+if ($found = 0) {
+    npc_add(coord, $type, ^max_32bit_int);
+    %npc_attacking_uid = uid;
+    npc_petbind(pets, $slot);
+    npc_setmode(playerfollow);
 }

@@ -20,6 +20,7 @@
 [opheld2,steel_full_helm] @levelrequire_defence(5, last_slot);
 [opheld2,steel_sq_shield] @levelrequire_defence(5, last_slot);
 [opheld2,steel_kiteshield] @levelrequire_defence(5, last_slot);
+[opheld2,banana_left_steel] @levelrequire_defence_and_strength(5, last_slot);
 [opheld2,steel_platelegs] @levelrequire_defence(5, last_slot);
 [opheld2,steel_plateskirt] @levelrequire_defence(5, last_slot);
 [opheld2,steel_chainbody] @levelrequire_defence(5, last_slot);

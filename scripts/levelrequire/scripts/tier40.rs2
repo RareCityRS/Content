@@ -20,6 +20,7 @@
 [opheld2,rune_full_helm] @levelrequire_defence(40, last_slot);
 [opheld2,rune_sq_shield] @levelrequire_defence(40, last_slot);
 [opheld2,rune_kiteshield] @levelrequire_defence(40, last_slot);
+[opheld2,banana_left_rune] @levelrequire_defence_and_strength(40, last_slot);
 [opheld2,rune_platelegs] @levelrequire_defence(40, last_slot);
 [opheld2,rune_plateskirt] @levelrequire_defence(40, last_slot);
 [opheld2,rune_chainbody] @levelrequire_defence(40, last_slot);

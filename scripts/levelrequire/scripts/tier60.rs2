@@ -11,6 +11,7 @@
 
 [opheld2,dragon_med_helm] @levelrequire_defence_caps(60, last_slot);
 [opheld2,dragon_sq_shield] @levelrequire_legends_quest_defence(60, last_slot);
+[opheld2,banana_left_dragon] @levelrequire_defence_and_strength(60, last_slot);
 [opheld2,dragon_chainbody] @levelrequire_defence_caps(60, last_slot);
 
 // Ranged

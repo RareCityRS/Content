@@ -27,6 +27,7 @@ if (%viking < ^viking_complete) {
 [opheld2,adamant_full_helm] @levelrequire_defence(30, last_slot);
 [opheld2,adamant_sq_shield] @levelrequire_defence(30, last_slot);
 [opheld2,adamant_kiteshield] @levelrequire_defence(30, last_slot);
+[opheld2,banana_left_adamant] @levelrequire_defence_and_strength(30, last_slot);
 [opheld2,adamant_platelegs] @levelrequire_defence(30, last_slot);
 [opheld2,adamant_plateskirt] @levelrequire_defence(30, last_slot);
 [opheld2,adamant_chainbody] @levelrequire_defence(30, last_slot);

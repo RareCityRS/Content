@@ -16,6 +16,7 @@
 [opheld2,black_full_helm] @levelrequire_defence(10, last_slot);
 [opheld2,black_sq_shield] @levelrequire_defence(10, last_slot);
 [opheld2,black_kiteshield] @levelrequire_defence(10, last_slot);
+[opheld2,banana_left_black] @levelrequire_defence_and_strength(10, last_slot);
 [opheld2,black_platelegs] @levelrequire_defence(10, last_slot);
 [opheld2,black_plateskirt] @levelrequire_defence(10, last_slot);
 [opheld2,black_chainbody] @levelrequire_defence(10, last_slot);

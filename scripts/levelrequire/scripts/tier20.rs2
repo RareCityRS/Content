@@ -21,6 +21,7 @@
 [opheld2,mithril_full_helm] @levelrequire_defence(20, last_slot);
 [opheld2,mithril_sq_shield] @levelrequire_defence(20, last_slot);
 [opheld2,mithril_kiteshield] @levelrequire_defence(20, last_slot);
+[opheld2,banana_left_mithril] @levelrequire_defence_and_strength(20, last_slot);
 [opheld2,mithril_platelegs] @levelrequire_defence(20, last_slot);
 [opheld2,mithril_plateskirt] @levelrequire_defence(20, last_slot);
 [opheld2,mithril_chainbody] @levelrequire_defence(20, last_slot);

@@ -231,9 +231,9 @@ if ($random < 3) {
 // Giga rare table
 [proc,gigararetable]()(namedobj, int)
 def_int $random = 0;
-$random = random(200);
+$random = random(100);
 
-if ($random < 2) { 
+if ($random < 1) { 
     obj_add(npc_coord, poisoned_dagger_p, 1, 600);
     session_log(^log_adventure, "Defeated a <npc_name> and received a Poisoned dagger(p)!");
 } if ($random < 18) { 
@@ -244,12 +244,48 @@ if ($random < 2) {
 
 
 // random drop table
+[proc,roll_tide_quest_complete](int $roll)(boolean)
+if (%upass >= ^upass_complete & ($roll = 19 | $roll = 197 | ($roll >= 221 & $roll <= 224))) {
+    return(true);
+}
+if (%hetty >= ^hetty_complete & $roll >= 64 & $roll <= 68) {
+    return(true);
+}
+if (%biohazard >= ^biohazard_complete & (($roll >= 147 & $roll <= 154) | $roll = 189)) {
+    return(true);
+}
+if (%itwatchtower >= ^itwatchtower_complete & ($roll = 47 | $roll = 198 | $roll = 199 | $roll = 218 | $roll = 226)) {
+    return(true);
+}
+if (%runemysteries >= ^runemysteries_complete & $roll = 6) {
+    return(true);
+}
+if (%drunkmonkquest >= ^drunkmonk_complete & $roll = 3) {
+    return(true);
+}
+if (%demonstart >= ^demon_complete & $roll >= 43 & $roll <= 45) {
+    return(true);
+}
+if (%treequest >= ^tree_complete & $roll = 121) {
+    return(true);
+}
+return(false);
+
 [proc,roll_tide]()(namedobj, int)
-def_int $random = 0;
-$random = random(100);
+def_int $random = random(100);
+def_int $low_roll = -1;
+if ($random < 75) {
+    $low_roll = random(276);
+    if (~roll_tide_quest_complete($low_roll) = true) {
+        $random = random(100);
+        if ($random < 75) {
+            $low_roll = random(276);
+        }
+    }
+}
 
 if ($random < 75) {
-    $random = random(276);
+    $random = $low_roll;
 
     if ($random < 1) {
         obj_add(npc_coord, mcannonremains, 1, ^lootdrop_duration);
@@ -289,7 +325,7 @@ if ($random < 75) {
         obj_add(npc_coord, mcannonbook, 1, ^lootdrop_duration);
     } else if ($random < 19) {
         obj_add(npc_coord, rockcake, 1, ^lootdrop_duration); 
-    } else if ($random < 20 & %upass < ^upass_complete) {
+    } else if ($random < 20) {
         obj_add(npc_coord, ibandoll, 1, ^lootdrop_duration);
     } else if ($random < 21) {
         obj_add(npc_coord, thkaramjamap, 1, ^lootdrop_duration);
@@ -339,7 +375,7 @@ if ($random < 75) {
         obj_add(npc_coord, silverlight_key_3, 1, ^lootdrop_duration);
     } else if ($random < 47) {
         obj_add(npc_coord, ground_bat_bones, 1, ^lootdrop_duration);
-    } else if ($random < 48 & %itwatchtower < ^itwatchtower_complete ) {
+    } else if ($random < 48 ) {
         obj_add(npc_coord, fingernails, 1, ^lootdrop_duration);
     } else if ($random < 49) {
         obj_add(npc_coord, jangerberries, 1, ^lootdrop_duration);
@@ -373,7 +409,7 @@ if ($random < 75) {
         obj_add(npc_coord, magic_golden_feather, 1, ^lootdrop_duration);
     } else if ($random < 64) {
         obj_add(npc_coord, holy_grail, 1, ^lootdrop_duration);  
-    } else if ($random < 69 & %hetty < ^hetty_complete) {
+    } else if ($random < 69) {
         obj_add(npc_coord, rats_tail, 1, ^lootdrop_duration);
     } else if ($random < 70) {
         obj_add(npc_coord, rat_poison, 1, ^lootdrop_duration);
@@ -540,15 +576,15 @@ if ($random < 75) {
         obj_add(npc_coord, shaman_robe, 1, ^lootdrop_duration);
     } else if ($random < 145) {
         obj_add(npc_coord, nightshade, 1, ^lootdrop_duration);
-    } else if ($random < 146 & %waterfall_quest < ^waterfall_complete) {
+    } else if ($random < 146) {
         obj_add(npc_coord, golrie_key_waterfall_quest, 1, ^lootdrop_duration);
-    } else if ($random < 147 & %waterfall_quest < ^waterfall_complete) {
+    } else if ($random < 147) {
         obj_add(npc_coord, glarials_pebble_waterfall_quest, 1, ^lootdrop_duration);
     } else if ($random < 151) {
         obj_add(npc_coord, liquid_honey, 1, ^lootdrop_duration);
     } else if ($random < 152) {
         obj_add(npc_coord, sulphuric_broline, 1, ^lootdrop_duration);
-    } else if ($random < 153 & %biohazard < ^biohazard_complete) {
+    } else if ($random < 153) {
         obj_add(npc_coord, plaguesample, 1, ^lootdrop_duration);
     } else if ($random < 154) {
         obj_add(npc_coord, touch_paper, 1, ^lootdrop_duration);
@@ -638,11 +674,11 @@ if ($random < 75) {
         obj_add(npc_coord, recommendedletter, 1, ^lootdrop_duration);    
     } else if ($random < 197) {
         obj_add(npc_coord, nuggets, 1, ^lootdrop_duration);
-    } else if ($random < 198 & %upass < ^upass_complete) {
+    } else if ($random < 198) {
         obj_add(npc_coord, ibansdove, 1, ^lootdrop_duration);
-    } else if ($random < 199 & %itwatchtower < ^itwatchtower_complete ) {
+    } else if ($random < 199 ) {
         obj_add(npc_coord, watch_eye_patch, 1, ^lootdrop_duration);
-    } else if ($random < 200 & %itwatchtower < ^itwatchtower_complete ) {
+    } else if ($random < 200 ) {
         obj_add(npc_coord, guamjangervial, 1, ^lootdrop_duration); 
     } else if ($random < 201) {
         obj_add(npc_coord, thpunishrock, 1, ^lootdrop_duration); 
@@ -662,23 +698,23 @@ if ($random < 75) {
         obj_add(npc_coord, agilityarena_ticket, calc(2 + random(3)), ^lootdrop_duration); 
     } else if ($random < 218) {
         obj_add(npc_coord, mithril_seed, calc(2 + random(3)), ^lootdrop_duration); 
-    } else if ($random < 219 & %itwatchtower < ^itwatchtower_complete) {
+    } else if ($random < 219) {
         obj_add(npc_coord, ogre_potion, 1, ^lootdrop_duration); 
-    } else if ($random < 221 & %itwatchtower < ^itwatchtower_complete) {
+    } else if ($random < 221) {
         obj_add(npc_coord, perfect_gold_bar, 1, ^lootdrop_duration); 
-    } else if ($random < 222 & %upass < ^upass_complete) {
+    } else if ($random < 222) {
         obj_add(npc_coord, othainian_amulet, 1, ^lootdrop_duration); 
-    } else if ($random < 223 & %upass < ^upass_complete) {
+    } else if ($random < 223) {
         obj_add(npc_coord, doomion_amulet, 1, ^lootdrop_duration); 
-    } else if ($random < 224 & %upass < ^upass_complete) {
+    } else if ($random < 224) {
         obj_add(npc_coord, holthion_amulet, 1, ^lootdrop_duration); 
-    } else if ($random < 225 & %upass < ^upass_complete) {
+    } else if ($random < 225) {
         obj_add(npc_coord, ibansshadow, 1, ^lootdrop_duration); 
     } else if ($random < 226) {
         obj_add(npc_coord, slave_shirt, 1, ^lootdrop_duration); 
-    } else if ($random < 227 & %itwatchtower < ^itwatchtower_complete) {
+    } else if ($random < 227) {
         obj_add(npc_coord, watchtowerrobe, 1, ^lootdrop_duration); 
-    } else if ($random < 228 & %itwatchtower < ^itwatchtower_complete) {
+    } else if ($random < 228) {
         obj_add(npc_coord, magic_ogre_potion, 1, ^lootdrop_duration); 
     } else if ($random < 229) {
         obj_add(npc_coord, thcaptplans, 1, ^lootdrop_duration); 
@@ -1127,7 +1163,7 @@ if ( $cbhat18_total > 0 ){
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
     } else if ( $cbhat18_total = 5 ){
-        $random = random(15);
+        $random = calc(random(40) / 3);
         $prestige = 72;
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
             ~superrare_getitem;
@@ -1139,7 +1175,7 @@ if ( $cbhat18_total > 0 ){
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
     } else if ( $cbhat18_total = 6 ){
-        $random = random(20);
+        $random = calc(random(128) / 9);
         $prestige = 90;
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
             ~superrare_getitem;
@@ -1151,7 +1187,7 @@ if ( $cbhat18_total > 0 ){
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
     } else if ( $cbhat18_total = 7 ){
-        $random = random(23);
+        $random = calc(random(400) / 27);
         $prestige = 108;
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
             ~superrare_getitem;
@@ -1163,7 +1199,7 @@ if ( $cbhat18_total > 0 ){
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
     } else if ( $cbhat18_total = 8 ){
-        $random = random(27);
+        $random = calc(random(1232) / 81);
         $prestige = 126;
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
             ~superrare_getitem;
@@ -1175,7 +1211,7 @@ if ( $cbhat18_total > 0 ){
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
     } else if ( $cbhat18_total = 9 ){
-        $random = random(31);
+        $random = calc(random(3760) / 243);
         $prestige = 144;
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
             ~superrare_getitem;
@@ -1187,7 +1223,7 @@ if ( $cbhat18_total > 0 ){
             mes("You need to collect more tea to complete chompy hat prestige mode.");
         }
     } else if ( $cbhat18_total = 10 ){
-        $random = random(40);
+        $random = calc(random(11408) / 729);
         $prestige = 162;
         if( calc(inv_total(inv, display_tea) + inv_total(bank, display_tea)) >= $prestige ){
             ~superrare_getitem;
@@ -1579,7 +1615,7 @@ inv_add(inv, display_tea, 1);
 def_int $random = 0;
 $random = random(13);
 
-    if ($random < 1 & %goblinquest < ^gobdip_complete) {
+    if ($random = 0 & %goblinquest < ^gobdip_complete) {
         $random = random(3);
         if ($random < 1) {
             obj_add(npc_coord, goblin_armour_orange, 1, ^lootdrop_duration);
@@ -1588,19 +1624,19 @@ $random = random(13);
         } else if ($random < 3) {
             obj_add(npc_coord, goblin_armour, 1, ^lootdrop_duration);
         } 
-    } else if ($random < 2 & %waterfall_quest < ^waterfall_complete) {
+    } else if ($random = 1 & %waterfall_quest < ^waterfall_complete) {
         obj_add(npc_coord, glarials_urn_full_waterfall_quest, 1, ^lootdrop_duration);
-    } else if ($random < 3 & %hetty < ^hetty_complete) {
+    } else if ($random = 2 & %hetty < ^hetty_complete) {
         obj_add(npc_coord, rats_tail, 1, ^lootdrop_duration);
-    } else if ($random < 4 & ( %fluffs < ^fluffs_gave_milk )){
+    } else if ($random = 3 & ( %fluffs < ^fluffs_gave_milk )){
         obj_add(npc_coord, seasoned_sardine, 1, ^lootdrop_duration);
-    } else if ($random < 5 & %biohazard < ^biohazard_complete) {
+    } else if ($random = 4 & %biohazard < ^biohazard_complete) {
         obj_add(npc_coord, plaguesample, 1, ^lootdrop_duration);
-    } else if ($random < 6 & %hunt < ^hunt_fetch_rum ) {
+    } else if ($random = 5 & %hunt < ^hunt_fetch_rum ) {
         obj_add(npc_coord, karamja_rum, 1, ^lootdrop_duration);
-    } else if ($random < 7 & %scorpcatcher < ^scorpcatcher_complete) {
+    } else if ($random = 6 & %scorpcatcher < ^scorpcatcher_complete) {
         obj_add(npc_coord, scorpioncagefull, 1, ^lootdrop_duration);
-    } else if ($random < 8 & %druidquest < ^druid_complete) {
+    } else if ($random = 7 & %druidquest < ^druid_complete) {
          $random = random(4);
         if ($random < 1) {
             obj_add(npc_coord, enchanted_rat_meat, 1, ^lootdrop_duration);
@@ -1611,15 +1647,15 @@ $random = random(13);
         } else if ($random < 4) {
             obj_add(npc_coord, enchanted_chicken, 1, ^lootdrop_duration);
         }
-    } else if ($random < 9 & %elenaquest < ^elena_complete_read_scroll) {
+    } else if ($random = 8 & %elenaquest < ^elena_complete_read_scroll) {
         obj_add(npc_coord, hangover_cure, 1, ^lootdrop_duration); 
-    } else if ($random < 10 & %desertrescue < ^desertrescue_complete) {
+    } else if ($random = 9 & %desertrescue < ^desertrescue_complete) {
         obj_add(npc_coord, thprotodart, 1, ^lootdrop_duration); 
-    } else if ($random < 11 & ( %haunted < ^haunted_started )) {
+    } else if ($random = 10 & ( %haunted < ^haunted_started )) {
         obj_add(npc_coord, oil_can, 1, ^lootdrop_duration); 
-    } else if ($random < 12 & %upass < ^upass_complete) {
+    } else if ($random = 11 & %upass < ^upass_complete) {
         obj_add(npc_coord, old_journal, 1, ^lootdrop_duration); 
-    } else if ($random < 13 &  %itwatchtower < ^itwatchtower_complete_read_scroll ) {
+    } else if ($random = 12 &  %itwatchtower < ^itwatchtower_complete_read_scroll ) {
         $random = random(3);
         if ($random < 1) {
             obj_add(npc_coord, relicpart1, 1, ^lootdrop_duration);
@@ -1650,11 +1686,22 @@ if ($random < 5) {
     obj_add(npc_coord, kebab, 1, ^lootdrop_duration);
 }
 
+[proc,banana_left_next]()(namedobj)
+switch_obj (inv_getobj(worn, ^wearpos_lhand)) {
+    case banana_left : return(banana_left_bronze);
+    case banana_left_bronze : return(banana_left_iron);
+    case banana_left_iron : return(banana_left_steel);
+    case banana_left_steel : return(banana_left_black);
+    case banana_left_black : return(banana_left_mithril);
+    case banana_left_mithril : return(banana_left_adamant);
+    case banana_left_adamant : return(banana_left_rune);
+    case banana_left_rune : return(banana_left_dragon);
+    case default : return(null);
+}
 
 [proc,lucky_draw]()(namedobj, int)
 def_int $random = 0;
 $random = random(50);
-def_obj $obj1 = inv_getobj(worn, ^wearpos_hat);
 
 if ($random < 4) {
     obj_add(npc_coord, cert_poison_chalice, 2, ^lootdrop_duration);
@@ -1669,8 +1716,31 @@ if ($random < 4) {
     obj_add(npc_coord, feather, calc(40 + random(90)), ^lootdrop_duration);
 } else if ($random < 19) {
     obj_add(npc_coord, cert_flax, 10, ^lootdrop_duration);
-} else if ($random < 29) {
+} else if ($random < 27) {
     obj_add(npc_coord, cert_bigoysterpearls, 1, ^lootdrop_duration);
+} else if ($random < 29) {
+    def_namedobj $drop = ~banana_left_next;
+    if ($drop = null) {
+        obj_add(npc_coord, cert_bigoysterpearls, 1, ^lootdrop_duration);
+        return(null, 0);
+    }
+    switch_obj ($drop) {
+        case banana_left_bronze : $random = random(3);
+        case banana_left_iron : $random = random(4);
+        case banana_left_steel : $random = random(6);
+        case banana_left_black : $random = random(10);
+        case banana_left_mithril : $random = random(15);
+        case banana_left_adamant : $random = random(23);
+        case banana_left_rune : $random = random(35);
+        case banana_left_dragon : $random = random(54);
+        case default : return(null, 0);
+    }
+    if ($random < 1) {
+        session_log(^log_adventure, "Defeated a <npc_name> and received a <oc_name($drop)>!");
+        obj_add(npc_coord, $drop, 1, 600);
+    } else {
+        obj_add(npc_coord, cert_bigoysterpearls, 1, ^lootdrop_duration);
+    }
 } else if ($random < 39) {
     $random = random(10);
     if ($random < 9) {
@@ -1821,25 +1891,10 @@ if ($random < 1) {
 [proc,rare_roll]()(namedobj, int)
 def_namedobj $drop = null;
 def_int $random = 0;
-$random = random(25);
+$random = random(50);
 
 if ($random < 1){
-    $random = random(100);
-    if ($random < 20) {
-        $drop = discofreturning;
-    } else if ($random < 30) {
-        $drop = half_full_wine_jug;
-    } else if ($random < 50) {
-        $drop = santa_hat;
-    } else if ($random < 70) {
-        $drop = halloweenmask_green;
-    } else if ($random < 80) {
-        $drop = halloweenmask_blue;
-    } else if ($random < 90) {
-        $drop = halloweenmask_red;
-    } else if ($random < 100) {
-        $drop = christmas_cracker;
-    }
+    $drop = christmas_cracker;
     inv_add(inv, $drop, 1);
     session_log(^log_adventure, "Defeated a <npc_name> and received a <oc_name($drop)>!");
 } else{

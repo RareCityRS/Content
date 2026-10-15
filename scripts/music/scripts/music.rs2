@@ -76,6 +76,7 @@ if ($unlock ! null) {
 }
 
 %musicplay = 0; // switch to manual mode
+%catcity_music_pending_song = null;
 
 if_settext(music:com_177, db_getfield($song, music:name, 0));
 @music_play(db_getfield($song, music:track, 0));

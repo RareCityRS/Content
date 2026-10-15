@@ -639,3 +639,25 @@ category=overgrown
 param=follower_id,overgrowncat_chocolatepoint
 tradeable=no
 param=destroy_drop,^true
+
+[felil_lion]
+name=Felil'lion
+desc=A little lion with a big reputation.
+model=inv_felil_lion
+2dxan=128
+2dyan=1792
+2dzoom=1300
+recol1s=15855
+recol1d=27143
+recol2s=4228
+recol2d=18690
+recol3s=32767
+recol3d=31606
+recol4s=31710
+recol4d=4511
+members=yes
+weight=2500g
+category=felil_lion
+param=follower_id,felil_lion
+tradeable=no
+param=destroy_drop,^true

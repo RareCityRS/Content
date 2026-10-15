@@ -35,7 +35,7 @@ if (map_members = ^false) {
     return;
 }
 
-if (npc_type = catcity_felion | npc_type = catcity_felion_cub) {
+if (npc_type = catcity_felion | npc_type = catcity_felion_enraged | npc_type = catcity_felion_cub) {
     ~catcity_venom_start;
     return;
 }

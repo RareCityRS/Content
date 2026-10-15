@@ -9,12 +9,12 @@ if (~sa_enough_energy = false) {
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 def_int $damagestyle = %damagestyle;
 def_int $damagetype = %damagetype;
-def_int $maxhit = %com_maxhit;
+def_int $maxhit = ~giga_spec_maxhit($weapon, $damagestyle);
 def_int $attackroll = scale(115, 100, ~player_attack_roll_specific($damagetype));
 ~set_sa_vars(oc_param($weapon, sa_energy));
 ~set_pk_vars;
 def_int $first_damage = ~pvp_giga_spec_hit($weapon, $damagestyle, $damagetype, $maxhit, $attackroll, false);
-if ($first_damage > 0 & $first_damage >= scale(50, 100, $maxhit)) {
+if ($first_damage > 0 & multiply($first_damage, 100) >= multiply($maxhit, 70)) {
     ~pvp_giga_entangle($first_damage);
 }
 def_boolean $force_max = false;
@@ -31,7 +31,7 @@ if (stat(hitpoints) = 0 | .stat(hitpoints) = 0 | .%death = ^true) {
 def_seq $attack_anim;
 def_synth $attack_sound;
 $attack_anim, $attack_sound = ~combat_swing_anim_and_synth($weapon, $damagetype, $damagestyle, %com_mode);
-anim($attack_anim, 0);
+anim(oc_param($weapon, slashattack_anim), 0);
 sound_synth($attack_sound, 1, 0);
 .anim(.%com_defendanim, 20);
 def_int $damage = 0;

@@ -1,29 +1,54 @@
 [ai_queue3,catcity_felion]
+npc_walk(npc_coord);
+npc_setmode(none);
+npc_sethuntmode(null);
+npc_delay(0);
+npc_changetype(catcity_felion_enraged, ^max_32bit_int);
+npc_statheal(hitpoints, 0, 100);
+npc_anim(cat_attack, 0);
+npc_say("Hisss!");
+%catcity_felion_summoned = 1;
+%catcity_felion_attacks = 0;
+%npc_action_delay = add(map_clock, 3);
+def_npc_uid $felion = npc_uid;
+~catcity_felion_summon;
+if (npc_finduid($felion) = false) {
+    return;
+}
+npc_delay(2);
+npc_sethuntmode(kalphite_worker);
+if (finduid(%npc_attacking_uid) = true) {
+    npc_setmode(applayer2);
+} else {
+    npc_setmode(null);
+}
+
+
+[ai_queue3,catcity_felion_enraged]
 gosub(npc_death);
 if (npc_findhero = ^false) {
     ~catcity_felion_dismiss;
     return;
 }
 obj_add(npc_coord, big_bones, 1, ^lootdrop_duration);
-obj_add(npc_coord, tbwt_raw_karambwanji, calc(40 + random(50)), 600);
+obj_add(npc_coord, tbwt_raw_karambwanji, calc(60 + random(70)), 600);
 ~lucky_draw;
+~strong_boi_roll;
+~strong_boi_roll;
+~roll_tide;
 
 def_int $random = random(512);
 if ($random < 128) {
-   obj_add(npc_coord, casket, calc(8 + random(10)), 600);
-} else if ($random < 152) {
+   obj_add(npc_coord, casket, calc(10 + random(15)), 600);
+} else if ($random < 135) {
     obj_add(npc_coord, macro_genilamp, 1, 600); 
-} else if ($random < 160) {
-    obj_add(npc_coord, agilityarena_ticket, calc(4 + random(6)), 600); 
-} else if ($random < 456) {
-    ~strong_boi_roll;
 } else if ($random < 511) {
-    ~lucky_draw;
+    ~felion_uncommon_roll;
 } else {
     ~rare_roll;
 }
 
-def_int $unc_random = random(128);
+def_int $unc_random = random(90);
 if ($unc_random < 1) {
     ~felion_giga_roll;
 } else {
@@ -32,6 +57,10 @@ if ($unc_random < 1) {
 
 if ($unc_random = 2) {
     obj_add(npc_coord, snelm_point_orange_broken, 1, 600);
+}
+
+if (random(1000) = 0) {
+    obj_add(npc_coord, felil_lion, 1, ^lootdrop_duration);
 }
 ~catcity_felion_dismiss;
 
@@ -210,6 +239,7 @@ if (npc_findhero = ^false) {
 obj_add(npc_coord, big_bones, 1, ^lootdrop_duration);
 obj_add(npc_coord, tbwt_raw_karambwanji, calc(5 + random(6)), ^lootdrop_duration);
 ~strong_boi_roll;
+~roll_tide;
 
 def_int $random = random(128);
 
@@ -222,34 +252,19 @@ if ($random < 20) {
 }
 
 
-[ai_queue2,catcity_felion]
+[ai_queue2,_catcity_felion]
 ~npc_default_damage(last_int);
-~catcity_felion_phase;
 
 
-[proc,catcity_felion_phase]
-if (%catcity_felion_summoned = 0 & npc_stat(hitpoints) > 0 & multiply(npc_stat(hitpoints), 2) < npc_basestat(hitpoints)) {
-    %catcity_felion_summoned = 1;
-    if (%catcity_felion_attacks >= ^catcity_felion_melee_per_volley & random(3) ! 0) {
-        %catcity_felion_attacks = sub(^catcity_felion_melee_per_volley, 1);
-    }
-    def_npc_uid $felion = npc_uid;
-    ~catcity_felion_summon;
-    if (npc_finduid($felion) = false) {
-        return;
-    }
-}
-
-
-[ai_queue1,catcity_felion]
+[ai_queue1,_catcity_felion]
 if (%catcity_felion_attacks < 0) {
     return;
 }
 ~npc_default_retaliate_ap;
 
-[ai_opplayer2,catcity_felion] npc_setmode(applayer2);
+[ai_opplayer2,_catcity_felion] npc_setmode(applayer2);
 
-[ai_applayer2,catcity_felion]
+[ai_applayer2,_catcity_felion]
 if (%npc_action_delay > map_clock) {
     return;
 }
@@ -273,12 +288,8 @@ anim(%com_defendanim, 0);
 npc_anim(npc_param(attack_anim), 0);
 sound_synth(bear_attack, 1, 0);
 ~npc_meleeattack;
-if (%catcity_felion_attacks >= ^catcity_felion_melee_per_volley) {
-    if (%catcity_felion_summoned = 0) {
-        %catcity_felion_attacks = ^catcity_felion_melee_per_volley;
-    } else if (random(3) ! 0) {
-        %catcity_felion_attacks = sub(^catcity_felion_melee_per_volley, 1);
-    }
+if (%catcity_felion_summoned = 0 & %catcity_felion_attacks >= ^catcity_felion_melee_per_volley) {
+    %catcity_felion_attacks = ^catcity_felion_melee_per_volley;
 }
 
 
@@ -314,22 +325,36 @@ npc_setmode(none);
 npc_sethuntmode(null);
 npc_facesquare(movecoord($centre, $aim_z, 0, sub(0, $aim_x)));
 npc_walk(movecoord(npc_coord, multiply($step_x, 2), 0, multiply($step_z, 2)));
+if (%npc_stunned > map_clock) {
+    ~catcity_felion_cancel_sand;
+    return;
+}
 npc_queue(4, 0, 4);
 npc_queue(5, calc(($aim_x + 128) * 256 + $aim_z + 128), 5);
 npc_queue(6, 0, 7);
+npc_queue(7, 0, 1);
 
 
-[ai_queue4,catcity_felion]
-if (npc_stat(hitpoints) = 0) {
+[ai_queue4,_catcity_felion]
+if (npc_stat(hitpoints) = 0 | %catcity_felion_attacks ! -1) {
+    return;
+}
+if (%npc_stunned > map_clock) {
+    ~catcity_felion_cancel_sand;
     return;
 }
 npc_walk(npc_coord);
 npc_anim(catcity_felion_roll, 0);
 
-[ai_queue5,catcity_felion]
-if (npc_stat(hitpoints) = 0) {
+[ai_queue5,_catcity_felion]
+if (npc_stat(hitpoints) = 0 | %catcity_felion_attacks ! -1) {
     return;
 }
+if (%npc_stunned > map_clock) {
+    ~catcity_felion_cancel_sand;
+    return;
+}
+%catcity_felion_attacks = -2;
 def_int $aim_x = sub(divide(last_int, 256), 128);
 def_int $aim_z = sub(modulo(last_int, 256), 128);
 def_int $back_limit = calc(^catcity_felion_sand_rear_padding * ^catcity_felion_sand_rear_padding * ($aim_x * $aim_x + $aim_z * $aim_z));
@@ -351,11 +376,31 @@ while (huntnext = true) {
 %npc_attacking_uid = $target;
 
 
-[ai_queue6,catcity_felion]
-if (npc_stat(hitpoints) = 0) {
+[ai_queue6,_catcity_felion]
+if (npc_stat(hitpoints) = 0 | %catcity_felion_attacks >= 0) {
     return;
 }
 %catcity_felion_attacks = 0;
+if (finduid(%npc_attacking_uid) = true) {
+    npc_setmode(applayer2);
+} else {
+    npc_setmode(null);
+}
+
+[ai_queue7,_catcity_felion]
+if (npc_stat(hitpoints) = 0 | %catcity_felion_attacks ! -1) {
+    return;
+}
+if (%npc_stunned > map_clock) {
+    ~catcity_felion_cancel_sand;
+    return;
+}
+npc_queue(7, 0, 1);
+
+[proc,catcity_felion_cancel_sand]
+%catcity_felion_attacks = 0;
+npc_walk(npc_coord);
+npc_anim(null, 0);
 if (finduid(%npc_attacking_uid) = true) {
     npc_setmode(applayer2);
 } else {
@@ -486,7 +531,7 @@ gosub(npc_death);
 def_npc_uid $disciple = npc_uid;
 def_int $position = %catcity_disciple_position;
 def_coord $here = npc_coord;
-if (npc_find($here, catcity_felion, ^catcity_disciple_heal_range, 0) = false) {
+if (npc_find($here, catcity_felion_enraged, ^catcity_disciple_heal_range, 0) = false) {
     return;
 }
 if (npc_stat(hitpoints) = 0) {

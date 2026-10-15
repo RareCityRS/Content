@@ -113,6 +113,37 @@ if (%musicloop = 0) {
 @catcity_music_next;
 
 [label,catcity_music_next]
+%catcity_music_pending_song = null;
+def_int $played = %catcity_music_played_east;
+def_int $count = 8;
+if (%catcity_music_area = ^catcity_music_town) {
+    $played = %catcity_music_played_town;
+    $count = 9;
+} else if (%catcity_music_area = ^catcity_music_beach) {
+    $played = %catcity_music_played_beach;
+}
+def_int $remaining = sub($count, bitcount($played));
+if ($remaining = 0) {
+    if (%musicplay ! 0) {
+        @catcity_music_shuffle;
+    }
+    return;
+}
+def_int $pick = random($remaining);
+def_int $index = 0;
+while ($index < $count) {
+    if (testbit($played, $index) = ^false) {
+        if ($pick = 0) {
+            %catcity_music_pending_area = %catcity_music_area;
+            %catcity_music_pending_index = $index;
+            @catcity_music_playlist;
+        }
+        $pick = sub($pick, 1);
+    }
+    $index = add($index, 1);
+}
+
+[label,catcity_music_playlist]
 if (%catcity_music_area = ^catcity_music_town) {
     @catcity_music_town;
 }
@@ -122,7 +153,7 @@ if (%catcity_music_area = ^catcity_music_beach) {
 @catcity_music_east;
 
 [label,catcity_music_town]
-switch_int(random(9)) {
+switch_int(%catcity_music_pending_index) {
     case 0 : @catcity_music_song("Adventure");
     case 1 : @catcity_music_song("Spirit");
     case 2 : @catcity_music_song("Expanse");
@@ -135,7 +166,7 @@ switch_int(random(9)) {
 }
 
 [label,catcity_music_beach]
-switch_int(random(8)) {
+switch_int(%catcity_music_pending_index) {
     case 0 : @catcity_music_song("Voyage");
     case 1 : @catcity_music_song("Wander");
     case 2 : @catcity_music_song("Dream");
@@ -147,7 +178,7 @@ switch_int(random(8)) {
 }
 
 [label,catcity_music_east]
-switch_int(random(8)) {
+switch_int(%catcity_music_pending_index) {
     case 0 : @catcity_music_song("Deep Wildy");
     case 1 : @catcity_music_song("Al Kharid");
     case 2 : @catcity_music_song("Duel Arena");
@@ -173,6 +204,116 @@ if ($unlock ! null) {
     }
 }
 if (%musicplay ! 0) {
+    %catcity_music_pending_song = db_getfield($song, music:track, 0);
     if_settext(music:com_177, db_getfield($song, music:name, 0));
     @music_play(db_getfield($song, music:track, 0));
+}
+
+[proc,catcity_music_complete]
+if (%catcity_music_pending_song = null | %catcity_music_pending_song ! %currentsong | %musicplay = 0) {
+    return;
+}
+if (%catcity_music_pending_area = ^catcity_music_town) {
+    %catcity_music_played_town = setbit(%catcity_music_played_town, %catcity_music_pending_index);
+} else if (%catcity_music_pending_area = ^catcity_music_beach) {
+    %catcity_music_played_beach = setbit(%catcity_music_played_beach, %catcity_music_pending_index);
+} else if (%catcity_music_pending_area = ^catcity_music_east) {
+    %catcity_music_played_east = setbit(%catcity_music_played_east, %catcity_music_pending_index);
+} else if (%catcity_music_pending_area = 4) {
+    ~catcity_music_shuffle_mark(%catcity_music_pending_index);
+}
+%catcity_music_pending_song = null;
+
+[label,catcity_music_shuffle]
+def_dbrow $song;
+def_int $index;
+$song, $index = ~catcity_music_shuffle_pick;
+if ($song = null) {
+    %catcity_music_shuffle_0 = 0;
+    %catcity_music_shuffle_1 = 0;
+    %catcity_music_shuffle_2 = 0;
+    %catcity_music_shuffle_3 = 0;
+    %catcity_music_shuffle_4 = 0;
+    %catcity_music_shuffle_5 = 0;
+    %catcity_music_shuffle_6 = 0;
+    %catcity_music_shuffle_7 = 0;
+    $song, $index = ~catcity_music_shuffle_pick;
+}
+if ($song = null) {
+    return;
+}
+%catcity_music_pending_area = 4;
+%catcity_music_pending_index = $index;
+%catcity_music_pending_song = db_getfield($song, music:track, 0);
+if_settext(music:com_177, db_getfield($song, music:name, 0));
+@music_play(%catcity_music_pending_song);
+
+[proc,catcity_music_shuffle_pick]()(dbrow, int)
+db_listall(music);
+def_dbrow $row = db_findnext;
+def_dbrow $selected = null;
+def_int $selected_index = -1;
+def_int $index = 0;
+def_int $count = 0;
+while ($row ! null) {
+    def_int $unlock;
+    def_int $bit;
+    $unlock, $bit = db_getfield($row, music:unlock, 0);
+    def_int $available = ^true;
+    if ($unlock ! null) {
+        $available = testbit(~music_getvar($unlock), $bit);
+    }
+    if ($available = ^true & ~catcity_music_shuffle_played($index) = ^false) {
+        $count = add($count, 1);
+        if (random($count) = 0) {
+            $selected = $row;
+            $selected_index = $index;
+        }
+    }
+    $index = add($index, 1);
+    $row = db_findnext;
+}
+return($selected, $selected_index);
+
+[proc,catcity_music_shuffle_played](int $index)(int)
+def_int $group = divide($index, 32);
+def_int $bit = modulo($index, 32);
+if ($group = 0) {
+    return(testbit(%catcity_music_shuffle_0, $bit));
+} else if ($group = 1) {
+    return(testbit(%catcity_music_shuffle_1, $bit));
+} else if ($group = 2) {
+    return(testbit(%catcity_music_shuffle_2, $bit));
+} else if ($group = 3) {
+    return(testbit(%catcity_music_shuffle_3, $bit));
+} else if ($group = 4) {
+    return(testbit(%catcity_music_shuffle_4, $bit));
+} else if ($group = 5) {
+    return(testbit(%catcity_music_shuffle_5, $bit));
+} else if ($group = 6) {
+    return(testbit(%catcity_music_shuffle_6, $bit));
+} else if ($group = 7) {
+    return(testbit(%catcity_music_shuffle_7, $bit));
+}
+return(^false);
+
+[proc,catcity_music_shuffle_mark](int $index)
+def_int $group = divide($index, 32);
+def_int $bit = modulo($index, 32);
+if ($group = 0) {
+    %catcity_music_shuffle_0 = setbit(%catcity_music_shuffle_0, $bit);
+} else if ($group = 1) {
+    %catcity_music_shuffle_1 = setbit(%catcity_music_shuffle_1, $bit);
+} else if ($group = 2) {
+    %catcity_music_shuffle_2 = setbit(%catcity_music_shuffle_2, $bit);
+} else if ($group = 3) {
+    %catcity_music_shuffle_3 = setbit(%catcity_music_shuffle_3, $bit);
+} else if ($group = 4) {
+    %catcity_music_shuffle_4 = setbit(%catcity_music_shuffle_4, $bit);
+} else if ($group = 5) {
+    %catcity_music_shuffle_5 = setbit(%catcity_music_shuffle_5, $bit);
+} else if ($group = 6) {
+    %catcity_music_shuffle_6 = setbit(%catcity_music_shuffle_6, $bit);
+} else if ($group = 7) {
+    %catcity_music_shuffle_7 = setbit(%catcity_music_shuffle_7, $bit);
 }

@@ -1,9 +1,14 @@
 [if_button,music:auto]
 %musicplay = 1;
+if (%catcity_music_area ! 0) {
+    softtimer(musicloop, 1);
+    @catcity_music_next;
+}
 @music_playbyregion(coord);
 
 [if_button,music:manual]
 %musicplay = 0;
+%catcity_music_pending_song = null;
 
 [if_button,music:loop]
 if (%musicloop = 0) {
@@ -17,7 +22,9 @@ if (%musicloop = 0) {
 
     // inferred from enabled
     mes("Music looping now disabled.");
-    clearsofttimer(musicloop);
+    if (%catcity_music_area = 0 | %musicplay = 0) {
+        clearsofttimer(musicloop);
+    }
 }
 
 [softtimer,musicloop]
@@ -36,6 +43,7 @@ if (map_clock > add(%musicstart, %musiclength)) {
     // osrs has a 2t delay between silence and looping
     midi_song(silence);
     if (%catcity_music_area ! 0 & %musicplay ! 0) {
+        ~catcity_music_complete;
         @catcity_music_next;
     }
     @music_play(%currentsong);

@@ -9,12 +9,12 @@ if (~sa_enough_energy = false) {
 def_obj $weapon = inv_getobj(worn, ^wearpos_rhand);
 def_int $damagestyle = %damagestyle;
 def_int $damagetype = %damagetype;
-def_int $maxhit = %com_maxhit;
+def_int $maxhit = ~giga_spec_maxhit($weapon, $damagestyle);
 def_int $attackroll = scale(115, 100, ~player_attack_roll_specific($damagetype));
 def_int $xp_multiplier = %npc_combat_xp_multiplier;
 ~set_sa_vars(oc_param($weapon, sa_energy));
 def_int $first_damage = ~pvm_giga_spec_hit($weapon, $damagestyle, $damagetype, $maxhit, $attackroll, $xp_multiplier, false);
-if ($first_damage > 0 & $first_damage >= scale(50, 100, $maxhit)) {
+if ($first_damage > 0 & multiply($first_damage, 100) >= multiply($maxhit, 70)) {
     ~pvm_giga_entangle($first_damage, $xp_multiplier);
 }
 def_boolean $force_max = false;
@@ -31,7 +31,7 @@ if (npc_stat(hitpoints) = 0) {
 def_seq $attack_anim;
 def_synth $attack_sound;
 $attack_anim, $attack_sound = ~combat_swing_anim_and_synth($weapon, $damagetype, $damagestyle, %com_mode);
-anim($attack_anim, 0);
+anim(oc_param($weapon, slashattack_anim), 0);
 sound_synth($attack_sound, 1, 0);
 npc_anim(npc_param(defend_anim), 20);
 def_int $damage = 0;
@@ -87,3 +87,13 @@ if (npc_type = black_knight_titan) {
 npc_heropoints($damage);
 spotanim_npc(db_getfield($spell_data, magic_spell_table:spotanim_target, 0), $duration);
 ~pvm_freeze_effect($spell_data);
+
+[proc,giga_spec_maxhit](obj $weapon, int $damagestyle)(int)
+def_int $attack_stylebonus;
+def_int $strength_stylebonus;
+def_int $defence_stylebonus;
+def_int $ranged_stylebonus;
+$attack_stylebonus, $strength_stylebonus, $defence_stylebonus, $ranged_stylebonus = ~combat_get_damagestyle_bonuses($damagestyle);
+def_int $effective_strength = calc(~combat_effective_stat(stat(strength), ~check_strength_prayer) + 8 + $strength_stylebonus);
+def_int $strengthbonus = calc(inv_totalparam(worn, strengthbonus) - oc_param($weapon, strengthbonus) + 36);
+return(~combat_maxhit(~combat_stat($effective_strength, $strengthbonus)));

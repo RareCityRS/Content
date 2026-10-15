@@ -1,3 +1,4 @@
+[opheld5,felil_lion] ~cat_drop;
 [opheld5,kittenobject_chocolate] ~cat_drop;
 [opheld5,growncatobject_chocolate] ~cat_drop;
 [opheld5,overgrowncatobject_chocolate] ~cat_drop;
@@ -28,6 +29,22 @@
 [opheld5,kittenobject_chocolatepoint] ~cat_drop;
 [opheld5,growncatobject_chocolatepoint] ~cat_drop;
 [opheld5,overgrowncatobject_chocolatepoint] ~cat_drop;
+
+[label,felil_lion_eyes]
+if (npc_type = felil_lion_red) {
+    mes("Felil'lion's eyes are already red.");
+    return;
+}
+if (inv_getobj(inv, last_useslot) ! viking_dummy_coin) {
+    return;
+}
+def_npc_uid $previous = npc_uid;
+inv_del(inv, viking_dummy_coin, 1);
+npc_changetype_keepall(felil_lion_red, ^max_32bit_int);
+if (%follower_uid = $previous) {
+    %follower_uid = npc_uid;
+}
+mes("Felil'lion's eyes turn red.");
 
 [label,catcity_cat_colour]
 ~chatplayer("<p,quiz>Can you change my cat's colour?");
@@ -61,6 +78,10 @@ if (%npc_attacking_uid ! uid | nc_category(npc_type) ! petcat) {
 }
 def_int $stage = 3;
 def_category $current = oc_category(nc_param(npc_type, pet_item_id));
+if ($current = felil_lion) {
+    mes("Felil'lion cannot be recoloured.");
+    return;
+}
 if ($current = kitten) {
     $stage = 1;
 }

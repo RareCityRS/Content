@@ -639,4 +639,4 @@ param=stab_sound,stabsword_stab
 param=slash_sound,stabsword_slash
 param=poison_severity,20
 param=specwep,^true
-param=sa_energy,600
+param=sa_energy,250
